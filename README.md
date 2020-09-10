@@ -2,5 +2,5 @@
 
 Team Member
  - Jeong hoon Kim
- - Sungjae Min
- - Sungju Go
+ - Sung jae Min
+ - Sung ju Go
