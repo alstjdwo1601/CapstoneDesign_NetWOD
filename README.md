@@ -1,6 +1,5 @@
-# Capstone Design _ PO Coach Season2
-
+# Capstone Design _ NetWOD
 Team Member
- - Jeong hoon Kim
+ - Jeong hoon Kim (leader)
  - Sung jae Min
  - Sung ju Go
