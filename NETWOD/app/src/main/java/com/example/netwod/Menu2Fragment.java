@@ -72,6 +72,7 @@ public class Menu2Fragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //프래그먼트 메인을 인플레이트해주고 컨테이너에 붙여달라는 뜻임
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_menu2 , container, false);
+        /*
         LinearLayout selectwodlayout = rootView.findViewById(R.id.SelectWODlayout);
         selectwodlayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +80,8 @@ public class Menu2Fragment extends Fragment {
                 activity.onFragmentChange(5);
             }
         });
+
+         */
         return rootView;
     }
     @Override
