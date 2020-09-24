@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -26,7 +27,10 @@ public class Menu2Fragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private ViewGroup rootView;
+    private CardView wodlistcard;
+    private CardView wodgeneratecard;
+    private CardView helpcard;
     MainActivity activity;
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -71,7 +75,29 @@ public class Menu2Fragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //프래그먼트 메인을 인플레이트해주고 컨테이너에 붙여달라는 뜻임
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_menu2 , container, false);
+        rootView = (ViewGroup) inflater.inflate(R.layout.fragment_menu2 , container, false);
+
+        wodlistcard = rootView.findViewById(R.id.WODlistcard);
+        wodlistcard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.onFragmentChange(5);
+            }
+        });
+        wodgeneratecard = rootView.findViewById(R.id.WODgeneratecard);
+        wodgeneratecard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.onFragmentChange(6);
+            }
+        });
+        helpcard = rootView.findViewById(R.id.Helpcard);
+        helpcard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.onFragmentChange(7);
+            }
+        });
         /*
         LinearLayout selectwodlayout = rootView.findViewById(R.id.SelectWODlayout);
         selectwodlayout.setOnClickListener(new View.OnClickListener() {

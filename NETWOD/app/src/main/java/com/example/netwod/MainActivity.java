@@ -25,7 +25,10 @@ public class MainActivity extends AppCompatActivity {
     private Menu2Fragment menu2Fragment = new Menu2Fragment();
     private Menu3Fragment menu3Fragment = new Menu3Fragment();
     private Menu4Fragment menu4Fragment = new Menu4Fragment();
-    private WodselectFragment wodselectFragment= new WodselectFragment();
+    private WodselectFragment wodselectFragment= new WodselectFragment(); //이건 필요 없는거임지금은
+    private WodlistFragment wodlistFragment= new WodlistFragment();
+    private WodgenerateFragment wodgenerateFragment=new WodgenerateFragment();
+    private HelpFragment helpFragment= new HelpFragment();
     LinearLayout selectwodlayout;
     /*
     1~4 하단 네비게이션 메뉴 화면
@@ -33,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
     2:와드 시작 화면
     3:기록 화면
     4:커뮤니티 화면
-    5:2-와드 생성 화면
-    6:2-와드 목록 화면
+    5:2-와드 목록 화면
+    6:2-와드 생성 화면
     7:2-정보 화면
 
 
@@ -61,10 +64,23 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, menu4Fragment).commit();
                 break;
             case 5 :
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,wodlistFragment ).commit();
+                break;
+            case 6 :
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, wodgenerateFragment).commit();
+                break;
+            case 7 :
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, helpFragment).commit();
+                break;
+            case 8 :
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, wodselectFragment).commit();
                 break;
-            case 6:
-
+            case 9 :
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, wodselectFragment).commit();
+                break;
+            case 10 :
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, wodselectFragment).commit();
+                break;
         }
 
         }
