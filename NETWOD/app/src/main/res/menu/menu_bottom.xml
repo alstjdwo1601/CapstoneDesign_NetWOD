@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_menu1"
+        android:icon="@drawable/home"
+        android:title="HOME" />
+
+    <item
+        android:id="@+id/navigation_menu2"
+
+        android:icon="@drawable/crossfiticon"
+        android:title="START" />
+
+    <item
+        android:id="@+id/navigation_menu3"
+        android:icon="@drawable/record"
+        android:title="RECORD" />
+
+    <item
+        android:id="@+id/navigation_menu4"
+        android:icon="@drawable/community"
+        android:title="COMMUNITY" />
+
+</menu>
