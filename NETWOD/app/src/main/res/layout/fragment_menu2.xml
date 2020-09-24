@@ -31,7 +31,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="WOD 목록"
+                    android:text="My WOD list"
                     android:textSize="24sp" />
 
                 <TextView
@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:gravity="center"
-                    android:text="저장된 WOD를 선택하여 수행합니다"
+                    android:text="Select a saved WOD to perform it."
                     android:textSize="15sp" />
             </LinearLayout>
 
@@ -48,7 +48,7 @@
                 android:id="@+id/imageView"
                 android:layout_width="140dp"
                 android:layout_height="140dp"
-                app:srcCompat="@drawable/splash" />
+                app:srcCompat="@drawable/wodlist" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -79,7 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="WOD 만들기"
+                    android:text="Create WOD"
                     android:textSize="24sp" />
 
                 <TextView
@@ -88,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:gravity="center"
-                    android:text="자동WOD생성/사용자 편집이 가능합니다."
+                    android:text="Automatic WOD generation/user editing."
                     android:textSize="15sp" />
             </LinearLayout>
 
@@ -96,7 +96,7 @@
                 android:id="@+id/imageView2"
                 android:layout_width="140dp"
                 android:layout_height="140dp"
-                app:srcCompat="@drawable/splash" />
+                app:srcCompat="@drawable/ohmywod" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -127,7 +127,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="WOD 도움말"
+                    android:text="WOD guide"
                     android:textSize="24sp" />
 
                 <TextView
@@ -136,7 +136,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:gravity="center"
-                    android:text="WOD 동작들을 익혀보세요."
+                    android:text="Movement Description Material"
                     android:textSize="15sp" />
             </LinearLayout>
 
@@ -144,7 +144,7 @@
                 android:id="@+id/imageView3"
                 android:layout_width="140dp"
                 android:layout_height="140dp"
-                app:srcCompat="@drawable/splash" />
+                app:srcCompat="@drawable/guide" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
