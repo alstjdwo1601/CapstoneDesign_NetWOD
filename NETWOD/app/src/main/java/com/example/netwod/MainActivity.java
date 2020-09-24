@@ -27,22 +27,48 @@ public class MainActivity extends AppCompatActivity {
     private Menu4Fragment menu4Fragment = new Menu4Fragment();
     private WodselectFragment wodselectFragment= new WodselectFragment();
     LinearLayout selectwodlayout;
-    public void onFragmentChange(int index)
-    {
+    /*
+    1~4 하단 네비게이션 메뉴 화면
+    1:홈화면
+    2:와드 시작 화면
+    3:기록 화면
+    4:커뮤니티 화면
+    5:2-와드 생성 화면
+    6:2-와드 목록 화면
+    7:2-정보 화면
 
-        if(index == 1 ){
-            getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, menu1Fragment).commit();
-        }
-        else if(index == 2){
-            getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, menu2Fragment).commit();
-        }
-        else if(index==3){
-            getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, menu3Fragment).commit();
-        }else if(index==5){
-            getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, wodselectFragment).commit();
+
+
+
+
+
+
+
+
+    */
+    public void onFragmentChange(int index) {
+        switch (index) {
+            case 1 :
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, menu1Fragment).commit();
+                break;
+            case 2 :
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, menu2Fragment).commit();
+                break;
+            case 3:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, menu3Fragment).commit();
+                break;
+            case 4:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, menu4Fragment).commit();
+                break;
+            case 5 :
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, wodselectFragment).commit();
+                break;
+            case 6:
+
         }
 
-    }
+        }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
@@ -68,11 +94,12 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 switch (item.getItemId()) {
                     case R.id.navigation_menu1: {
-                        transaction.replace(R.id.frame_layout, menu1Fragment).commitAllowingStateLoss();
+                        //transaction.replace(R.id.frame_layout, menu1Fragment).commitAllowingStateLoss();
+                        onFragmentChange(1);
                         break;
                     }
                     case R.id.navigation_menu2: {
-                        transaction.replace(R.id.frame_layout, menu2Fragment).commitAllowingStateLoss();
+                        onFragmentChange(2);
                         break;
                     }
                     case R.id.navigation_menu3: {
@@ -80,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     }
                     case R.id.navigation_menu4: {
-                        transaction.replace(R.id.frame_layout, menu4Fragment).commitAllowingStateLoss();
+                        onFragmentChange(4);
                         break;
                     }
                 }
