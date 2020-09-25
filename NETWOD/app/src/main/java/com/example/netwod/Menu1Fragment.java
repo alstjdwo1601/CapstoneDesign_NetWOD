@@ -77,8 +77,11 @@ public class Menu1Fragment extends Fragment {
         btn_fragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                tv_fragment.setText("섹스");
+                ExcelScrapper a=new ExcelScrapper();
+                a.readExcel();
+                String ss=a.list.get(0).getValue();
+                //String ttt=a.readExcel().get(1).getValue();
+                tv_fragment.setText(ss);
 
             }
         });
