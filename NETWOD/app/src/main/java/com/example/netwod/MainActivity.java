@@ -7,12 +7,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private WodgenerateFragment wodgenerateFragment=new WodgenerateFragment();
     private HelpFragment helpFragment= new HelpFragment();
     LinearLayout selectwodlayout;
+
     /*
     1~4 하단 네비게이션 메뉴 화면
     1:홈화면
@@ -79,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, wodselectFragment).commit();
                 break;
             case 10 :
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, wodselectFragment).commit();
                 break;
         }
@@ -103,8 +107,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
         // bottomNavigationView의 아이템이 선택될 때 호출될 리스너 등록
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @SuppressLint("SetTextI18n")
                     @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -112,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.navigation_menu1: {
                         //transaction.replace(R.id.frame_layout, menu1Fragment).commitAllowingStateLoss();
                         onFragmentChange(1);
+
                         break;
                     }
                     case R.id.navigation_menu2: {
