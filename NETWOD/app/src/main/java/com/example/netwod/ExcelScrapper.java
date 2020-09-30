@@ -19,61 +19,128 @@ import java.util.Objects;
 
 class UserInfo {
     private String UserName;
+
+    public String getUserName() {
+        return UserName;
+    }
+
+    public void setUserName(String userName) {
+        UserName = userName;
+    }
+
+    public String getUserAge() {
+        return UserAge;
+    }
+
+    public void setUserAge(String userAge) {
+        UserAge = userAge;
+    }
+
+    public String getUserWeight() {
+        return UserWeight;
+    }
+
+    public void setUserWeight(String userWeight) {
+        UserWeight = userWeight;
+    }
+
+    public String getUserHeight() {
+        return UserHeight;
+    }
+
+    public void setUserHeight(String userHeight) {
+        UserHeight = userHeight;
+    }
+
+    public String getUser_NumOfTraining() {
+        return User_NumOfTraining;
+    }
+
+    public void setUser_NumOfTraining(String user_NumOfTraining) {
+        User_NumOfTraining = user_NumOfTraining;
+    }
+
+    public boolean isDumbbell() {
+        return Dumbbell;
+    }
+
+    public void setDumbbell(boolean dumbbell) {
+        Dumbbell = dumbbell;
+    }
+
+    public boolean isBody() {
+        return Body;
+    }
+
+    public void setBody(boolean body) {
+        Body = body;
+    }
+
+    public boolean isKettlebell() {
+        return Kettlebell;
+    }
+
+    public void setKettlebell(boolean kettlebell) {
+        Kettlebell = kettlebell;
+    }
+
+    public boolean isBarbell() {
+        return Barbell;
+    }
+
+    public void setBarbell(boolean barbell) {
+        Barbell = barbell;
+    }
+
+    public boolean isWallBall() {
+        return WallBall;
+    }
+
+    public void setWallBall(boolean wallBall) {
+        WallBall = wallBall;
+    }
+
+    public boolean isBox() {
+        return Box;
+    }
+
+    public void setBox(boolean box) {
+        Box = box;
+    }
+
     private String UserAge;
     private String UserWeight;
     private String UserHeight;
     private String User_NumOfTraining;
+    private boolean Dumbbell;
+    private boolean Body;
+    private boolean Kettlebell;
+    private boolean Barbell;
+    private boolean WallBall;
+    private boolean Box;
 
-    public UserInfo(){}
-
-    public UserInfo(String UserName, String UserAge, String UserWeight, String UserHeight, String User_NumOfTraining) {
-        super();
-        this.UserName = UserName;
-        this.UserAge = UserAge;
-        this.UserHeight = UserHeight;
-        this.UserWeight = UserWeight;
-        this.User_NumOfTraining = User_NumOfTraining;
+    public boolean isJumprope() {
+        return Jumprope;
     }
 
-    public String getUserName(){
-        return UserName;
+    public void setJumprope(boolean jumprope) {
+        Jumprope = jumprope;
     }
 
-    public void setUserName(){
-        this.UserName = UserName;
+    public boolean isPullUpBar() {
+        return PullUpBar;
     }
 
-    public String getUserAge(){
-        return UserAge;
+    public void setPullUpBar(boolean pullUpBar) {
+        PullUpBar = pullUpBar;
     }
 
-    public void setUserAge(){
-        this.UserAge = UserAge;
-    }
+    private boolean Jumprope;
+    private boolean PullUpBar;
+public UserInfo(){}
 
-    public String getUserWeight(){
-        return UserWeight;
-    }
 
-    public void setUserWeight(){
-        this.UserWeight = UserWeight;
-    }
 
-    public String getUserHeight(){
-        return UserHeight;
-    }
-
-    public void setUserHeight(){
-        this.UserHeight = UserHeight;
-    }
-
-    public String getUser_NumOfTraining(){
-        return User_NumOfTraining;
-    }
-
-    public void setUser_NumOfTraining(){
-        this.User_NumOfTraining = User_NumOfTraining;
-    }
 }
 
 
@@ -151,6 +218,7 @@ class ExcelScrapper {
             ed2.setCategory("min");
             //list.add(ed);
             list.add(ed2);
+
 
 
 

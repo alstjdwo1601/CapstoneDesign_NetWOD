@@ -24,57 +24,39 @@
             tools:src="@tools:sample/backgrounds/scenic" />
 
         <LinearLayout
-            android:id="@+id/userinfo"
+            android:id="@+id/changeuserinfo"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="50"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/NametextView"
+            <EditText
+                android:id="@+id/editTextName"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:autoText="false"
-                android:clickable="false"
-                android:contextClickable="false"
                 android:ems="10"
-                android:focusableInTouchMode="false"
-                android:gravity="center_vertical"
                 android:hint="NAME"
-                android:inputType="textPersonName"
-                android:textIsSelectable="false"
-                android:textSize="15dp" />
+                android:inputType="textPersonName" />
 
-            <TextView
-                android:id="@+id/HeighttextView"
+            <EditText
+                android:id="@+id/editTextTextHeight"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:clickable="false"
-                android:contextClickable="false"
                 android:ems="10"
-                android:focusableInTouchMode="false"
-                android:gravity="center_vertical"
                 android:hint="HEIGHT"
-                android:inputType="textPersonName"
-                android:textIsSelectable="false"
-                android:textSize="15dp" />
+                android:inputType="textPersonName" />
 
-            <TextView
-                android:id="@+id/WeightTextView"
+            <EditText
+                android:id="@+id/editTextTextWeight"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:clickable="false"
-                android:contextClickable="false"
                 android:ems="10"
-                android:focusableInTouchMode="false"
-                android:gravity="center_vertical"
                 android:hint="WEIGHT"
-                android:inputType="textPersonName"
-                android:textIsSelectable="false"
-                android:textSize="15dp" />
+                android:inputType="textPersonName" />
+
         </LinearLayout>
     </LinearLayout>
 
@@ -114,25 +96,19 @@
                 android:weightSum="2">
 
                 <CheckBox
-                    android:id="@+id/BarbellcheckBox"
+                    android:id="@+id/changeBarbellcheckBox"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-
-                    android:clickable="false"
-                    android:editable="false"
                     android:text="Barbell"
                     android:textSize="20sp" />
 
                 <CheckBox
-                    android:id="@+id/BodycheckBox"
+                    android:id="@+id/changeBodycheckBox"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-
-                    android:clickable="false"
-                    android:editable="false"
-                    android:text="Body"
+                    android:text="BodY"
                     android:textSize="20sp" />
             </LinearLayout>
 
@@ -144,24 +120,18 @@
                 android:weightSum="2">
 
                 <CheckBox
-                    android:id="@+id/PullUpBarcheckBox"
+                    android:id="@+id/changePullUpBarcheckBox"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-
-                    android:clickable="false"
-                    android:editable="false"
                     android:text="Pull-Up Bar"
                     android:textSize="20sp" />
 
                 <CheckBox
-                    android:id="@+id/JumpRopecheckBox"
+                    android:id="@+id/changeJumpRopecheckBox"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-
-                    android:clickable="false"
-                    android:editable="false"
                     android:text="Jump Rope"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -174,24 +144,18 @@
                 android:weightSum="2">
 
                 <CheckBox
-                    android:id="@+id/KettlebellcheckBox"
+                    android:id="@+id/changeKettlebellcheckBox"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-
-                    android:clickable="false"
-                    android:editable="false"
                     android:text="Kettlebell"
                     android:textSize="20sp" />
 
                 <CheckBox
-                    android:id="@+id/WallBallcheckBox"
+                    android:id="@+id/changeWallBallcheckBox"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-
-                    android:clickable="false"
-                    android:editable="false"
                     android:text="Wall Ball"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -204,23 +168,18 @@
                 android:weightSum="2">
 
                 <CheckBox
-                    android:id="@+id/BoxcheckBox"
+                    android:id="@+id/changeBoxcheckBox"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-
-                    android:clickable="false"
-                    android:editable="false"
                     android:text="Box"
                     android:textSize="20sp" />
 
                 <CheckBox
-                    android:id="@+id/DumbbellcheckBox"
+                    android:id="@+id/changeDumbbellcheckBox"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-
-                    android:clickable="false"
                     android:text="Dumbbell"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -229,10 +188,10 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/Editbutton"
+        android:id="@+id/Changeinfobutton"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="10"
-        android:text="Edit information" />
+        android:text="Save Changes" />
 
 </LinearLayout>

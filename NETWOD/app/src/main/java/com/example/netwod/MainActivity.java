@@ -21,9 +21,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
 
     // FrameLayout에 각 메뉴의 Fragment를 바꿔 줌
+    UserInfo user;
+
+
     private FragmentManager fragmentManager = getSupportFragmentManager();
     // 4개의 메뉴에 들어갈 Fragment들
-    private Menu1Fragment menu1Fragment = new Menu1Fragment();
+    public Menu1Fragment menu1Fragment = new Menu1Fragment();
     private Menu2Fragment menu2Fragment = new Menu2Fragment();
     private Menu3Fragment menu3Fragment = new Menu3Fragment();
     private Menu4Fragment menu4Fragment = new Menu4Fragment();
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private WodlistFragment wodlistFragment= new WodlistFragment();
     private WodgenerateFragment wodgenerateFragment=new WodgenerateFragment();
     private HelpFragment helpFragment= new HelpFragment();
+    public ChangeinfoFragment changeinfoFragment= new ChangeinfoFragment();
     LinearLayout selectwodlayout;
 
     /*
@@ -76,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, helpFragment).commit();
                 break;
             case 8 :
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, wodselectFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, changeinfoFragment).commit();
                 break;
             case 9 :
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, wodselectFragment).commit();
@@ -93,6 +97,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
+        user=new UserInfo();
+        user.setUserHeight("190");
+        user.setUserName("JEongHoon");
+        user.setUserWeight("77");
+        user.setPullUpBar(false);
+        user.setBarbell(true);
+        user.setKettlebell(false);
+        user.setBody(true);
+        user.setDumbbell(false);
+        user.setPullUpBar(false);
+        user.setBox(true);
+        user.setJumprope(false);
+        user.setWallBall(false);
+
+
         setContentView(R.layout.activity_main);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_view);

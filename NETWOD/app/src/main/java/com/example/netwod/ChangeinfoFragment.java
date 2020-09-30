@@ -17,7 +17,7 @@ import android.widget.TextView;
  * Use the {@link Menu1Fragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Menu1Fragment extends Fragment {
+public class ChangeinfoFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,7 +30,7 @@ public class Menu1Fragment extends Fragment {
     TextView tv_username;
     TextView tv_userheight;
     TextView tv_userweight;
-    Button btn_fragment;
+    Button changeinfobutton;
     MainActivity activity;
     CheckBox bodycheckbox;
     CheckBox barbellcheckbox;
@@ -40,9 +40,8 @@ public class Menu1Fragment extends Fragment {
     CheckBox jumpropecheckbox;
     CheckBox kettlebellcheckbox;
     CheckBox wallballcheckbox;
-
     private ViewGroup rootView;
-    public Menu1Fragment() {
+    public ChangeinfoFragment() {
         // Required empty public constructor
     }
 
@@ -55,8 +54,8 @@ public class Menu1Fragment extends Fragment {
      * @return A new instance of fragment Menu1Fragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static Menu1Fragment newInstance(String param1, String param2) {
-        Menu1Fragment fragment = new Menu1Fragment();
+    public static ChangeinfoFragment newInstance(String param1, String param2) {
+        ChangeinfoFragment fragment = new ChangeinfoFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -77,68 +76,31 @@ public class Menu1Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView = (ViewGroup) inflater.inflate(R.layout.fragment_menu1 , container, false);
+        rootView = (ViewGroup) inflater.inflate(R.layout.fragment_changeinfo , container, false);
 
-        //텍스트뷰 바운딩
-        tv_username= rootView.findViewById(R.id.NametextView);
-        tv_userheight= rootView.findViewById(R.id.HeighttextView);
-        tv_userweight= rootView.findViewById(R.id.WeightTextView);
+        //activity.onFragmentChange(5);이위치에서 됨
+
+        changeinfobutton=(Button)rootView.findViewById(R.id.Changeinfobutton);
+        bodycheckbox=(CheckBox)rootView.findViewById(R.id.BodycheckBox);
+        dumbbellcheckbox=(CheckBox)rootView.findViewById(R.id.DumbbellcheckBox);
+        tv_username= rootView.findViewById(R.id.editTextName);
+
+        tv_userheight= rootView.findViewById(R.id.editTextTextHeight);
+        tv_userweight= rootView.findViewById(R.id.editTextTextWeight);
         String userName=((MainActivity)getActivity()).user.getUserName();
         String userHeight=((MainActivity)getActivity()).user.getUserHeight();
         String userWeight=((MainActivity)getActivity()).user.getUserWeight();
+
         //체크박스 바운딩
-        boxcheckbox=rootView.findViewById(R.id.BoxcheckBox);
-        jumpropecheckbox=rootView.findViewById(R.id.JumpRopecheckBox);
-        barbellcheckbox=rootView.findViewById(R.id.BarbellcheckBox);
-        dumbbellcheckbox=rootView.findViewById(R.id.DumbbellcheckBox);
-        bodycheckbox=rootView.findViewById(R.id.BodycheckBox);
-        kettlebellcheckbox=rootView.findViewById(R.id.KettlebellcheckBox);
-        pullupbarcheckbox=rootView.findViewById(R.id.PullUpBarcheckBox);
-        wallballcheckbox=rootView.findViewById(R.id.WallBallcheckBox);
+        boxcheckbox=rootView.findViewById(R.id.changeBoxcheckBox);
+        jumpropecheckbox=rootView.findViewById(R.id.changeJumpRopecheckBox);
+        barbellcheckbox=rootView.findViewById(R.id.changeBarbellcheckBox);
+        dumbbellcheckbox=rootView.findViewById(R.id.changeDumbbellcheckBox);
+        bodycheckbox=rootView.findViewById(R.id.changeBodycheckBox);
+        kettlebellcheckbox=rootView.findViewById(R.id.changeKettlebellcheckBox);
+        pullupbarcheckbox=rootView.findViewById(R.id.changePullUpBarcheckBox);
+        wallballcheckbox=rootView.findViewById(R.id.changeWallBallcheckBox);
         //user 와 동기화
-
-
-/*
-        boxcheckbox.setChecked(      ((MainActivity)getActivity()).user.isBox()        );
-
-        jumpropecheckbox.setChecked(      ((MainActivity)getActivity()).user.isJumprope()        );
-        barbellcheckbox.setChecked(      ((MainActivity)getActivity()).user.isBarbell()        );
-        dumbbellcheckbox.setChecked(      ((MainActivity)getActivity()).user.isDumbbell()        );
-        bodycheckbox.setChecked(      ((MainActivity)getActivity()).user.isBody()        );
-
-        kettlebellcheckbox.setChecked(     (boolean) ((MainActivity)getActivity()).user.isKettlebell()        );
-        pullupbarcheckbox.setChecked(      ((MainActivity)getActivity()).user.isPullUpBar()        );
-        wallballcheckbox.setChecked(      ((MainActivity)getActivity()).user.isWallBall()        );
-        */
-
-        tv_username.setText(userName);
-        tv_userheight.setText(userHeight);
-        tv_userweight.setText(userWeight);
-/*
-        if( ((MainActivity)getActivity()).user.isBox()!=boxcheckbox.isChecked())
-            boxcheckbox.performClick();
-        if( ((MainActivity)getActivity()).user.isBarbell()!=barbellcheckbox.isChecked())
-            barbellcheckbox.performClick();
-        if( ((MainActivity)getActivity()).user.isDumbbell()!=dumbbellcheckbox.isChecked())
-            dumbbellcheckbox.performClick();
-        if( ((MainActivity)getActivity()).user.isKettlebell()!=kettlebellcheckbox.isChecked())
-            kettlebellcheckbox.performClick();
-        if( ((MainActivity)getActivity()).user.isWallBall()!=wallballcheckbox.isChecked()) {
-            wallballcheckbox.performClick();
-
-
-        }
-        if( ((MainActivity)getActivity()).user.isJumprope()!=jumpropecheckbox.isChecked())
-            jumpropecheckbox.performClick();
-        if( ((MainActivity)getActivity()).user.isBody()!=bodycheckbox.isChecked())
-            bodycheckbox.performClick();
-        if( ((MainActivity)getActivity()).user.isPullUpBar()!=pullupbarcheckbox.isChecked())
-            pullupbarcheckbox.performClick();
-            */
-
-        btn_fragment=(Button)rootView.findViewById(R.id.Editbutton);
-
-
         boxcheckbox.setChecked(      ((MainActivity)getActivity()).user.isBox()        );
         jumpropecheckbox.setChecked(      ((MainActivity)getActivity()).user.isJumprope()        );
         barbellcheckbox.setChecked(      ((MainActivity)getActivity()).user.isBarbell()        );
@@ -150,19 +112,33 @@ public class Menu1Fragment extends Fragment {
 
 
 
-        btn_fragment.setOnClickListener(new View.OnClickListener() {
+
+        tv_username.setText(userName);
+        tv_userheight.setText(userHeight);
+        tv_userweight.setText(userWeight);
+        changeinfobutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((MainActivity)getActivity()).user.setUserName( tv_username.getText().toString());
+                ((MainActivity)getActivity()).user.setUserWeight(tv_userweight.getText().toString());
+                ((MainActivity)getActivity()).user.setUserHeight( tv_userheight.getText().toString());
+                ((MainActivity)getActivity()).user.setBarbell((boolean)barbellcheckbox.isChecked());
+                ((MainActivity)getActivity()).user.setDumbbell((boolean)dumbbellcheckbox.isChecked());
+
+                ((MainActivity)getActivity()).user.setBox((boolean)boxcheckbox.isChecked());
+                ((MainActivity)getActivity()).user.setJumprope((boolean)jumpropecheckbox.isChecked());
+                ((MainActivity)getActivity()).user.setBody((boolean)bodycheckbox.isChecked());
+                ((MainActivity)getActivity()).user.setKettlebell((boolean)kettlebellcheckbox.isChecked());
+                ((MainActivity)getActivity()).user.setWallBall((boolean)wallballcheckbox.isChecked());
+                ((MainActivity)getActivity()).user.setPullUpBar((boolean)pullupbarcheckbox.isChecked());
 
 
-                //boxcheckbox.performClick();
 
-
-                activity.onFragmentChange(8);
-
+                activity.onFragmentChange(1);
 
             }
         });
+        //bodycheckbox.setOnClickListener();
 
 
 
@@ -180,5 +156,4 @@ public class Menu1Fragment extends Fragment {
         //이 메소드가 호출될떄는 프래그먼트가 엑티비티위에 올라와있는거니깐 getActivity메소드로 엑티비티참조가능
         activity = (MainActivity) getActivity();
     }
-
 }
