@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private WodgenerateFragment wodgenerateFragment=new WodgenerateFragment();
     private HelpFragment helpFragment= new HelpFragment();
     public ChangeinfoFragment changeinfoFragment= new ChangeinfoFragment();
+
     LinearLayout selectwodlayout;
 
     /*

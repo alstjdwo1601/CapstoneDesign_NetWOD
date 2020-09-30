@@ -137,8 +137,37 @@ public class Menu1Fragment extends Fragment {
             */
 
         btn_fragment=(Button)rootView.findViewById(R.id.Editbutton);
+        boxcheckbox.setChecked(   false     );
+        jumpropecheckbox.setChecked(      false      );
+        barbellcheckbox.setChecked(    false    );
+        dumbbellcheckbox.setChecked(   false       );
+        bodycheckbox.setChecked(    false      );
+        kettlebellcheckbox.setChecked(    false     );
+        pullupbarcheckbox.setChecked(   false       );
+        wallballcheckbox.setChecked(   false      );
 
+        if(((MainActivity)getActivity()).user.isBarbell()==true ) {
+            barbellcheckbox.performClick();
 
+        }
+        if(((MainActivity)getActivity()).user.isDumbbell()==true ) {
+            dumbbellcheckbox.performClick();
+
+        }
+        if(((MainActivity)getActivity()).user.isKettlebell()==true )
+            kettlebellcheckbox.performClick();
+        if(((MainActivity)getActivity()).user.isBody()==true )
+            bodycheckbox.performClick();
+        if(((MainActivity)getActivity()).user.isJumprope()==true )
+            jumpropecheckbox.performClick();
+        if(((MainActivity)getActivity()).user.isPullUpBar()==true )
+            pullupbarcheckbox.performClick();
+        if(((MainActivity)getActivity()).user.isWallBall()==true )
+            wallballcheckbox.performClick();
+        if(((MainActivity)getActivity()).user.isBox()==true )
+            boxcheckbox.performClick();
+
+        /*
         boxcheckbox.setChecked(      ((MainActivity)getActivity()).user.isBox()        );
         jumpropecheckbox.setChecked(      ((MainActivity)getActivity()).user.isJumprope()        );
         barbellcheckbox.setChecked(      ((MainActivity)getActivity()).user.isBarbell()        );
@@ -147,7 +176,7 @@ public class Menu1Fragment extends Fragment {
         kettlebellcheckbox.setChecked(      ((MainActivity)getActivity()).user.isKettlebell()        );
         pullupbarcheckbox.setChecked(     (boolean) ((MainActivity)getActivity()).user.isPullUpBar()        );
         wallballcheckbox.setChecked(    (boolean)  ((MainActivity)getActivity()).user.isWallBall()        );
-
+*/
 
 
         btn_fragment.setOnClickListener(new View.OnClickListener() {

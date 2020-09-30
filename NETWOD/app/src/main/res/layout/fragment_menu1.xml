@@ -119,6 +119,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
 
+                    android:checked="false"
                     android:clickable="false"
                     android:editable="false"
                     android:text="Barbell"
@@ -130,6 +131,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
 
+                    android:checked="false"
                     android:clickable="false"
                     android:editable="false"
                     android:text="Body"
@@ -149,6 +151,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
 
+                    android:checked="false"
                     android:clickable="false"
                     android:editable="false"
                     android:text="Pull-Up Bar"
@@ -160,6 +163,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
 
+                    android:checked="false"
                     android:clickable="false"
                     android:editable="false"
                     android:text="Jump Rope"
@@ -179,6 +183,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
 
+                    android:checked="false"
                     android:clickable="false"
                     android:editable="false"
                     android:text="Kettlebell"
@@ -190,6 +195,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
 
+                    android:checked="false"
                     android:clickable="false"
                     android:editable="false"
                     android:text="Wall Ball"
@@ -209,6 +215,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
 
+                    android:checked="false"
                     android:clickable="false"
                     android:editable="false"
                     android:text="Box"
@@ -220,6 +227,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
 
+                    android:checked="false"
                     android:clickable="false"
                     android:text="Dumbbell"
                     android:textSize="20sp" />
