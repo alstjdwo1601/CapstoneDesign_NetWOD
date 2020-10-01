@@ -3,6 +3,8 @@ package com.example.netwod;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +21,14 @@ public class HelpFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private ViewGroup rootView;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private RecyclerView recyclerView;
+    public RecyclerView.LayoutManager layoutManager;
+    private RecyclerView.Adapter adapter;
+    MainActivity activity;
     public HelpFragment() {
         // Required empty public constructor
     }
@@ -59,6 +64,19 @@ public class HelpFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_help, container, false);
+        activity = (MainActivity) getActivity();
+        rootView = (ViewGroup) inflater.inflate(R.layout.fragment_help , container, false);
+        recyclerView = rootView.findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(activity);
+
+
+
+        recyclerView.setLayoutManager(layoutManager);
+
+        adapter = new RecyclerViewHelp();
+        recyclerView.setAdapter(adapter);
+
+        return rootView;
     }
 }
