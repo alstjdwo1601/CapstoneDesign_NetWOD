@@ -1,5 +1,6 @@
 package com.example.netwod;
 import android.content.Intent;
+import android.os.Environment;
 
 //import org.apache.poi.ss.usermodel.Sheet;
 //import org.apache.poi.ss.usermodel.Workbook;
@@ -150,26 +151,6 @@ class UserInfo {
 
 
 
-class exData {
-    private String category;
-    private String value;
-
-    public String getCategory(){
-        return category;
-    }
-
-    public String getValue(){
-        return value;
-    }
-
-    public void setCategory(String s) {
-        this.category = s;
-    }
-
-    public void setValue(String s) {
-        this.value = s;
-    }
-}
 
 
 
@@ -177,18 +158,28 @@ class exData {
 class ExcelScrapper {
 
     public static Object mContext;
-    public ArrayList<exData> list= new ArrayList<exData>();
+    public ArrayList<String> list= new ArrayList<String>();
     public void readExcel(){
 
         //String path = Objects.requireNonNull(ExcelScrapper.class.getResource("")).getPath();
-
+        System.out.println("readexcel진입에서 사이즈:"+this.list.size());
         try {
+            System.out.println("try에서 사이즈:"+this.list.size());
             Workbook workbook = null;
-            Sheet sheet = null;
+            System.out.println("1 사이즈:"+this.list.size());
+            Sheet sheet;
+            String p=System.getProperty("user.dir");
+            System.out.println("디레ㄱㄱ토리:"+p);
+            System.out.println("try3232에서 사이즈:"+this.list.size());
+       //     InputStream is = new FileInputStream("C:\\Users\\user\\Documents\\GitHub\\CapstoneDesign_NetWOD\\NETWOD\\app\\src\\main\\java\\com\\example\\netwod\\"+"tem.xls");
+            InputStream is = new FileInputStream("C:/Users/user/Documents/GitHub/CapstoneDesign_NetWOD/NETWOD/app/src/main//java/com/example/netwod/"+"tem.xls");
 
-            InputStream is = new FileInputStream("C:\\Users\\user\\Documents\\GitHub\\CapstoneDesign_NetWOD\\NETWOD\\app\\src\\main\\java\\com\\example\\netwod\\"+"NetWOD teplate sheet.xls");
+            //String p=System.getProperty("user.dir");
+            //InputStream is=new FileInputStream("NetWOD teplate sheet.xls");
+
             workbook = Workbook.getWorkbook(is);
-
+            //InputStream df=new FileInputStream("")
+                   // String p=System.getProperty("user.dir");
 
             if(workbook != null){
                 sheet = workbook.getSheet(1);
@@ -200,7 +191,7 @@ class ExcelScrapper {
                     int nRowEndIndex = sheet.getColumn(nMaxColumn - 1).length - 1;
                     int nColumnStartIndex = 12;
                     int nColumnEndIndex = sheet.getRow(17).length - 1;
-                    exData ed = new exData();
+
 
                     /*
                     for (int nRow = nRowStartIndex; nRow <= nRowEndIndex; nRow++) {
@@ -212,10 +203,13 @@ class ExcelScrapper {
                     }
                     */
                     String ctgy = sheet.getCell(13,5).getContents();
-                    String val = sheet.getCell(12, 5).getContents();
-                    ed.setCategory(ctgy);
-                    ed.setValue(val);
-                    this.list.add(ed);
+                    String weight=sheet.getCell(13,7).getContents();
+                    String height=sheet.getCell(13,8).getContents();
+
+                    this.list.add(ctgy);
+                    this.list.add(weight);
+                    this.list.add(height);
+                    System.out.println("액셀스크래퍼에서 사이즈:"+this.list.size());
                 }
                 else{
                     System.out.println("Sheet is null");
@@ -277,6 +271,7 @@ class ExcelScrapper {
 
 
         } catch (Exception e) {
+            System.out.println("cat에서 사이즈:"+this.list.size());
             e.printStackTrace();
         }
     }

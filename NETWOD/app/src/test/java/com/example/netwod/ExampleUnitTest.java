@@ -13,14 +13,12 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
-        exData ff= new exData();
-        ff.setValue("value");
-        ff.setCategory("cate");
-        System.out.println(ff.getCategory());
+
         System.out.println("머야");
         ExcelScrapper a= new ExcelScrapper();
         a.readExcel();
-        System.out.println(a.list.get(0).getCategory());
+        System.out.println(a.list.get(0));
+        System.out.println(a.list.size());
 
 
     }
