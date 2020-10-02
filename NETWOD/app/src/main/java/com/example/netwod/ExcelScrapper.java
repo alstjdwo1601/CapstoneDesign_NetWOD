@@ -1,8 +1,8 @@
 package com.example.netwod;
 import android.content.Intent;
 
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+//import org.apache.poi.ss.usermodel.Sheet;
+//import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -12,9 +12,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.io.InputStream;
+import jxl.Sheet;
+import jxl.Workbook;
+
 
 
 class UserInfo {
@@ -178,6 +183,43 @@ class ExcelScrapper {
         //String path = Objects.requireNonNull(ExcelScrapper.class.getResource("")).getPath();
 
         try {
+            Workbook workbook = null;
+            Sheet sheet = null;
+
+            InputStream is = new FileInputStream("C:\\Users\\user\\Documents\\GitHub\\CapstoneDesign_NetWOD\\NETWOD\\app\\src\\main\\java\\com\\example\\netwod"+"NetWOD teplate sheet.xlsx");
+            workbook = Workbook.getWorkbook(is);
+
+            if(workbook != null){
+                sheet = workbook.getSheet(1);
+
+                if(sheet != null){
+
+                    int nMaxColumn = 17;
+                    int nRowStartIndex = 5;
+                    int nRowEndIndex = sheet.getColumn(nMaxColumn - 1).length - 1;
+                    int nColumnStartIndex = 12;
+                    int nColumnEndIndex = sheet.getRow(17).length - 1;
+                    exData ed = new exData();
+
+
+                    for (int nRow = nRowStartIndex; nRow <= nRowEndIndex; nRow++) {
+                        String ctgy = sheet.getCell(nColumnStartIndex, nRow).getContents();
+                        String val = sheet.getCell(nColumnStartIndex + 1, nRow).getContents();
+                        ed.setCategory(ctgy);
+                        ed.setValue(val);
+
+                    }
+                }
+                else{
+                    System.out.println("Sheet is null");
+                }
+            }
+            else{
+                System.out.println("Workbook is null");
+            }
+
+
+            /*
             //File file = new File(path + "NetWOD teplate sheet.xlsx");
             File file = new File("C:\\Users\\user\\Documents\\GitHub\\CapstoneDesign_NetWOD\\NETWOD\\app\\src\\main\\java\\com\\example\\netwod"+"NetWOD teplate sheet.xlsx");
 
@@ -220,10 +262,6 @@ class ExcelScrapper {
             list.add(ed2);
 
 
-
-
-
-
             /*
             for (rowindex = 5; rowindex < rows; rowindex++) {
                 exData ed = new exData();
@@ -243,22 +281,20 @@ class ExcelScrapper {
             }
             */
 
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-        //Intent intent = new Intent(, MainActivity.class);
-        //Intent.putExtra("개인정보",list);
-
     }
 
 
-
+    /*
     public void writeExcel(){
         Workbook wb = new XSSFWorkbook();
         Sheet sheet = wb.createSheet("new sheet");
     }
+    */
+
 
 }
 
