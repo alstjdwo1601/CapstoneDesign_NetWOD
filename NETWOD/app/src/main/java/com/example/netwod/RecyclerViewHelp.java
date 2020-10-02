@@ -14,14 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.FileReader;
 import java.util.List;
-import com.opencsv.CSVReader;
+
 public class RecyclerViewHelp extends RecyclerView.Adapter<RecyclerViewHelp.ViewHolder> {
     private String[] title={"Thrusters","Overhead Squats","Deadlifts","Hang Power Cleans","Push Jerks","Power Clean","Front Squat","Push Press","Back Squat","Clean-and-Jerks","Deadlift",
             "Bench","Clean","Push Presses","Burpees","Push-Ups","Lunges","Air Squats","Run","Sit-Ups","Walking Lunge Steps","Back Extensions","Burpee",
             "Mountain Climbers","Split Squat Jumps","Squat Jumps","Walking Lunges","Handstand Push-Ups","Jumping Pull-Ups","Pull-Ups",
             "Knees-to-Elbows","Double-Unders","Kettlebell Swings","Wall Ball Shots","Box Jumps",
     };
-    private String[] type={};
+    private String[] type={"DUMBBELL","BARBELL","DUMBBELL","AMRAP","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL",};
     //CSVReader reader = new CSVReader(new FileReader("tt.csv"));
     //List myEntries = reader.readAll();
 

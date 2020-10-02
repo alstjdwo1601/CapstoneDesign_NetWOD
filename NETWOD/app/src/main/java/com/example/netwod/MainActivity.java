@@ -100,7 +100,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         user=new UserInfo();
         user.setUserHeight("190");
-        user.setUserName("JEongHoon");
+        ExcelScrapper a=new ExcelScrapper();
+        a.readExcel();
+        exData ff=new exData();
+        ff.setCategory("category");
+        ff.setValue("value");
+        //a.list.add(ff);
+        user.setUserName(a.list.get(0).getCategory());
         user.setUserWeight("77");
         user.setPullUpBar(false);
         user.setBarbell(true);

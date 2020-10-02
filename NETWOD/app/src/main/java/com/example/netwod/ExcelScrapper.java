@@ -142,7 +142,7 @@ class UserInfo {
 
     private boolean Jumprope;
     private boolean PullUpBar;
-public UserInfo(){}
+    public UserInfo(){}
 
 
 
@@ -163,11 +163,11 @@ class exData {
     }
 
     public void setCategory(String s) {
-        this.category = category;
+        this.category = s;
     }
 
     public void setValue(String s) {
-        this.value = value;
+        this.value = s;
     }
 }
 
@@ -186,14 +186,15 @@ class ExcelScrapper {
             Workbook workbook = null;
             Sheet sheet = null;
 
-            InputStream is = new FileInputStream("C:\\Users\\user\\Documents\\GitHub\\CapstoneDesign_NetWOD\\NETWOD\\app\\src\\main\\java\\com\\example\\netwod"+"NetWOD teplate sheet.xlsx");
+            InputStream is = new FileInputStream("C:\\Users\\user\\Documents\\GitHub\\CapstoneDesign_NetWOD\\NETWOD\\app\\src\\main\\java\\com\\example\\netwod\\"+"NetWOD teplate sheet.xls");
             workbook = Workbook.getWorkbook(is);
+
 
             if(workbook != null){
                 sheet = workbook.getSheet(1);
 
                 if(sheet != null){
-
+                    System.out.println("????");
                     int nMaxColumn = 17;
                     int nRowStartIndex = 5;
                     int nRowEndIndex = sheet.getColumn(nMaxColumn - 1).length - 1;
@@ -201,7 +202,7 @@ class ExcelScrapper {
                     int nColumnEndIndex = sheet.getRow(17).length - 1;
                     exData ed = new exData();
 
-
+                    /*
                     for (int nRow = nRowStartIndex; nRow <= nRowEndIndex; nRow++) {
                         String ctgy = sheet.getCell(nColumnStartIndex, nRow).getContents();
                         String val = sheet.getCell(nColumnStartIndex + 1, nRow).getContents();
@@ -209,6 +210,12 @@ class ExcelScrapper {
                         ed.setValue(val);
 
                     }
+                    */
+                    String ctgy = sheet.getCell(13,5).getContents();
+                    String val = sheet.getCell(12, 5).getContents();
+                    ed.setCategory(ctgy);
+                    ed.setValue(val);
+                    this.list.add(ed);
                 }
                 else{
                     System.out.println("Sheet is null");
@@ -222,14 +229,12 @@ class ExcelScrapper {
             /*
             //File file = new File(path + "NetWOD teplate sheet.xlsx");
             File file = new File("C:\\Users\\user\\Documents\\GitHub\\CapstoneDesign_NetWOD\\NETWOD\\app\\src\\main\\java\\com\\example\\netwod"+"NetWOD teplate sheet.xlsx");
-
             FileInputStream fis = null;
             try {
                 fis = new FileInputStream(file);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-
             XSSFWorkbook workbook = null;
             try {
                 assert fis != null;
@@ -237,18 +242,13 @@ class ExcelScrapper {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             int rowindex = 5;
             int colindex = 12;
-
             //시트
             assert workbook != null;
             XSSFSheet sheet = workbook.getSheetAt(1);
             //행
             int rows = sheet.getPhysicalNumberOfRows();
-
-
-
             exData ed = new exData();
             XSSFRow row = sheet.getRow(rowindex);
             //XSSFCell cell = row.getCell(2);
@@ -260,24 +260,18 @@ class ExcelScrapper {
             ed2.setCategory("min");
             //list.add(ed);
             list.add(ed2);
-
-
             /*
             for (rowindex = 5; rowindex < rows; rowindex++) {
                 exData ed = new exData();
-
                 //행 읽기
                 XSSFRow row = sheet.getRow(rowindex);
                 XSSFCell cell = row.getCell(2);
-
                 //Log.d("dddddddddddddddddd", String.valueOf(row));
                 //Log.d("dddddddddddddddddd", String.valueOf(cell));
-
                 ed.setCategory(String.valueOf(row.getCell(0)));
                 ed.setValue(String.valueOf(row.getCell(1)));
                 //Log.d("ddddddddddddd", String.valueOf(ed));
                 list.add(ed);
-
             }
             */
 
@@ -297,11 +291,4 @@ class ExcelScrapper {
 
 
 }
-
-
-
-
-
-
-
 
