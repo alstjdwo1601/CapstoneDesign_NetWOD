@@ -8,9 +8,17 @@ public class Movement {
 
     public Movement(String a,int b,int c,int d){ //
     	setMovementname(a);
-    	setDifficultscore(b);        
+    	setMovementnum(b);        
         setDifficultscore(c);
         setWeight(d);
+    }
+    
+    public Movement(String a,int move_weight,int Reps){ //
+    	setMovementname(a);
+    	setMovementnum(Reps);
+    	setDifficultscore(move_weight);
+    	setWeight(move_weight); 
+    	
     }
 
     public Movement(){
