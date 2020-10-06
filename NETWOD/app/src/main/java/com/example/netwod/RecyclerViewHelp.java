@@ -21,7 +21,11 @@ public class RecyclerViewHelp extends RecyclerView.Adapter<RecyclerViewHelp.View
             "Mountain Climbers","Split Squat Jumps","Squat Jumps","Walking Lunges","Handstand Push-Ups","Jumping Pull-Ups","Pull-Ups",
             "Knees-to-Elbows","Double-Unders","Kettlebell Swings","Wall Ball Shots","Box Jumps",
     };
-    private String[] type={"DUMBBELL","BARBELL","DUMBBELL","AMRAP","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL","DUMBBELL",};
+    private String[] type={"Barbell","Barbell","Barbell","Barbell","Barbell","Barbell","Barbell","Barbell","Barbell",
+            "Barbell","Barbell","Barbell","Barbell","Barbell","Body","Body","Body","Body","Body","Body",
+            "Body","Body","Body","Body","Body","Body","Body","Body","Pull-Up Bar","Pull-Up Bar","Pull-Up Bar","Jump Rope",
+            "Kettlebell","Wall Ball","Box"
+    };
     //CSVReader reader = new CSVReader(new FileReader("tt.csv"));
     //List myEntries = reader.readAll();
 
@@ -100,11 +104,168 @@ public class RecyclerViewHelp extends RecyclerView.Adapter<RecyclerViewHelp.View
             public void onClick(View v) {
 
 
+                Intent intent;
+                /*
+                for(int i=0;i<title.length;i++){
 
 
 
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
-                v.getContext().startActivity(intent);
+
+
+                }
+*/
+
+
+
+
+                switch (title[position]){
+                    case "Thrusters":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=L219ltL15zk"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Overhead Squats":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Deadlifts":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Hang Power Cleans":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=0aP3tgKZcHQ"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Push Jerks":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Power Clean":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Front Squat":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Push Press":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Back Squat":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Clean-and-Jerks":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Deadlift":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Bench":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Clean":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Push Presses":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Burpees":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Push-Ups":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Lunges":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Air Squats":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Run":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Sit-Ups":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Walking Lunge Steps":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Back Extensions":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Burpee":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "dd":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Thrusters1":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Thrusters2":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Thrusters3":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Thrusters4":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Thrusters5":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Thrusters6":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Thrusters7":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Thrusters8":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Thrusters9":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Thrusters10":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case "Thrusters11":
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.naver.com"));
+                        v.getContext().startActivity(intent);
+                        break;
+
+                    default:
+                        break;
+
+                }
+
+
 
                 Toast.makeText(v.getContext(), "Test!", Toast.LENGTH_SHORT).show();
             }
