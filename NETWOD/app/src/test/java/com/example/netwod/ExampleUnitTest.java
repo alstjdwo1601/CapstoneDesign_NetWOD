@@ -14,11 +14,11 @@ public class ExampleUnitTest {
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
 
-        System.out.println("머야");
+
         ExcelScrapper a= new ExcelScrapper();
         a.readExcel();
-        System.out.println(a.list.get(0));
-        System.out.println(a.list.size());
+        System.out.println(a.schedule);
+        System.out.println(a.record);
 
 
     }

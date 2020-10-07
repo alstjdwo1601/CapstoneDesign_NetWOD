@@ -158,20 +158,22 @@ class UserInfo {
 class ExcelScrapper {
 
     public static Object mContext;
-    public ArrayList<String> list= new ArrayList<String>();
+    public ArrayList<String> user_info= new ArrayList<String>();
+    public ArrayList<String> equipment = new ArrayList<String>();
+    public ArrayList<ArrayList<String>> schedule = new ArrayList<ArrayList<String>>();
+    public ArrayList<ArrayList<String>> record = new ArrayList<ArrayList<String>>();
     public void readExcel(){
 
-        //String path = Objects.requireNonNull(ExcelScrapper.class.getResource("")).getPath();
-        System.out.println("readexcel진입에서 사이즈:"+this.list.size());
+
         try {
-            System.out.println("try에서 사이즈:"+this.list.size());
+
             Workbook workbook = null;
-            System.out.println("1 사이즈:"+this.list.size());
+
             Sheet sheet;
             String p=System.getProperty("user.dir");
-            System.out.println("디레ㄱㄱ토리:"+p);
-            System.out.println("try3232에서 사이즈:"+this.list.size());
-       //     InputStream is = new FileInputStream("C:\\Users\\user\\Documents\\GitHub\\CapstoneDesign_NetWOD\\NETWOD\\app\\src\\main\\java\\com\\example\\netwod\\"+"tem.xls");
+            //System.out.println("디레ㄱㄱ토리:"+p);
+
+       //   InputStream is = new FileInputStream("C:\\Users\\user\\Documents\\GitHub\\CapstoneDesign_NetWOD\\NETWOD\\app\\src\\main\\java\\com\\example\\netwod\\"+"tem.xls");
             InputStream is = new FileInputStream("C:/Users/user/Documents/GitHub/CapstoneDesign_NetWOD/NETWOD/app/src/main//java/com/example/netwod/"+"tem.xls");
 
             //String p=System.getProperty("user.dir");
@@ -185,31 +187,91 @@ class ExcelScrapper {
                 sheet = workbook.getSheet(1);
 
                 if(sheet != null){
-                    System.out.println("????");
-                    int nMaxColumn = 17;
-                    int nRowStartIndex = 5;
-                    int nRowEndIndex = sheet.getColumn(nMaxColumn - 1).length - 1;
-                    int nColumnStartIndex = 12;
-                    int nColumnEndIndex = sheet.getRow(17).length - 1;
 
 
-                    /*
-                    for (int nRow = nRowStartIndex; nRow <= nRowEndIndex; nRow++) {
-                        String ctgy = sheet.getCell(nColumnStartIndex, nRow).getContents();
-                        String val = sheet.getCell(nColumnStartIndex + 1, nRow).getContents();
-                        ed.setCategory(ctgy);
-                        ed.setValue(val);
 
-                    }
-                    */
-                    String ctgy = sheet.getCell(13,5).getContents();
+
+                    // 유저 정보 엑셀에서 읽어오는 부분
+                    String name = sheet.getCell(13,5).getContents();
+                    String age = sheet.getCell(13,6).getContents();
                     String weight=sheet.getCell(13,7).getContents();
                     String height=sheet.getCell(13,8).getContents();
+                    String NumofTraining = sheet.getCell(13,9).getContents();
 
-                    this.list.add(ctgy);
-                    this.list.add(weight);
-                    this.list.add(height);
-                    System.out.println("액셀스크래퍼에서 사이즈:"+this.list.size());
+                    this.user_info.add(name);
+                    //this.user_info.add(age);
+                    this.user_info.add(weight);
+                    this.user_info.add(height);
+                    //this.user_info.add(NumofTraining);
+
+
+                    //운동 스케줄 엑셀에서 읽어오는 부분
+                    int nMaxColumn = 9;
+                    int nRowStartIndex = 9;
+                    int nRowEndIndex = 150;
+                    int nColumnStartIndex = 2;
+                    int nColumnEndIndex = 10;
+
+                    ArrayList<String> wod_name = new ArrayList<String>();
+                    ArrayList<String> wod_type = new ArrayList<String>();
+                    ArrayList<String> movement = new ArrayList<String>();
+                    ArrayList<String> equipment = new ArrayList<String>();
+                    ArrayList<String> reps = new ArrayList<String>();
+                    ArrayList<String> equip_weight = new ArrayList<String>();
+                    ArrayList<String> wod_level = new ArrayList<String>();
+                    ArrayList<String> wod_record = new ArrayList<String>();
+                    ArrayList<String> score = new ArrayList<String>();
+
+
+                    for (int nRow1 = nRowStartIndex; nRow1<=nRowEndIndex; nRow1+=50){
+                        wod_name.add( sheet.getCell(nColumnStartIndex, nRow1).getContents());
+                        wod_type.add( sheet.getCell(nColumnStartIndex+1,nRow1).getContents());
+
+                        wod_level.add(sheet.getCell(nColumnStartIndex+6,nRow1).getContents());
+                        wod_record.add(sheet.getCell(nColumnStartIndex+7,nRow1).getContents());
+                        score.add(sheet.getCell(nColumnStartIndex+8,nRow1).getContents());
+                    }
+                    for (int nRow = nRowStartIndex; nRow <=nRowEndIndex; nRow ++){
+                        do {
+                            movement.add(sheet.getCell(nColumnStartIndex + 2, nRow).getContents());
+                        } while (movement.contains(null));
+                        do {
+                            equipment.add(sheet.getCell(nColumnStartIndex + 3, nRow).getContents());
+                        } while (equipment.contains(null));
+                        do {
+                            reps.add(sheet.getCell(nColumnStartIndex + 4, nRow).getContents());
+
+                        } while (reps.contains(null));
+                        do {
+                            equip_weight.add(sheet.getCell(nColumnStartIndex + 5, nRow).getContents());
+
+                        } while (equip_weight.contains(null));
+
+                    }
+                    schedule.add(wod_name);
+                    schedule.add(wod_type);
+                    schedule.add(movement);
+                    schedule.add(equipment);
+                    schedule.add(reps);
+                    schedule.add(equip_weight);
+                    schedule.add(wod_level);
+                    schedule.add(wod_record);
+                    schedule.add(score);
+
+                    record.add(wod_name);
+                    record.add(wod_type);
+                    record.add(movement);
+                    record.add(equipment);
+                    record.add(reps);
+                    record.add(equip_weight);
+                    record.add(wod_level);
+                    record.add(wod_record);
+                    record.add(score);
+
+
+
+
+
                 }
                 else{
                     System.out.println("Sheet is null");
@@ -220,69 +282,11 @@ class ExcelScrapper {
             }
 
 
-            /*
-            //File file = new File(path + "NetWOD teplate sheet.xlsx");
-            File file = new File("C:\\Users\\user\\Documents\\GitHub\\CapstoneDesign_NetWOD\\NETWOD\\app\\src\\main\\java\\com\\example\\netwod"+"NetWOD teplate sheet.xlsx");
-            FileInputStream fis = null;
-            try {
-                fis = new FileInputStream(file);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            XSSFWorkbook workbook = null;
-            try {
-                assert fis != null;
-                workbook = new XSSFWorkbook(fis);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            int rowindex = 5;
-            int colindex = 12;
-            //시트
-            assert workbook != null;
-            XSSFSheet sheet = workbook.getSheetAt(1);
-            //행
-            int rows = sheet.getPhysicalNumberOfRows();
-            exData ed = new exData();
-            XSSFRow row = sheet.getRow(rowindex);
-            //XSSFCell cell = row.getCell(2);
-            ed.setCategory(String.valueOf(row.getCell(12)));
-            ed.setValue(String.valueOf(row.getCell(12)));
-            //Log.d("ddddddddddddd", String.valueOf(ed));
-            exData ed2=new exData();
-            ed2.setValue("sung");
-            ed2.setCategory("min");
-            //list.add(ed);
-            list.add(ed2);
-            /*
-            for (rowindex = 5; rowindex < rows; rowindex++) {
-                exData ed = new exData();
-                //행 읽기
-                XSSFRow row = sheet.getRow(rowindex);
-                XSSFCell cell = row.getCell(2);
-                //Log.d("dddddddddddddddddd", String.valueOf(row));
-                //Log.d("dddddddddddddddddd", String.valueOf(cell));
-                ed.setCategory(String.valueOf(row.getCell(0)));
-                ed.setValue(String.valueOf(row.getCell(1)));
-                //Log.d("ddddddddddddd", String.valueOf(ed));
-                list.add(ed);
-            }
-            */
-
-
         } catch (Exception e) {
-            System.out.println("cat에서 사이즈:"+this.list.size());
             e.printStackTrace();
         }
     }
 
-
-    /*
-    public void writeExcel(){
-        Workbook wb = new XSSFWorkbook();
-        Sheet sheet = wb.createSheet("new sheet");
-    }
-    */
 
 
 }
