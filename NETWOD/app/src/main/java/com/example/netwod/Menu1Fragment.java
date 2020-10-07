@@ -12,6 +12,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Menu1Fragment#newInstance} factory method to
@@ -80,6 +87,7 @@ public class Menu1Fragment extends Fragment {
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment_menu1 , container, false);
 
         //텍스트뷰 바운딩
+
         tv_username= rootView.findViewById(R.id.NametextView);
         tv_userheight= rootView.findViewById(R.id.HeighttextView);
         tv_userweight= rootView.findViewById(R.id.WeightTextView);
@@ -96,87 +104,14 @@ public class Menu1Fragment extends Fragment {
         pullupbarcheckbox=rootView.findViewById(R.id.PullUpBarcheckBox);
         wallballcheckbox=rootView.findViewById(R.id.WallBallcheckBox);
         //user 와 동기화
+        btn_fragment=rootView.findViewById(R.id.Editbutton);
 
 
-/*
-        boxcheckbox.setChecked(      ((MainActivity)getActivity()).user.isBox()        );
 
-        jumpropecheckbox.setChecked(      ((MainActivity)getActivity()).user.isJumprope()        );
-        barbellcheckbox.setChecked(      ((MainActivity)getActivity()).user.isBarbell()        );
-        dumbbellcheckbox.setChecked(      ((MainActivity)getActivity()).user.isDumbbell()        );
-        bodycheckbox.setChecked(      ((MainActivity)getActivity()).user.isBody()        );
-
-        kettlebellcheckbox.setChecked(     (boolean) ((MainActivity)getActivity()).user.isKettlebell()        );
-        pullupbarcheckbox.setChecked(      ((MainActivity)getActivity()).user.isPullUpBar()        );
-        wallballcheckbox.setChecked(      ((MainActivity)getActivity()).user.isWallBall()        );
-        */
 
         tv_username.setText(userName);
         tv_userheight.setText(userHeight);
         tv_userweight.setText(userWeight);
-/*
-        if( ((MainActivity)getActivity()).user.isBox()!=boxcheckbox.isChecked())
-            boxcheckbox.performClick();
-        if( ((MainActivity)getActivity()).user.isBarbell()!=barbellcheckbox.isChecked())
-            barbellcheckbox.performClick();
-        if( ((MainActivity)getActivity()).user.isDumbbell()!=dumbbellcheckbox.isChecked())
-            dumbbellcheckbox.performClick();
-        if( ((MainActivity)getActivity()).user.isKettlebell()!=kettlebellcheckbox.isChecked())
-            kettlebellcheckbox.performClick();
-        if( ((MainActivity)getActivity()).user.isWallBall()!=wallballcheckbox.isChecked()) {
-            wallballcheckbox.performClick();
-
-
-        }
-        if( ((MainActivity)getActivity()).user.isJumprope()!=jumpropecheckbox.isChecked())
-            jumpropecheckbox.performClick();
-        if( ((MainActivity)getActivity()).user.isBody()!=bodycheckbox.isChecked())
-            bodycheckbox.performClick();
-        if( ((MainActivity)getActivity()).user.isPullUpBar()!=pullupbarcheckbox.isChecked())
-            pullupbarcheckbox.performClick();
-            */
-
-        btn_fragment=(Button)rootView.findViewById(R.id.Editbutton);
-        boxcheckbox.setChecked(   false     );
-        jumpropecheckbox.setChecked(      false      );
-        barbellcheckbox.setChecked(    false    );
-        dumbbellcheckbox.setChecked(   false       );
-        bodycheckbox.setChecked(    false      );
-        kettlebellcheckbox.setChecked(    false     );
-        pullupbarcheckbox.setChecked(   false       );
-        wallballcheckbox.setChecked(   false      );
-
-        if(((MainActivity)getActivity()).user.isBarbell()==true ) {
-            barbellcheckbox.performClick();
-
-        }
-        if(((MainActivity)getActivity()).user.isDumbbell()==true ) {
-            dumbbellcheckbox.performClick();
-
-        }
-        if(((MainActivity)getActivity()).user.isKettlebell()==true )
-            kettlebellcheckbox.performClick();
-        if(((MainActivity)getActivity()).user.isBody()==true )
-            bodycheckbox.performClick();
-        if(((MainActivity)getActivity()).user.isJumprope()==true )
-            jumpropecheckbox.performClick();
-        if(((MainActivity)getActivity()).user.isPullUpBar()==true )
-            pullupbarcheckbox.performClick();
-        if(((MainActivity)getActivity()).user.isWallBall()==true )
-            wallballcheckbox.performClick();
-        if(((MainActivity)getActivity()).user.isBox()==true )
-            boxcheckbox.performClick();
-
-        /*
-        boxcheckbox.setChecked(      ((MainActivity)getActivity()).user.isBox()        );
-        jumpropecheckbox.setChecked(      ((MainActivity)getActivity()).user.isJumprope()        );
-        barbellcheckbox.setChecked(      ((MainActivity)getActivity()).user.isBarbell()        );
-        dumbbellcheckbox.setChecked(      ((MainActivity)getActivity()).user.isDumbbell()        );
-        bodycheckbox.setChecked(      ((MainActivity)getActivity()).user.isBody()        );
-        kettlebellcheckbox.setChecked(      ((MainActivity)getActivity()).user.isKettlebell()        );
-        pullupbarcheckbox.setChecked(     (boolean) ((MainActivity)getActivity()).user.isPullUpBar()        );
-        wallballcheckbox.setChecked(    (boolean)  ((MainActivity)getActivity()).user.isWallBall()        );
-*/
 
 
         btn_fragment.setOnClickListener(new View.OnClickListener() {
@@ -197,6 +132,7 @@ public class Menu1Fragment extends Fragment {
 
 
         //return inflater.inflate(R.layout.fragment_menu1, container, false);
+        //saveuserprofile();
         return rootView;
     }
 
@@ -209,5 +145,25 @@ public class Menu1Fragment extends Fragment {
         //이 메소드가 호출될떄는 프래그먼트가 엑티비티위에 올라와있는거니깐 getActivity메소드로 엑티비티참조가능
         activity = (MainActivity) getActivity();
     }
+    public void saveuserprofile(){
+        try {
+            String data ;
+            //TextView t=(TextView)findViewById(R.id.NametextView);
+            data=tv_username.getText().toString();
 
+            FileOutputStream fos=activity.openFileOutput("Data.txt",activity.MODE_APPEND);
+            // mode에는 두가지가 있다. MODE_PRIVATE은 덮어쓰기, MODE_APPEND는 이어 붙이기
+            //위 바이트스트림(FileOutputStream)을 문자 스트림(Writer)으로 변환
+            PrintWriter writer= new PrintWriter(fos);
+
+            //writer.write(data+"\n"); //아래 한줄과 같은 의미
+            writer.println(data);
+            writer.flush();
+            writer.close();
+
+        }
+        catch (FileNotFoundException e) {e.printStackTrace();}
+
+
+    }
 }
