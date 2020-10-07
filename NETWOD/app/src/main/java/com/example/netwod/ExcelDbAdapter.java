@@ -19,6 +19,18 @@ public class ExcelDbAdapter {
     public static final String KEY_HEIGHT= "height";
     public static final String KEY_NUM_OF_WORK = "NumOfWork";
 
+    //스케줄
+    public static final String KEY_WOD_NAME = "wod_name";
+    public static final String KEY_WOD_TYPE = "wod_type";
+    public static final String KEY_MOVEMENT = "movement";
+    public static final String KEY_EQUIPMENT = "equipment";
+    public static final String KEY_REPS = "reps";
+    public static final String KEY_EQUIP_WEIGHT = "equip_weight";
+    public static final String KEY_WOD_LEVEL = "wod_level";
+    public static final String KEY_WOD_RECORD = "wod_record";
+    public static final String KEY_SCORE = "score";
+
+
     //primary key
     private static final String KEY_ROWID = "_id";
 
@@ -26,6 +38,7 @@ public class ExcelDbAdapter {
     private SQLiteDatabase mDb;
 
     //개인 정보 테이블 생성 쿼리
+
     private static  final String DATABASE_CREATE = "create table info (_id integer primary key autoincrement,"
             +"name text not null, age text not null, weight text not null, height text not null, NumOfWork text not null );";
 
@@ -33,6 +46,16 @@ public class ExcelDbAdapter {
     private static final String DATABASE_TABLE = "PI_table";
     private static final int DATABASE_VERSION = 2;
     private final Context mCtx;
+
+
+
+    //스케줄 테이블 생성 쿼리
+    /*
+    private static final String DATABASE_CREATE1 = "create table schedule (_id integer primary key autoincrement,"
+            + "wod_name text not null, wod_type text not null, movement text, equipment text, reps text, equip_weight text," +
+            "wod_level text not null, wod_record");";
+
+     */
 
 
 
