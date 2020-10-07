@@ -21,7 +21,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="50"
-            tools:src="@tools:sample/backgrounds/scenic" />
+            android:visibility="visible"
+            tools:src="@tools:sample/avatars" />
 
         <LinearLayout
             android:id="@+id/userinfo"
