@@ -91,9 +91,10 @@ public class Menu1Fragment extends Fragment {
         tv_username= rootView.findViewById(R.id.NametextView);
         tv_userheight= rootView.findViewById(R.id.HeighttextView);
         tv_userweight= rootView.findViewById(R.id.WeightTextView);
-        String userName=((MainActivity)getActivity()).user.getUserName();
-        String userHeight=((MainActivity)getActivity()).user.getUserHeight();
-        String userWeight=((MainActivity)getActivity()).user.getUserWeight();
+
+        String userName=activity.excelscrapper.userinfo.getUserName();
+        String userHeight=activity.excelscrapper.userinfo.getUserHeight();
+        String userWeight=activity.excelscrapper.userinfo.getUserWeight();
         //체크박스 바운딩
         boxcheckbox=rootView.findViewById(R.id.BoxcheckBox);
         jumpropecheckbox=rootView.findViewById(R.id.JumpRopecheckBox);

@@ -87,9 +87,9 @@ public class ChangeinfoFragment extends Fragment {
 
         tv_userheight= rootView.findViewById(R.id.editTextTextHeight);
         tv_userweight= rootView.findViewById(R.id.editTextTextWeight);
-        String userName=((MainActivity)getActivity()).user.getUserName();
-        String userHeight=((MainActivity)getActivity()).user.getUserHeight();
-        String userWeight=((MainActivity)getActivity()).user.getUserWeight();
+        String userName=((MainActivity)getActivity()).excelscrapper.userinfo.getUserName();
+        String userHeight=((MainActivity)getActivity()).excelscrapper.userinfo.getUserHeight();
+        String userWeight=((MainActivity)getActivity()).excelscrapper.userinfo.getUserWeight();
 
         //체크박스 바운딩
         boxcheckbox=rootView.findViewById(R.id.changeBoxcheckBox);
@@ -101,14 +101,14 @@ public class ChangeinfoFragment extends Fragment {
         pullupbarcheckbox=rootView.findViewById(R.id.changePullUpBarcheckBox);
         wallballcheckbox=rootView.findViewById(R.id.changeWallBallcheckBox);
         //user 와 동기화
-        boxcheckbox.setChecked(      ((MainActivity)getActivity()).user.isBox()        );
-        jumpropecheckbox.setChecked(      ((MainActivity)getActivity()).user.isJumprope()        );
-        barbellcheckbox.setChecked(      ((MainActivity)getActivity()).user.isBarbell()        );
-        dumbbellcheckbox.setChecked(      ((MainActivity)getActivity()).user.isDumbbell()        );
-        bodycheckbox.setChecked(      ((MainActivity)getActivity()).user.isBody()        );
-        kettlebellcheckbox.setChecked(      ((MainActivity)getActivity()).user.isKettlebell()        );
-        pullupbarcheckbox.setChecked(     (boolean) ((MainActivity)getActivity()).user.isPullUpBar()        );
-        wallballcheckbox.setChecked(    (boolean)  ((MainActivity)getActivity()).user.isWallBall()        );
+        //boxcheckbox.setChecked(      ((MainActivity)getActivity()).user.isBox()        );
+        //jumpropecheckbox.setChecked(      ((MainActivity)getActivity()).user.isJumprope()        );
+        //barbellcheckbox.setChecked(      ((MainActivity)getActivity()).user.isBarbell()        );
+        //dumbbellcheckbox.setChecked(      ((MainActivity)getActivity()).user.isDumbbell()        );
+        //bodycheckbox.setChecked(      ((MainActivity)getActivity()).user.isBody()        );
+        //kettlebellcheckbox.setChecked(      ((MainActivity)getActivity()).user.isKettlebell()        );
+        //pullupbarcheckbox.setChecked(     (boolean) ((MainActivity)getActivity()).user.isPullUpBar()        );
+        //wallballcheckbox.setChecked(    (boolean)  ((MainActivity)getActivity()).user.isWallBall()        );
 
 
 
@@ -118,19 +118,19 @@ public class ChangeinfoFragment extends Fragment {
         tv_userweight.setText(userWeight);
         changeinfobutton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                ((MainActivity)getActivity()).user.setUserName( tv_username.getText().toString());
-                ((MainActivity)getActivity()).user.setUserWeight(tv_userweight.getText().toString());
-                ((MainActivity)getActivity()).user.setUserHeight( tv_userheight.getText().toString());
-                ((MainActivity)getActivity()).user.setBarbell((boolean)barbellcheckbox.isChecked());
-                ((MainActivity)getActivity()).user.setDumbbell((boolean)dumbbellcheckbox.isChecked());
+            public void onClick(View v) { //이거 엑셀수정으로 바꿔야함
+                ((MainActivity)getActivity()).excelscrapper.userinfo.setUserName( tv_username.getText().toString());
+                ((MainActivity)getActivity()).excelscrapper.userinfo.setUserWeight(tv_userweight.getText().toString());
+                ((MainActivity)getActivity()).excelscrapper.userinfo.setUserHeight( tv_userheight.getText().toString());
+                ((MainActivity)getActivity()).excelscrapper.userinfo.setBarbell((boolean)barbellcheckbox.isChecked());
+                ((MainActivity)getActivity()).excelscrapper.userinfo.setDumbbell((boolean)dumbbellcheckbox.isChecked());
 
-                ((MainActivity)getActivity()).user.setBox((boolean)boxcheckbox.isChecked());
-                ((MainActivity)getActivity()).user.setJumprope((boolean)jumpropecheckbox.isChecked());
-                ((MainActivity)getActivity()).user.setBody((boolean)bodycheckbox.isChecked());
-                ((MainActivity)getActivity()).user.setKettlebell((boolean)kettlebellcheckbox.isChecked());
-                ((MainActivity)getActivity()).user.setWallBall((boolean)wallballcheckbox.isChecked());
-                ((MainActivity)getActivity()).user.setPullUpBar((boolean)pullupbarcheckbox.isChecked());
+                ((MainActivity)getActivity()).excelscrapper.userinfo.setBox((boolean)boxcheckbox.isChecked());
+                ((MainActivity)getActivity()).excelscrapper.userinfo.setJumprope((boolean)jumpropecheckbox.isChecked());
+                ((MainActivity)getActivity()).excelscrapper.userinfo.setBody((boolean)bodycheckbox.isChecked());
+                ((MainActivity)getActivity()).excelscrapper.userinfo.setKettlebell((boolean)kettlebellcheckbox.isChecked());
+                ((MainActivity)getActivity()).excelscrapper.userinfo.setWallBall((boolean)wallballcheckbox.isChecked());
+                ((MainActivity)getActivity()).excelscrapper.userinfo.setPullUpBar((boolean)pullupbarcheckbox.isChecked());
 
 
 

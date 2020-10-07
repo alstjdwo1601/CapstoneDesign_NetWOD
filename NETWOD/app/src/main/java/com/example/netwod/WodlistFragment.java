@@ -74,7 +74,7 @@ public class WodlistFragment extends Fragment {
 
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new RecyclerViewA();
+        adapter = new RecyclerViewA(activity.excelscrapper.userinfo);
         recyclerView.setAdapter(adapter);
 
         return rootView;

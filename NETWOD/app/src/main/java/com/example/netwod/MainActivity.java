@@ -36,7 +36,7 @@ import jxl.Workbook;
 public class MainActivity extends AppCompatActivity {
 
     // FrameLayout에 각 메뉴의 Fragment를 바꿔 줌
-    UserInfo user;
+    //UserInfo user;
 
     ExcelScrapper excelscrapper;
     private FragmentManager fragmentManager = getSupportFragmentManager();
@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     7:2-정보 화면
     */
     public void onFragmentChange(int index) {
+
         switch (index) {
             case 1:
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, menu1Fragment).commit();
@@ -105,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
-        user = new UserInfo();
+        //user = new UserInfo();
         excelscrapper=new ExcelScrapper();
 excelscrapper.readExcel();
         //testexcel();
@@ -115,21 +116,20 @@ excelscrapper.readExcel();
         //a.readExcel();
         //testexcel();
 
-        user.setUserName(excelscrapper.user_info.get(0));
-        user.setUserWeight(excelscrapper.user_info.get(1));
-        user.setUserHeight(excelscrapper.user_info.get(2));
-        System.out.println(excelscrapper.user_info.get(0));
 
-        user.setPullUpBar(false);
-        user.setBarbell(true);
-        user.setKettlebell(false);
-        user.setBody(true);
-        user.setDumbbell(false);
-        user.setPullUpBar(false);
-        user.setBox(true);
-        user.setJumprope(false);
-        user.setWallBall(false);
 
+
+
+        //user.setPullUpBar(false);
+        //user.setBarbell(true);
+        //user.setKettlebell(false);
+        //user.setBody(true);
+        //user.setDumbbell(false);
+        //user.setPullUpBar(false);
+        //user.setBox(true);
+        //user.setJumprope(false);
+        //user.setWallBall(false);
+System.out.println("메인엑티비티에서"+excelscrapper.userinfo.wodrecord.wodlist.get(0).getWODname());
 
         setContentView(R.layout.activity_main);
 
@@ -217,14 +217,6 @@ excelscrapper.readExcel();
     }
 
 
-public void readuserprofile(){
-
-
-
-
-
-}
-
 
 
 
@@ -238,11 +230,29 @@ public void readuserprofile(){
     class ExcelScrapper {
         //변수들 특히 어레이리스트 1.동적할당 2.private썼으면 게터세터
         //어플 키면 excelscrapper가 엑셀 읽고 Userinfo를 하나 줌. 난 그 userinfo.리스트 이걸로만 접근할거임
-        
+        UserInfo userinfo=new UserInfo();
         class UserInfo {
+
             private WODrecord wodrecord; //템플릿에 있는 개인이 실제로 한 기록
             private ArrayList<WOD> userwodlist; //와드 선택할때 리스트(뭐 할지 고를지)
             private String UserName;
+
+            public WODrecord getWodrecord() {
+                return wodrecord;
+            }
+
+            public void setWodrecord(WODrecord wodrecord) {
+                this.wodrecord = wodrecord;
+            }
+
+            public ArrayList<WOD> getUserwodlist() {
+                return userwodlist;
+            }
+
+            public void setUserwodlist(ArrayList<WOD> userwodlist) {
+                this.userwodlist = userwodlist;
+            }
+
 
             public String getUserName() {
                 return UserName;
@@ -361,35 +371,138 @@ public void readuserprofile(){
 
             private boolean Jumprope;
             private boolean PullUpBar;
-            public UserInfo(){}
+            public UserInfo(){
+                this.wodrecord=new WODrecord(); //템플릿에 있는 개인이 실제로 한 기록
+                this.userwodlist=new ArrayList<WOD>(); //와드 선택할때 리스트(뭐 할지 고를지)
+
+
+            }
 
 
 
         }
         class WOD{
-            String WODname;//ex) FRAN
-            String WODtype; //포타임, 암랩 등등
-            //데드21,월볼21 + 데드15,월볼15 와드 예시
-            ArrayList movement;//{데드,월볼,데드,월볼,데드,월볼}
-            ArrayList movementnum;//={21,21,21,15,15,15};
+            private String WODname;//ex) FRAN
 
+
+            public String getWODlevel() {
+                return WODlevel;
+            }
+
+            public void setWODlevel(String WODlevel) {
+                this.WODlevel = WODlevel;
+            }
+
+            private String WODlevel;
+
+            public String getWODname() {
+                return WODname;
+            }
+
+            public void setWODname(String WODname) {
+                this.WODname = WODname;
+            }
+
+            public String getWODtype() {
+                return WODtype;
+            }
+
+            public void setWODtype(String WODtype) {
+                this.WODtype = WODtype;
+            }
+
+            public ArrayList<String> getMovement() {
+                return movement;
+            }
+
+            public void setMovement(ArrayList<String> movement) {
+                this.movement = movement;
+            }
+
+            public ArrayList<String> getMovementnum() {
+                return movementnum;
+            }
+
+            public void setMovementnum(ArrayList<String> movementnum) {
+                this.movementnum = movementnum;
+            }
+
+            private String WODtype; //포타임, 암랩 등등
+            //데드21,월볼21 + 데드15,월볼15 와드 예시
+            private ArrayList<String> movement;//{데드,월볼,데드,월볼,데드,월볼}
+            private ArrayList<String> movementnum;//={21,21,21,15,15,15};
+
+            public ArrayList<String> getWeightlist() {
+                return weightlist;
+            }
+
+            public void setWeightlist(ArrayList<String> weightlist) {
+                this.weightlist = weightlist;
+            }
+
+            private ArrayList<String> weightlist;
+
+            public ArrayList<String> getEquipment() {
+                return equipment;
+            }
+
+            public void setEquipment(ArrayList<String> equipment) {
+                this.equipment = equipment;
+            }
+
+            private ArrayList<String> equipment;
+            public WOD(){
+                this.movement=new ArrayList<String>();
+                this.movementnum=new ArrayList<String>();
+                this.weightlist=new ArrayList<String>();
+                this.equipment=new ArrayList<String>();
+            }
 
         }
         class WODrecord{
-            ArrayList<WOD> wodlist; //{프란,신디,민성재,김정훈}
-            ArrayList<String> scorelist; //{"70","80","75","60"}
-            ArrayList<String> recordlist; //{"4:32","3:53","2:10","6:34"}
+            private ArrayList<WOD> wodlist; //{프란,신디,민성재,김정훈}
+            private ArrayList<String> scorelist; //{"70","80","75","60"}
+
+            public ArrayList<WOD> getWodlist() {
+                return wodlist;
+            }
+
+            public void setWodlist(ArrayList<WOD> wodlist) {
+                this.wodlist = wodlist;
+            }
+
+            public ArrayList<String> getScorelist() {
+                return scorelist;
+            }
+
+            public void setScorelist(ArrayList<String> scorelist) {
+                this.scorelist = scorelist;
+            }
+
+            public ArrayList<String> getRecordlist() {
+                return recordlist;
+            }
+
+            public void setRecordlist(ArrayList<String> recordlist) {
+                this.recordlist = recordlist;
+            }
+
+            private ArrayList<String> recordlist; //{"4:32","3:53","2:10","6:34"}
+            public WODrecord(){
+                wodlist=new ArrayList<WOD>();
+                scorelist=new ArrayList<String>();
+                recordlist=new ArrayList<String>();
+
+
+
+            }
         }
-        class Player{
 
-
-
-        }
 
 
 
         //dfsd
-        public ArrayList<String> user_info= new ArrayList<String>();
+
         public ArrayList<String> equipment = new ArrayList<String>();
         public ArrayList<ArrayList<String>> schedule = new ArrayList<ArrayList<String>>();
         public ArrayList<ArrayList<String>> record = new ArrayList<ArrayList<String>>();
@@ -414,32 +527,62 @@ public void readuserprofile(){
                 if(workbook != null){
                     sheet = workbook.getSheet(1);
 
-                    if(sheet != null){
-
-
+                    if(sheet != null) {
 
 
                         // 유저 정보 엑셀에서 읽어오는 부분
-                        String name = sheet.getCell(13,5).getContents();
-                        String age = sheet.getCell(13,6).getContents();
-                        String weight=sheet.getCell(13,7).getContents();
-                        String height=sheet.getCell(13,8).getContents();
-                        String NumofTraining = sheet.getCell(13,9).getContents();
+                        String name = sheet.getCell(13, 5).getContents();
+                        String age = sheet.getCell(13, 6).getContents();
+                        String weight = sheet.getCell(13, 7).getContents();
+                        String height = sheet.getCell(13, 8).getContents();
+                        String NumofTraining = sheet.getCell(13, 9).getContents();
 
-                        this.user_info.add(name);
+
+                        this.userinfo.setUserName(name);
+                        this.userinfo.setUserWeight(weight);
+                        this.userinfo.setUserHeight(height);
                         //this.user_info.add(age);
-                        this.user_info.add(weight);
-                        this.user_info.add(height);
+
                         //this.user_info.add(NumofTraining);
 
 
                         //운동 스케줄 엑셀에서 읽어오는 부분
-                        int nMaxColumn = 9;
+                        //int nMaxColumn = 9;
                         int nRowStartIndex = 9;
                         int nRowEndIndex = 150;
                         int nColumnStartIndex = 2;
-                        int nColumnEndIndex = 10;
+                        int wodrow;
+                        int wodcol;
+                        //int nColumnEndIndex = 10;
+                        //무브먼트(4,X) ,
+                        while(sheet.getCell(nColumnStartIndex, nRowStartIndex).getContents()!=""){ //와드 두당한번씩돈다
 
+                        this.userinfo.wodrecord.recordlist.add(sheet.getCell(9, nRowStartIndex).getContents());
+                        this.userinfo.wodrecord.scorelist.add(sheet.getCell(10, nRowStartIndex).getContents());
+                            wodrow=nRowStartIndex;
+                            wodcol=4; //movement
+                            WOD wod=new WOD();
+
+                            wod.setWODname(sheet.getCell(2, nRowStartIndex).getContents()            );
+                            wod.setWODtype(sheet.getCell(3, nRowStartIndex).getContents()    );
+                            wod.setWODlevel(sheet.getCell(8, nRowStartIndex).getContents()    );
+
+                            while(sheet.getCell(4, wodrow).getContents()!=""){
+                                //System.out.println("NULL인가"+sheet.getCell(2, nRowStartIndex).getContents() );
+                                wod.getMovement().add(sheet.getCell(4, wodrow).getContents());
+                                System.out.println("MOVEment이름:"+sheet.getCell(4, wodrow).getContents() );
+                                wod.getEquipment().add(sheet.getCell(5, wodrow).getContents());
+                                wod.getMovementnum().add(sheet.getCell(6, wodrow).getContents());
+                                wod.getWeightlist().add(sheet.getCell(7, wodrow).getContents());
+                                System.out.println("weight무게:"+sheet.getCell(7, wodrow).getContents() );
+
+                                wodrow+=1;
+                            }
+                            //System.out.println("와드네임"+sheet.getCell(2, nRowStartIndex).getContents() );
+                            this.userinfo.wodrecord.wodlist.add(wod);
+
+                        nRowStartIndex+=50;
+                        }
                         ArrayList<String> wod_name = new ArrayList<String>();
                         ArrayList<String> wod_type = new ArrayList<String>();
                         ArrayList<String> movement = new ArrayList<String>();
@@ -451,15 +594,15 @@ public void readuserprofile(){
                         ArrayList<String> score = new ArrayList<String>();
 
 
-                        for (int nRow1 = nRowStartIndex; nRow1<=nRowEndIndex; nRow1+=50){
-                            wod_name.add( sheet.getCell(nColumnStartIndex, nRow1).getContents());
-                            wod_type.add( sheet.getCell(nColumnStartIndex+1,nRow1).getContents());
+                        for (int nRow1 = nRowStartIndex; nRow1 <= nRowEndIndex; nRow1 += 50) {
+                            wod_name.add(sheet.getCell(nColumnStartIndex, nRow1).getContents());
+                            wod_type.add(sheet.getCell(nColumnStartIndex + 1, nRow1).getContents());
 
-                            wod_level.add(sheet.getCell(nColumnStartIndex+6,nRow1).getContents());
-                            wod_record.add(sheet.getCell(nColumnStartIndex+7,nRow1).getContents());
-                            score.add(sheet.getCell(nColumnStartIndex+8,nRow1).getContents());
+                            wod_level.add(sheet.getCell(nColumnStartIndex + 6, nRow1).getContents());
+                            wod_record.add(sheet.getCell(nColumnStartIndex + 7, nRow1).getContents());
+                            score.add(sheet.getCell(nColumnStartIndex + 8, nRow1).getContents());
                         }
-                        for (int nRow = nRowStartIndex; nRow <=nRowEndIndex; nRow ++){
+                        for (int nRow = nRowStartIndex; nRow <= nRowEndIndex; nRow++) {
                             do {
                                 movement.add(sheet.getCell(nColumnStartIndex + 2, nRow).getContents());
                             } while (movement.contains(null));
@@ -476,6 +619,13 @@ public void readuserprofile(){
                             } while (equip_weight.contains(null));
 
                         }
+                        //this.userinfo.wodrecord.wodlist.add
+                        //wod_name.size이게 와드개수네
+                        //for(wod_name.size){
+                        //this.userinfo.wodrecord.wodlist.add
+
+                    //}
+
                         schedule.add(wod_name);
                         schedule.add(wod_type);
                         schedule.add(movement);
