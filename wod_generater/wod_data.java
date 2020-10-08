@@ -7,15 +7,28 @@ public class wod_data{  // data type  .xlsx form
     public ArrayList<String> movement_list = new ArrayList<>();
 	public ArrayList<Integer> weight = new ArrayList<Integer>();
 	public ArrayList<Integer> Reps = new ArrayList<Integer>();
-	public int wodtype;
+	public String wodtype;
+	
+	
+	
+	
     public wod_data(){ // 
     
-    wod_reader();
+    wod_exaple();
 
 
     }
     
-    public void wod_reader() { // read xlsx form sample
+    public void wod_reader(){
+    	
+    	
+    	
+    	
+    	
+    	
+    }
+    
+    public void wod_exaple() { // read xlsx form sample
     	String first_col = "fortime";
     	String[] Second_col = {"Thrusters"
     			,"Pull-Ups"
@@ -35,34 +48,34 @@ public class wod_data{  // data type  .xlsx form
     			,"0"
     			,"42"
     			,"0"};
+    	wod_reader("test",first_col,Second_col,third_col,fourth_col); 	
+	}
+    
+  
+    public void wod_reader(String name,String type,String[] movements,String[] reps,String[] kg) { // read xlsx form sample
+
     	
-    	int list_length = Second_col.length; 
+    	int list_length = movements.length;
     	// start 
     	
-    	name = "Test_WOD"; // after modify
-    	wodtype = checktype(first_col); // fortime = 0 , AMRAP =1 else =2
+    	this.name = name; // after modify
+    	this.wodtype = type; // fortime = 0 , AMRAP =1 else =2
     	
     	for (int i = 0 ; i < list_length; i++) { // just 1 wod after modify
-    		movement_list.add(Second_col[i]);
-    		weight.add(Integer.parseInt(fourth_col[i]));
-    		Reps.add(Integer.parseInt(third_col[i]));
-    		
-    		
+    		this.movement_list.add(movements[i]);
+    		this.weight.add(Integer.parseInt(reps[i]));
+    		this.Reps.add(Integer.parseInt(kg[i]));
+    			
     	} 
     	
-    	
+    
     	
     	
 	}
-
-	private int checktype(String first_col) {
-		if (first_col.equals("Fortime"))
-			return 0;
-		else if (first_col.equals("AMRAP"))
-			return 1;
-		else
-			return 2;
-	}
+    
+    public void wod_fortime(String[] movements) {}
+    public void wod_AMRAP(String[] movements) {}
+    public void wod_EMON(String[] movements) {}
     
     
 
