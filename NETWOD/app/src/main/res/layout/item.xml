@@ -7,7 +7,7 @@
     android:background="#407878"
     android:backgroundTint="#2196F3"
     android:orientation="horizontal"
-    android:paddingBottom="5dp"
+    android:paddingTop="3dp"
     android:weightSum="8"
     app:barrierMargin="0dp">
 

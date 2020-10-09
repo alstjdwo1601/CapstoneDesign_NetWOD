@@ -381,8 +381,19 @@ System.out.println("메인엑티비티에서"+excelscrapper.userinfo.wodrecord.w
 
 
         }
+
+
         class WOD{
-            private String WODname;//ex) FRAN
+            private String WODname;//ex) FRAN,고성주의 와드
+            private String WODlevel;
+            private String WODtype; //포타임, 암랩 등등
+            //데드21,월볼21 + 데드15,월볼15 와드 예시
+            private ArrayList<String> movement;//{데드,월볼,데드,월볼,데드,월볼}
+            private ArrayList<String> movementnum;//={21,21,21,15,15,15};
+            private ArrayList<String> weightlist;
+            private ArrayList<String> equipment;
+
+
 
 
             public String getWODlevel() {
@@ -393,7 +404,7 @@ System.out.println("메인엑티비티에서"+excelscrapper.userinfo.wodrecord.w
                 this.WODlevel = WODlevel;
             }
 
-            private String WODlevel;
+
 
             public String getWODname() {
                 return WODname;
@@ -427,10 +438,7 @@ System.out.println("메인엑티비티에서"+excelscrapper.userinfo.wodrecord.w
                 this.movementnum = movementnum;
             }
 
-            private String WODtype; //포타임, 암랩 등등
-            //데드21,월볼21 + 데드15,월볼15 와드 예시
-            private ArrayList<String> movement;//{데드,월볼,데드,월볼,데드,월볼}
-            private ArrayList<String> movementnum;//={21,21,21,15,15,15};
+
 
             public ArrayList<String> getWeightlist() {
                 return weightlist;
@@ -440,7 +448,7 @@ System.out.println("메인엑티비티에서"+excelscrapper.userinfo.wodrecord.w
                 this.weightlist = weightlist;
             }
 
-            private ArrayList<String> weightlist;
+
 
             public ArrayList<String> getEquipment() {
                 return equipment;
@@ -450,7 +458,7 @@ System.out.println("메인엑티비티에서"+excelscrapper.userinfo.wodrecord.w
                 this.equipment = equipment;
             }
 
-            private ArrayList<String> equipment;
+
             public WOD(){
                 this.movement=new ArrayList<String>();
                 this.movementnum=new ArrayList<String>();
@@ -512,7 +520,7 @@ System.out.println("메인엑티비티에서"+excelscrapper.userinfo.wodrecord.w
 
             try {
                 System.out.println(am);
-                is = am.open("tem a.xls");
+                is = am.open("newwodtemplate.xls");
 
                 // TODO : use is(InputStream).
                 Workbook workbook = null;
