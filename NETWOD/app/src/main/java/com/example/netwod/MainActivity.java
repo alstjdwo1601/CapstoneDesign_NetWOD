@@ -520,7 +520,7 @@ System.out.println("메인엑티비티에서"+excelscrapper.userinfo.wodrecord.w
 
             try {
                 System.out.println(am);
-                is = am.open("newwodtemplate.xls");
+                is = am.open("netwodtemplate.xls");
 
                 // TODO : use is(InputStream).
                 Workbook workbook = null;
