@@ -1,4 +1,4 @@
-package project;
+package wod;
 
 public class learning {
 	private float[] layer_input;

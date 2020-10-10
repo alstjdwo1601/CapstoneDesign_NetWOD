@@ -1,4 +1,4 @@
-package project;
+package wod;
 
 import java.util.ArrayList;
 
@@ -12,6 +12,11 @@ public class wod_data{  // data type  .xlsx form
 	
 	
 	
+	public wod_data(int score) {
+		
+		
+	}
+	
     public wod_data(){ // 
     
     wod_exaple();
@@ -19,7 +24,8 @@ public class wod_data{  // data type  .xlsx form
 
     }
     
-    public void wod_reader(){
+    public void wod_reader(){ // what type?
+  
     	
     	
     	
@@ -43,7 +49,7 @@ public class wod_data{  // data type  .xlsx form
     			,"9"
     			,"9"};
     	String[] fourth_col = {"42"
-    			,"0" // NULL
+    			,"0" //
     			,"42"
     			,"0"
     			,"42"
@@ -60,7 +66,6 @@ public class wod_data{  // data type  .xlsx form
     	
     	this.name = name; // after modify
     	this.wodtype = type; // fortime = 0 , AMRAP =1 else =2
-    	
     	for (int i = 0 ; i < list_length; i++) { // just 1 wod after modify
     		this.movement_list.add(movements[i]);
     		this.weight.add(Integer.parseInt(reps[i]));
@@ -70,9 +75,27 @@ public class wod_data{  // data type  .xlsx form
     	
     
     	
-    	
 	}
     
+    
+    
+    
+    
+    
+    
+    public void wod_function(String[] movements) {
+    int list_length = movements.length;
+    movement_data data = new movement_data();
+    int kg =  data.movement_average_kg(movements[1], 1, 1);
+    int raps = data.movement_average_reps(movements[1], 1, 1);
+    
+    
+    	
+    }
+    
+    
+    
+    public void wod_movement(String[] movements) {}
     public void wod_fortime(String[] movements) {}
     public void wod_AMRAP(String[] movements) {}
     public void wod_EMON(String[] movements) {}

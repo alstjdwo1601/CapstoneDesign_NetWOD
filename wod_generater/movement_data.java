@@ -1,4 +1,4 @@
-package project;
+package wod;
 
 public class movement_data {
 
@@ -11,6 +11,9 @@ public class movement_data {
 	,"Wall Ball"
 	,"Box"	
 	};
+	
+	
+	
 	
 	private String[] movement_name = new String[]{"Thrusters" // 0 barbell start
 			,"Overhead Squarts"
@@ -99,6 +102,15 @@ public class movement_data {
 		
 		return -1; // equitment add or movement add
 	}
+	public int movement_average_kg(String movement,int time,int divide){
+		
+		return 1;
+	}
+	
+	public int movement_average_reps(String movement,int time,int divide) {
+		return 1;
+	}
+	
 	
 
 	

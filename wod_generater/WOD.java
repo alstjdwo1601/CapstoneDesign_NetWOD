@@ -1,4 +1,4 @@
-package project;
+package wod;
 
 import java.util.ArrayList;
 
@@ -21,7 +21,13 @@ public class WOD{
     	}  
     } 
 
-
+    public WOD wod_generate(int score,String name) {
+    	WODname = name;
+    	WODlevel = score;
+    	wod_data generate = new wod_data(score);
+    	
+    	return this;
+    }
     public void print_wod() {
     	System.out.println("WODname : " +WODname);
     	System.out.println("WOD level : " + WODlevel);
