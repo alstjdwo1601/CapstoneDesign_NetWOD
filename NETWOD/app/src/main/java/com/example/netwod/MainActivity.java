@@ -11,11 +11,14 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -24,14 +27,20 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import jxl.Sheet;
 import jxl.Workbook;
+import jxl.write.WritableCellFormat;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -108,7 +117,63 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //user = new UserInfo();
         excelscrapper=new ExcelScrapper();
-excelscrapper.readExcel();
+
+        String ess = Environment.getExternalStorageState();
+        String sdCardPath = null;
+        if(ess.equals(Environment.MEDIA_MOUNTED)) {
+            sdCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+            System.out.println("경로는 받음");
+            Toast.makeText(this, "SD Card stored in ", Toast.LENGTH_SHORT).show();
+
+        } else {
+
+            Toast.makeText(this, "SD Card not ready!", Toast.LENGTH_SHORT).show();
+        }
+        //File file = new File(sdCardPath + "/test.txt");
+        File file = new File(sdCardPath+"/Download/netwodtemplate.xls" );
+        System.out.println("파일.겟네임:"+file.getAbsolutePath());
+       // File tmpfile = new File(sdCardPath+"/Download/temporary.xls" );
+        WritableWorkbook wworkbook = null;
+        try {
+            wworkbook = Workbook.createWorkbook(new File(sdCardPath+"/Download/temporary.xls" ));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        WritableSheet sheet = wworkbook.createSheet("Sheet1", 0);
+
+        jxl.write.WritableCellFormat  format= new WritableCellFormat();
+        jxl.write.WritableCellFormat  format0= new WritableCellFormat();
+        jxl.write.Label label = null;
+        jxl.write.Blank blank = null;
+
+        label = new jxl.write.Label(0,0,"순위지랄",format);
+        try {
+            sheet.addCell(label);
+        } catch (WriteException e) {
+            e.printStackTrace();
+        }
+        try {
+            wworkbook.write();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            wworkbook.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (WriteException e) {
+            e.printStackTrace();
+        }
+        try {
+            FileInputStream fileInputStream = new FileInputStream(file);
+
+            excelscrapper.readExcel(fileInputStream);
+        } catch (FileNotFoundException e) {
+            System.out.println("파일 못읽음");
+            e.printStackTrace();
+        }
+
+
         //testexcel();
 
         //a.list.add(ff);
@@ -514,25 +579,133 @@ System.out.println("메인엑티비티에서"+excelscrapper.userinfo.wodrecord.w
         public ArrayList<String> equipment = new ArrayList<String>();
         public ArrayList<ArrayList<String>> schedule = new ArrayList<ArrayList<String>>();
         public ArrayList<ArrayList<String>> record = new ArrayList<ArrayList<String>>();
-        public void readExcel(){
-            AssetManager am = getResources().getAssets();
-            InputStream is = null;
 
+        /*
+        public void writeExcel(File file){
             try {
-                System.out.println(am);
-                is = am.open("netwodtemplate.xls");
 
-                // TODO : use is(InputStream).
-                Workbook workbook = null;
-
+                WritableWorkbook workbook = null;
+                //WritableWorkbook f=Workbook.createWorkbook(os,workbook);
                 Sheet sheet;
-                String p = System.getProperty("user.dir");
-
+                //String p = System.getProperty("user.dir");
+                workbook=Workbook.createWorkbook(new File());
                 workbook = Workbook.getWorkbook(is);
+                if(workbook==null){
+                    System.out.println("워크북이 NULL");
+
+                }
                 //InputStream df=new FileInputStream("")
                 // String p=System.getProperty("user.dir");
 
                 if(workbook != null){
+                    System.out.println("워크북이 있다");
+
+                    sheet = workbook.getSheet(1);
+
+                    if(sheet != null) {
+
+
+                        // 유저 정보 엑셀에서 읽어오는 부분
+                        String name = sheet.getCell(13, 5).getContents();
+                        String age = sheet.getCell(13, 6).getContents();
+                        String weight = sheet.getCell(13, 7).getContents();
+                        String height = sheet.getCell(13, 8).getContents();
+                        String NumofTraining = sheet.getCell(13, 9).getContents();
+
+
+                        this.userinfo.setUserName(name);
+                        this.userinfo.setUserWeight(weight);
+                        this.userinfo.setUserHeight(height);
+                        //this.user_info.add(age);
+
+                        //this.user_info.add(NumofTraining);
+
+
+                        //운동 스케줄 엑셀에서 읽어오는 부분
+                        //int nMaxColumn = 9;
+                        int nRowStartIndex = 9;
+                        int nRowEndIndex = 150;
+                        int nColumnStartIndex = 2;
+                        int wodrow;
+                        int wodcol;
+                        //int nColumnEndIndex = 10;
+                        //무브먼트(4,X) ,
+
+
+
+
+
+
+                        //this.userinfo.wodrecord.wodlist.add
+                        //wod_name.size이게 와드개수네
+                        //for(wod_name.size){
+                        //this.userinfo.wodrecord.wodlist.add
+
+                        //}
+
+
+                    }
+                    else{
+                        System.out.println("Sheet is null");
+                    }
+                }
+                else{
+                    System.out.println("Workbook is null");
+                }
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+        }
+*/
+
+        public void readExcel(InputStream is){
+            AssetManager am = getResources().getAssets();
+            //InputStream is = null;
+
+
+
+
+
+
+
+            File path;    //저장 데이터가 존재하는 디렉토리경로
+
+            File file;     //파일명까지 포함한 경로
+
+
+
+
+
+
+
+
+
+            try {
+                System.out.println(am);
+                //is = am.open("netwodtemplate.xls");
+                //InputStream is2=new FileInputStream("src/main/assets/netwodtemplate.xls");
+                //InputStream is2=new FileInputStream("NETWOD/app/src/main/assets/netwodtemplate.xls");
+                // TODO : use is(InputStream).
+                Workbook workbook = null;
+                //WritableWorkbook f=Workbook.createWorkbook(os,workbook);
+                Sheet sheet;
+                //String p = System.getProperty("user.dir");
+
+                workbook = Workbook.getWorkbook(is);
+                if(workbook==null){
+                System.out.println("워크북이 NULL");
+
+                }
+                //InputStream df=new FileInputStream("")
+                // String p=System.getProperty("user.dir");
+
+                if(workbook != null){
+                    System.out.println("워크북이 있다");
+
                     sheet = workbook.getSheet(1);
 
                     if(sheet != null) {
@@ -578,11 +751,11 @@ System.out.println("메인엑티비티에서"+excelscrapper.userinfo.wodrecord.w
                             while(sheet.getCell(4, wodrow).getContents()!=""){
                                 //System.out.println("NULL인가"+sheet.getCell(2, nRowStartIndex).getContents() );
                                 wod.getMovement().add(sheet.getCell(4, wodrow).getContents());
-                                System.out.println("MOVEment이름:"+sheet.getCell(4, wodrow).getContents() );
+
                                 wod.getEquipment().add(sheet.getCell(5, wodrow).getContents());
                                 wod.getMovementnum().add(sheet.getCell(6, wodrow).getContents());
                                 wod.getWeightlist().add(sheet.getCell(7, wodrow).getContents());
-                                System.out.println("weight무게:"+sheet.getCell(7, wodrow).getContents() );
+
 
                                 wodrow+=1;
                             }

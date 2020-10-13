@@ -54,18 +54,38 @@ public class RecyclerViewA extends RecyclerView.Adapter<RecyclerViewA.ViewHolder
     @Override
     public void onBindViewHolder(RecyclerViewA.ViewHolder holder, final int position) {
         //holder.textView.setText(title[position]);
-        holder.textView.setText(userinfo.getWodrecord().getWodlist().get(position).getWODname());
+
         System.out.println("recyclerView에서 position:" + position);
         //holder.textView2.setText(type[position]);
-        holder.textView2.setText(userinfo.getWodrecord().getWodlist().get(position).getWODtype());
+
         int msize = userinfo.getWodrecord().getWodlist().get(position).getMovement().size();
+        int titlesize = userinfo.getWodrecord().getWodlist().get(position).getWODname().length();
+        int typesize = userinfo.getWodrecord().getWodlist().get(position).getWODtype().length();
         String movementstring="";
+        String titlestring="";
+        String typestring="";
+        for(int i=0; i<titlesize;i++){
+
+            titlestring=titlestring+"\n"+userinfo.getWodrecord().getWodlist().get(position).getWODname().charAt(i);
+
+
+        }
+        for(int i=0; i<typesize;i++){
+
+            typestring=typestring+"\n"+userinfo.getWodrecord().getWodlist().get(position).getWODtype().charAt(i);
+
+
+        }
 
         for (int i = 0; i < msize; i++){
             movementstring=movementstring+"\n"+userinfo.getWodrecord().getWodlist().get(position).getMovement().get(i);
+            if(userinfo.getWodrecord().getWodlist().get(position).getWeightlist().get(i)!=""){
+                movementstring=movementstring+" "+userinfo.getWodrecord().getWodlist().get(position).getWeightlist().get(i)+"kg";
+            }
+            movementstring=movementstring+" "+userinfo.getWodrecord().getWodlist().get(position).getMovementnum().get(i)+"times";
     }
-
-
+        holder.textView.setText(titlestring);
+        holder.textView2.setText(typestring);
         //movementstring=userinfo.getWodrecord().getWodlist().get(position).getMovement().get(0);
 
         holder.textView3.setText(movementstring);

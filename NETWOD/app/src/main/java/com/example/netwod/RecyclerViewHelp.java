@@ -60,6 +60,11 @@ public class RecyclerViewHelp extends RecyclerView.Adapter<RecyclerViewHelp.View
     public void onBindViewHolder(RecyclerViewHelp.ViewHolder holder, final int position) {
         holder.textView.setText(title[position]);
         holder.textView2.setText(type[position]);
+
+
+
+
+
     /*
     position
     1Thrusters
@@ -106,22 +111,7 @@ public class RecyclerViewHelp extends RecyclerView.Adapter<RecyclerViewHelp.View
         holder.textView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 Intent intent;
-                /*
-                for(int i=0;i<title.length;i++){
-
-
-
-
-
-                }
-*/
-
-
-
-
                 switch (title[position]){
                     case "Air Squats":
                         intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=rMvwVtlqjTE"));
