@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //user = new UserInfo();
         excelscrapper=new ExcelScrapper();
+<<<<<<< HEAD
 
         String ess = Environment.getExternalStorageState();
         String sdCardPath = null;
@@ -175,11 +176,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         //testexcel();
+=======
+        excelscrapper.readExcel();
+>>>>>>> 6cc944652c2603f1d96f62879928cea3ef83a38f
 
-        //a.list.add(ff);
-        //ExcelScrapper a= new ExcelScrapper();
-        //a.readExcel();
-        //testexcel();
 
 
 
@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
         //user.setBox(true);
         //user.setJumprope(false);
         //user.setWallBall(false);
-System.out.println("메인엑티비티에서"+excelscrapper.userinfo.wodrecord.wodlist.get(0).getWODname());
+        //System.out.println("메인엑티비티에서"+excelscrapper.userinfo.wodrecord.wodlist.get(0).getWODname());
 
         setContentView(R.layout.activity_main);
 
@@ -239,53 +239,6 @@ System.out.println("메인엑티비티에서"+excelscrapper.userinfo.wodrecord.w
         });
     }
 
-    public void testexcel() {
-        AssetManager am = getResources().getAssets();
-        InputStream is = null;
-
-        try {
-            System.out.println(am);
-            is = am.open("tem a.xls");
-
-            // TODO : use is(InputStream).
-            Workbook workbook = null;
-
-            Sheet sheet;
-            String p = System.getProperty("user.dir");
-
-
-            workbook = Workbook.getWorkbook(is);
-            sheet = workbook.getSheet(1);
-            String ctgy = sheet.getCell(13, 5).getContents();
-            String weight = sheet.getCell(13, 7).getContents();
-            String height = sheet.getCell(13, 8).getContents();
-
-            this.list.add(ctgy);
-            this.list.add(weight);
-            this.list.add(height);
-            System.out.println("액셀스크래퍼에서 사이즈:" + this.list.size());
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        if (is != null) {
-            try {
-                is.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-
-    }
-
-
-
-
-
-
 
 
 
@@ -300,7 +253,29 @@ System.out.println("메인엑티비티에서"+excelscrapper.userinfo.wodrecord.w
 
             private WODrecord wodrecord; //템플릿에 있는 개인이 실제로 한 기록
             private ArrayList<WOD> userwodlist; //와드 선택할때 리스트(뭐 할지 고를지)
+
             private String UserName;
+            private String UserAge;
+            private String UserWeight;
+            private String UserHeight;
+            private String User_NumOfTraining;
+
+            public UserInfo(){
+                this.wodrecord=new WODrecord(); //템플릿에 있는 개인이 실제로 한 기록
+                this.userwodlist=new ArrayList<WOD>(); //와드 선택할때 리스트(뭐 할지 고를지)
+
+            }
+
+
+            //운동 기구가 있는지 없는지
+            private boolean Dumbbell;
+            private boolean Body;
+            private boolean Kettlebell;
+            private boolean Barbell;
+            private boolean WallBall;
+            private boolean Box;
+            private boolean Jumprope;
+            private boolean PullUpBar;
 
             public WODrecord getWodrecord() {
                 return wodrecord;
@@ -407,16 +382,6 @@ System.out.println("메인엑티비티에서"+excelscrapper.userinfo.wodrecord.w
                 Box = box;
             }
 
-            private String UserAge;
-            private String UserWeight;
-            private String UserHeight;
-            private String User_NumOfTraining;
-            private boolean Dumbbell;
-            private boolean Body;
-            private boolean Kettlebell;
-            private boolean Barbell;
-            private boolean WallBall;
-            private boolean Box;
 
             public boolean isJumprope() {
                 return Jumprope;
@@ -434,17 +399,6 @@ System.out.println("메인엑티비티에서"+excelscrapper.userinfo.wodrecord.w
                 PullUpBar = pullUpBar;
             }
 
-            private boolean Jumprope;
-            private boolean PullUpBar;
-            public UserInfo(){
-                this.wodrecord=new WODrecord(); //템플릿에 있는 개인이 실제로 한 기록
-                this.userwodlist=new ArrayList<WOD>(); //와드 선택할때 리스트(뭐 할지 고를지)
-
-
-            }
-
-
-
         }
 
 
@@ -452,12 +406,19 @@ System.out.println("메인엑티비티에서"+excelscrapper.userinfo.wodrecord.w
             private String WODname;//ex) FRAN,고성주의 와드
             private String WODlevel;
             private String WODtype; //포타임, 암랩 등등
+
             //데드21,월볼21 + 데드15,월볼15 와드 예시
             private ArrayList<String> movement;//{데드,월볼,데드,월볼,데드,월볼}
             private ArrayList<String> movementnum;//={21,21,21,15,15,15};
-            private ArrayList<String> weightlist;
-            private ArrayList<String> equipment;
+            private ArrayList<String> weightlist;//각각 무게
+            private ArrayList<String> equipment;// 사용한 기구
 
+            public WOD(){
+                this.movement=new ArrayList<String>();
+                this.movementnum=new ArrayList<String>();
+                this.weightlist=new ArrayList<String>();
+                this.equipment=new ArrayList<String>();
+            }
 
 
 
@@ -468,8 +429,6 @@ System.out.println("메인엑티비티에서"+excelscrapper.userinfo.wodrecord.w
             public void setWODlevel(String WODlevel) {
                 this.WODlevel = WODlevel;
             }
-
-
 
             public String getWODname() {
                 return WODname;
@@ -524,17 +483,21 @@ System.out.println("메인엑티비티에서"+excelscrapper.userinfo.wodrecord.w
             }
 
 
-            public WOD(){
-                this.movement=new ArrayList<String>();
-                this.movementnum=new ArrayList<String>();
-                this.weightlist=new ArrayList<String>();
-                this.equipment=new ArrayList<String>();
-            }
+
 
         }
         class WODrecord{
             private ArrayList<WOD> wodlist; //{프란,신디,민성재,김정훈}
             private ArrayList<String> scorelist; //{"70","80","75","60"}
+            private ArrayList<String> recordlist; //{"4:32","3:53","2:10","6:34"}
+
+
+            public WODrecord(){
+                wodlist=new ArrayList<WOD>();
+                scorelist=new ArrayList<String>();
+                recordlist=new ArrayList<String>();
+
+            }
 
             public ArrayList<WOD> getWodlist() {
                 return wodlist;
@@ -560,19 +523,12 @@ System.out.println("메인엑티비티에서"+excelscrapper.userinfo.wodrecord.w
                 this.recordlist = recordlist;
             }
 
-            private ArrayList<String> recordlist; //{"4:32","3:53","2:10","6:34"}
-            public WODrecord(){
-                wodlist=new ArrayList<WOD>();
-                scorelist=new ArrayList<String>();
-                recordlist=new ArrayList<String>();
 
-
-
-            }
         }
 
 
 
+<<<<<<< HEAD
 
         //dfsd
 
@@ -681,11 +637,22 @@ System.out.println("메인엑티비티에서"+excelscrapper.userinfo.wodrecord.w
 
 
 
+=======
+        //엑셀 읽는 부분
+        public void readExcel(){
+            AssetManager am = getResources().getAssets();
+            InputStream is = null;
+            InputStream is2 = null;
+            InputStream is3 = null;
+            InputStream is4 = null;
+            InputStream is5 = null;
+>>>>>>> 6cc944652c2603f1d96f62879928cea3ef83a38f
 
 
 
             try {
                 System.out.println(am);
+<<<<<<< HEAD
                 //is = am.open("netwodtemplate.xls");
                 //InputStream is2=new FileInputStream("src/main/assets/netwodtemplate.xls");
                 //InputStream is2=new FileInputStream("NETWOD/app/src/main/assets/netwodtemplate.xls");
@@ -702,7 +669,33 @@ System.out.println("메인엑티비티에서"+excelscrapper.userinfo.wodrecord.w
                 }
                 //InputStream df=new FileInputStream("")
                 // String p=System.getProperty("user.dir");
+=======
+                is = am.open("netwodtemplate.xls");
+                is2 = am.open("movement.xls");
+                is3 = am.open("equipment.xls");
+                is4 = am.open("wodlist.xls");
+                is5 = am.open("userwodlist.xls");
 
+
+                // TODO : use is(InputStream).
+                Workbook workbook = null;
+                Workbook workbook2 = null;
+                Workbook workbook3 = null;
+                Workbook workbook4 = null;
+                Workbook workbook5 = null;
+
+
+                Sheet sheet;
+
+                workbook = Workbook.getWorkbook(is);
+                workbook2 = Workbook.getWorkbook(is2);
+                workbook3 = Workbook.getWorkbook(is3);
+                workbook4 = Workbook.getWorkbook(is4);
+                workbook5 = Workbook.getWorkbook(is5);
+
+>>>>>>> 6cc944652c2603f1d96f62879928cea3ef83a38f
+
+                //netwodtemplate.xls 읽기
                 if(workbook != null){
                     System.out.println("워크북이 있다");
 
@@ -718,13 +711,13 @@ System.out.println("메인엑티비티에서"+excelscrapper.userinfo.wodrecord.w
                         String height = sheet.getCell(13, 8).getContents();
                         String NumofTraining = sheet.getCell(13, 9).getContents();
 
-
                         this.userinfo.setUserName(name);
                         this.userinfo.setUserWeight(weight);
                         this.userinfo.setUserHeight(height);
                         //this.user_info.add(age);
-
                         //this.user_info.add(NumofTraining);
+
+
 
 
                         //운동 스케줄 엑셀에서 읽어오는 부분
@@ -764,72 +757,6 @@ System.out.println("메인엑티비티에서"+excelscrapper.userinfo.wodrecord.w
 
                         nRowStartIndex+=50;
                         }
-                        ArrayList<String> wod_name = new ArrayList<String>();
-                        ArrayList<String> wod_type = new ArrayList<String>();
-                        ArrayList<String> movement = new ArrayList<String>();
-                        ArrayList<String> equipment = new ArrayList<String>();
-                        ArrayList<String> reps = new ArrayList<String>();
-                        ArrayList<String> equip_weight = new ArrayList<String>();
-                        ArrayList<String> wod_level = new ArrayList<String>();
-                        ArrayList<String> wod_record = new ArrayList<String>();
-                        ArrayList<String> score = new ArrayList<String>();
-
-
-                        for (int nRow1 = nRowStartIndex; nRow1 <= nRowEndIndex; nRow1 += 50) {
-                            wod_name.add(sheet.getCell(nColumnStartIndex, nRow1).getContents());
-                            wod_type.add(sheet.getCell(nColumnStartIndex + 1, nRow1).getContents());
-
-                            wod_level.add(sheet.getCell(nColumnStartIndex + 6, nRow1).getContents());
-                            wod_record.add(sheet.getCell(nColumnStartIndex + 7, nRow1).getContents());
-                            score.add(sheet.getCell(nColumnStartIndex + 8, nRow1).getContents());
-                        }
-                        for (int nRow = nRowStartIndex; nRow <= nRowEndIndex; nRow++) {
-                            do {
-                                movement.add(sheet.getCell(nColumnStartIndex + 2, nRow).getContents());
-                            } while (movement.contains(null));
-                            do {
-                                equipment.add(sheet.getCell(nColumnStartIndex + 3, nRow).getContents());
-                            } while (equipment.contains(null));
-                            do {
-                                reps.add(sheet.getCell(nColumnStartIndex + 4, nRow).getContents());
-
-                            } while (reps.contains(null));
-                            do {
-                                equip_weight.add(sheet.getCell(nColumnStartIndex + 5, nRow).getContents());
-
-                            } while (equip_weight.contains(null));
-
-                        }
-                        //this.userinfo.wodrecord.wodlist.add
-                        //wod_name.size이게 와드개수네
-                        //for(wod_name.size){
-                        //this.userinfo.wodrecord.wodlist.add
-
-                    //}
-
-                        schedule.add(wod_name);
-                        schedule.add(wod_type);
-                        schedule.add(movement);
-                        schedule.add(equipment);
-                        schedule.add(reps);
-                        schedule.add(equip_weight);
-                        schedule.add(wod_level);
-                        schedule.add(wod_record);
-                        schedule.add(score);
-
-                        record.add(wod_name);
-                        record.add(wod_type);
-                        record.add(movement);
-                        record.add(equipment);
-                        record.add(reps);
-                        record.add(equip_weight);
-                        record.add(wod_level);
-                        record.add(wod_record);
-                        record.add(score);
-
-
-
-
 
                     }
                     else{
@@ -841,15 +768,108 @@ System.out.println("메인엑티비티에서"+excelscrapper.userinfo.wodrecord.w
                 }
 
 
-            } catch (Exception e) {
+
+                //movement.xls 읽기
+                if(workbook2 !=null){
+                    sheet = workbook2.getSheet(0);
+                    if(sheet != null) {
+
+                        int nRowStartIndex = 1;
+                        int nRowEndIndex = 32;
+                        int nColumnStartIndex = 0;
+
+                        while (sheet.getCell(nColumnStartIndex, nRowStartIndex).getContents() != "") {
+                            WOD wod = new WOD();
+
+
+                        }
+                    }
+                    else{
+                        System.out.println("Sheet is null");
+                    }
+                }
+                else{
+                    System.out.println("Workbook is null");
+                }
+
+
+                //equipment.xls 엑셀 읽기
+                if(workbook3 !=null){
+                    sheet = workbook3.getSheet(0);
+                    if(sheet != null) {
+
+                        int nRowStartIndex = 0;
+                        int nRowEndIndex = 8;
+                        int nColumnStartIndex = 0;
+
+                        while (sheet.getCell(nColumnStartIndex, nRowStartIndex).getContents() != "") {
+                            WOD wod = new WOD();
+
+
+                        }
+                    }
+                    else{
+                        System.out.println("Sheet is null");
+                    }
+                }
+                else{
+                    System.out.println("Workbook is null");
+                }
+
+
+                //wodlist.xls 엑셀 읽기
+                if(workbook4 !=null){
+                    sheet = workbook4.getSheet(0);
+                    if(sheet != null) {
+
+                        int nRowStartIndex = 1;
+                        int nRowEndIndex = 32;
+                        int nColumnStartIndex = 0;
+
+                        while (sheet.getCell(nColumnStartIndex, nRowStartIndex).getContents() != "") {
+                            WOD wod = new WOD();
+
+
+                        }
+                    }
+                    else{
+                        System.out.println("Sheet is null");
+                    }
+                }
+                else{
+                    System.out.println("Workbook is null");
+                }
+
+
+                //userwodlist.xls 읽기
+                if(workbook5 !=null){
+                    sheet = workbook5.getSheet(0);
+                    if(sheet != null) {
+
+                        int nRowStartIndex = 1;
+                        int nRowEndIndex = 32;
+                        int nColumnStartIndex = 0;
+
+                        while (sheet.getCell(nColumnStartIndex, nRowStartIndex).getContents() != "") {
+                            WOD wod = new WOD();
+
+
+                        }
+                    }
+                    else{
+                        System.out.println("Sheet is null");
+                    }
+                }
+                else{
+                    System.out.println("Workbook is null");
+                }
+
+            }
+            catch (Exception e) {
                 e.printStackTrace();
             }
         }
-
-
-
     }
-
 }
 
 

@@ -1,4 +1,4 @@
-package project;
+package wod;
 
 public class Mainfunction {
 

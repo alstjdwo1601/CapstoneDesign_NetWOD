@@ -1,4 +1,4 @@
-package project;
+package wod;
 
 public class Movement {
     private String movementname;
