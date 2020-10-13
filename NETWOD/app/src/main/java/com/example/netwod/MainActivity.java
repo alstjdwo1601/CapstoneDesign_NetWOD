@@ -117,13 +117,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //user = new UserInfo();
         excelscrapper=new ExcelScrapper();
-<<<<<<< HEAD
+
 
         String ess = Environment.getExternalStorageState();
         String sdCardPath = null;
         if(ess.equals(Environment.MEDIA_MOUNTED)) {
             sdCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
-            System.out.println("경로는 받음");
+
             Toast.makeText(this, "SD Card stored in ", Toast.LENGTH_SHORT).show();
 
         } else {
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
         }
         //File file = new File(sdCardPath + "/test.txt");
         File file = new File(sdCardPath+"/Download/netwodtemplate.xls" );
-        System.out.println("파일.겟네임:"+file.getAbsolutePath());
+
        // File tmpfile = new File(sdCardPath+"/Download/temporary.xls" );
         WritableWorkbook wworkbook = null;
         try {
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         jxl.write.Label label = null;
         jxl.write.Blank blank = null;
 
-        label = new jxl.write.Label(0,0,"순위지랄",format);
+        label = new jxl.write.Label(0,0,"ㅇㅅㅇ",format);
         try {
             sheet.addCell(label);
         } catch (WriteException e) {
@@ -170,15 +170,15 @@ public class MainActivity extends AppCompatActivity {
 
             excelscrapper.readExcel(fileInputStream);
         } catch (FileNotFoundException e) {
-            System.out.println("파일 못읽음");
+            System.out.println("템플렛파일 못읽음");
             e.printStackTrace();
         }
 
 
         //testexcel();
-=======
-        excelscrapper.readExcel();
->>>>>>> 6cc944652c2603f1d96f62879928cea3ef83a38f
+
+
+
 
 
 
@@ -528,7 +528,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-<<<<<<< HEAD
+
 
         //dfsd
 
@@ -619,44 +619,13 @@ public class MainActivity extends AppCompatActivity {
 */
 
         public void readExcel(InputStream is){
-            AssetManager am = getResources().getAssets();
-            //InputStream is = null;
-
-
-
-
-
-
-
-            File path;    //저장 데이터가 존재하는 디렉토리경로
-
-            File file;     //파일명까지 포함한 경로
-
-
-
-
-
-
-=======
-        //엑셀 읽는 부분
-        public void readExcel(){
-            AssetManager am = getResources().getAssets();
-            InputStream is = null;
-            InputStream is2 = null;
-            InputStream is3 = null;
-            InputStream is4 = null;
-            InputStream is5 = null;
->>>>>>> 6cc944652c2603f1d96f62879928cea3ef83a38f
 
 
 
             try {
-                System.out.println(am);
-<<<<<<< HEAD
-                //is = am.open("netwodtemplate.xls");
-                //InputStream is2=new FileInputStream("src/main/assets/netwodtemplate.xls");
-                //InputStream is2=new FileInputStream("NETWOD/app/src/main/assets/netwodtemplate.xls");
-                // TODO : use is(InputStream).
+
+
+                 // TODO : use is(InputStream).
                 Workbook workbook = null;
                 //WritableWorkbook f=Workbook.createWorkbook(os,workbook);
                 Sheet sheet;
@@ -669,31 +638,19 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //InputStream df=new FileInputStream("")
                 // String p=System.getProperty("user.dir");
-=======
-                is = am.open("netwodtemplate.xls");
-                is2 = am.open("movement.xls");
-                is3 = am.open("equipment.xls");
-                is4 = am.open("wodlist.xls");
-                is5 = am.open("userwodlist.xls");
+
+
 
 
                 // TODO : use is(InputStream).
-                Workbook workbook = null;
-                Workbook workbook2 = null;
-                Workbook workbook3 = null;
-                Workbook workbook4 = null;
-                Workbook workbook5 = null;
 
 
-                Sheet sheet;
 
-                workbook = Workbook.getWorkbook(is);
-                workbook2 = Workbook.getWorkbook(is2);
-                workbook3 = Workbook.getWorkbook(is3);
-                workbook4 = Workbook.getWorkbook(is4);
-                workbook5 = Workbook.getWorkbook(is5);
 
->>>>>>> 6cc944652c2603f1d96f62879928cea3ef83a38f
+
+
+
+
 
                 //netwodtemplate.xls 읽기
                 if(workbook != null){
@@ -770,99 +727,19 @@ public class MainActivity extends AppCompatActivity {
 
 
                 //movement.xls 읽기
-                if(workbook2 !=null){
-                    sheet = workbook2.getSheet(0);
-                    if(sheet != null) {
-
-                        int nRowStartIndex = 1;
-                        int nRowEndIndex = 32;
-                        int nColumnStartIndex = 0;
-
-                        while (sheet.getCell(nColumnStartIndex, nRowStartIndex).getContents() != "") {
-                            WOD wod = new WOD();
-
-
-                        }
-                    }
-                    else{
-                        System.out.println("Sheet is null");
-                    }
-                }
-                else{
-                    System.out.println("Workbook is null");
-                }
 
 
                 //equipment.xls 엑셀 읽기
-                if(workbook3 !=null){
-                    sheet = workbook3.getSheet(0);
-                    if(sheet != null) {
 
-                        int nRowStartIndex = 0;
-                        int nRowEndIndex = 8;
-                        int nColumnStartIndex = 0;
-
-                        while (sheet.getCell(nColumnStartIndex, nRowStartIndex).getContents() != "") {
-                            WOD wod = new WOD();
-
-
-                        }
-                    }
-                    else{
-                        System.out.println("Sheet is null");
-                    }
-                }
-                else{
-                    System.out.println("Workbook is null");
-                }
 
 
                 //wodlist.xls 엑셀 읽기
-                if(workbook4 !=null){
-                    sheet = workbook4.getSheet(0);
-                    if(sheet != null) {
 
-                        int nRowStartIndex = 1;
-                        int nRowEndIndex = 32;
-                        int nColumnStartIndex = 0;
-
-                        while (sheet.getCell(nColumnStartIndex, nRowStartIndex).getContents() != "") {
-                            WOD wod = new WOD();
-
-
-                        }
-                    }
-                    else{
-                        System.out.println("Sheet is null");
-                    }
-                }
-                else{
-                    System.out.println("Workbook is null");
-                }
 
 
                 //userwodlist.xls 읽기
-                if(workbook5 !=null){
-                    sheet = workbook5.getSheet(0);
-                    if(sheet != null) {
-
-                        int nRowStartIndex = 1;
-                        int nRowEndIndex = 32;
-                        int nColumnStartIndex = 0;
-
-                        while (sheet.getCell(nColumnStartIndex, nRowStartIndex).getContents() != "") {
-                            WOD wod = new WOD();
 
 
-                        }
-                    }
-                    else{
-                        System.out.println("Sheet is null");
-                    }
-                }
-                else{
-                    System.out.println("Workbook is null");
-                }
 
             }
             catch (Exception e) {
