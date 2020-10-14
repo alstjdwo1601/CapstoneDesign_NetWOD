@@ -12,6 +12,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import java.io.IOException;
+
+import jxl.read.biff.BiffException;
+import jxl.write.WriteException;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Menu1Fragment#newInstance} factory method to
@@ -100,15 +105,7 @@ public class ChangeinfoFragment extends Fragment {
         kettlebellcheckbox=rootView.findViewById(R.id.changeKettlebellcheckBox);
         pullupbarcheckbox=rootView.findViewById(R.id.changePullUpBarcheckBox);
         wallballcheckbox=rootView.findViewById(R.id.changeWallBallcheckBox);
-        //user 와 동기화
-        //boxcheckbox.setChecked(      ((MainActivity)getActivity()).user.isBox()        );
-        //jumpropecheckbox.setChecked(      ((MainActivity)getActivity()).user.isJumprope()        );
-        //barbellcheckbox.setChecked(      ((MainActivity)getActivity()).user.isBarbell()        );
-        //dumbbellcheckbox.setChecked(      ((MainActivity)getActivity()).user.isDumbbell()        );
-        //bodycheckbox.setChecked(      ((MainActivity)getActivity()).user.isBody()        );
-        //kettlebellcheckbox.setChecked(      ((MainActivity)getActivity()).user.isKettlebell()        );
-        //pullupbarcheckbox.setChecked(     (boolean) ((MainActivity)getActivity()).user.isPullUpBar()        );
-        //wallballcheckbox.setChecked(    (boolean)  ((MainActivity)getActivity()).user.isWallBall()        );
+
 
 
 
@@ -119,6 +116,7 @@ public class ChangeinfoFragment extends Fragment {
         changeinfobutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { //이거 엑셀수정으로 바꿔야함
+
                 ((MainActivity)getActivity()).excelscrapper.userinfo.setUserName( tv_username.getText().toString());
                 ((MainActivity)getActivity()).excelscrapper.userinfo.setUserWeight(tv_userweight.getText().toString());
                 ((MainActivity)getActivity()).excelscrapper.userinfo.setUserHeight( tv_userheight.getText().toString());
@@ -131,7 +129,16 @@ public class ChangeinfoFragment extends Fragment {
                 ((MainActivity)getActivity()).excelscrapper.userinfo.setKettlebell((boolean)kettlebellcheckbox.isChecked());
                 ((MainActivity)getActivity()).excelscrapper.userinfo.setWallBall((boolean)wallballcheckbox.isChecked());
                 ((MainActivity)getActivity()).excelscrapper.userinfo.setPullUpBar((boolean)pullupbarcheckbox.isChecked());
+                try {
+                     activity.excelscrapper.writeExcel();
 
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (BiffException e) {
+                    e.printStackTrace();
+                } catch (WriteException e) {
+                    e.printStackTrace();
+                }
 
 
                 activity.onFragmentChange(1);

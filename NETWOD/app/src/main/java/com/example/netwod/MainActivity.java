@@ -35,8 +35,13 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import jxl.CellType;
 import jxl.Sheet;
 import jxl.Workbook;
+import jxl.read.biff.BiffException;
+import jxl.write.Label;
+import jxl.write.Number;
+import jxl.write.WritableCell;
 import jxl.write.WritableCellFormat;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
@@ -116,63 +121,32 @@ public class MainActivity extends AppCompatActivity {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         //user = new UserInfo();
-        excelscrapper=new ExcelScrapper();
 
 
-        String ess = Environment.getExternalStorageState();
+
+
         String sdCardPath = null;
-        if(ess.equals(Environment.MEDIA_MOUNTED)) {
-            sdCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+        sdCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
 
-            Toast.makeText(this, "SD Card stored in ", Toast.LENGTH_SHORT).show();
 
-        } else {
 
-            Toast.makeText(this, "SD Card not ready!", Toast.LENGTH_SHORT).show();
-        }
-        //File file = new File(sdCardPath + "/test.txt");
+
         File file = new File(sdCardPath+"/Download/netwodtemplate.xls" );
 
        // File tmpfile = new File(sdCardPath+"/Download/temporary.xls" );
-        WritableWorkbook wworkbook = null;
-        try {
-            wworkbook = Workbook.createWorkbook(new File(sdCardPath+"/Download/temporary.xls" ));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        WritableSheet sheet = wworkbook.createSheet("Sheet1", 0);
 
-        jxl.write.WritableCellFormat  format= new WritableCellFormat();
-        jxl.write.WritableCellFormat  format0= new WritableCellFormat();
-        jxl.write.Label label = null;
-        jxl.write.Blank blank = null;
 
-        label = new jxl.write.Label(0,0,"ㅇㅅㅇ",format);
+        FileInputStream fileInputStream = null;
         try {
-            sheet.addCell(label);
-        } catch (WriteException e) {
-            e.printStackTrace();
-        }
-        try {
-            wworkbook.write();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            wworkbook.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (WriteException e) {
-            e.printStackTrace();
-        }
-        try {
-            FileInputStream fileInputStream = new FileInputStream(file);
-
-            excelscrapper.readExcel(fileInputStream);
+            fileInputStream = new FileInputStream(file);
         } catch (FileNotFoundException e) {
-            System.out.println("템플렛파일 못읽음");
             e.printStackTrace();
         }
+        //excelscrapper=new ExcelScrapper(sdCardPath,fileInputStream);
+        excelscrapper=new ExcelScrapper(sdCardPath);
+        excelscrapper.readExcel();
+
+            //excelscrapper.readExcel(fileInputStream);
 
 
         //testexcel();
@@ -249,6 +223,15 @@ public class MainActivity extends AppCompatActivity {
         //변수들 특히 어레이리스트 1.동적할당 2.private썼으면 게터세터
         //어플 키면 excelscrapper가 엑셀 읽고 Userinfo를 하나 줌. 난 그 userinfo.리스트 이걸로만 접근할거임
         UserInfo userinfo=new UserInfo();
+        String sdCardPath;
+        FileInputStream is=null;
+        File file;
+        public ExcelScrapper(String s){
+            this.sdCardPath=s;
+
+
+        }
+
         class UserInfo {
 
             private WODrecord wodrecord; //템플릿에 있는 개인이 실제로 한 기록
@@ -536,90 +519,104 @@ public class MainActivity extends AppCompatActivity {
         public ArrayList<ArrayList<String>> schedule = new ArrayList<ArrayList<String>>();
         public ArrayList<ArrayList<String>> record = new ArrayList<ArrayList<String>>();
 
-        /*
-        public void writeExcel(File file){
+
+        public void writeExcel() throws IOException, BiffException, WriteException {
+            file=new File(sdCardPath+"/Download/netwodtemplate.xls" );
+            //File file = new File(sdCardPath+"/Download/netwodtemplate.xls" );
+
             try {
-
-                WritableWorkbook workbook = null;
-                //WritableWorkbook f=Workbook.createWorkbook(os,workbook);
-                Sheet sheet;
-                //String p = System.getProperty("user.dir");
-                workbook=Workbook.createWorkbook(new File());
-                workbook = Workbook.getWorkbook(is);
-                if(workbook==null){
-                    System.out.println("워크북이 NULL");
-
-                }
-                //InputStream df=new FileInputStream("")
-                // String p=System.getProperty("user.dir");
-
-                if(workbook != null){
-                    System.out.println("워크북이 있다");
-
-                    sheet = workbook.getSheet(1);
-
-                    if(sheet != null) {
-
-
-                        // 유저 정보 엑셀에서 읽어오는 부분
-                        String name = sheet.getCell(13, 5).getContents();
-                        String age = sheet.getCell(13, 6).getContents();
-                        String weight = sheet.getCell(13, 7).getContents();
-                        String height = sheet.getCell(13, 8).getContents();
-                        String NumofTraining = sheet.getCell(13, 9).getContents();
-
-
-                        this.userinfo.setUserName(name);
-                        this.userinfo.setUserWeight(weight);
-                        this.userinfo.setUserHeight(height);
-                        //this.user_info.add(age);
-
-                        //this.user_info.add(NumofTraining);
-
-
-                        //운동 스케줄 엑셀에서 읽어오는 부분
-                        //int nMaxColumn = 9;
-                        int nRowStartIndex = 9;
-                        int nRowEndIndex = 150;
-                        int nColumnStartIndex = 2;
-                        int wodrow;
-                        int wodcol;
-                        //int nColumnEndIndex = 10;
-                        //무브먼트(4,X) ,
-
-
-
-
-
-
-                        //this.userinfo.wodrecord.wodlist.add
-                        //wod_name.size이게 와드개수네
-                        //for(wod_name.size){
-                        //this.userinfo.wodrecord.wodlist.add
-
-                        //}
-
-
-                    }
-                    else{
-                        System.out.println("Sheet is null");
-                    }
-                }
-                else{
-                    System.out.println("Workbook is null");
-                }
-
-
-            } catch (Exception e) {
+                is = new FileInputStream(file);
+                System.out.println("write에서 인풋스트림 생성 성공");
+            } catch (FileNotFoundException e) {
+                System.out.println("write에서 인풋스트림 생성 불가");
                 e.printStackTrace();
             }
 
+            Workbook originworkbook = null;
+            //WritableWorkbook f=Workbook.createWorkbook(os,workbook);
+
+            //String p = System.getProperty("user.dir");
+
+            originworkbook = Workbook.getWorkbook(is);
+
+
+
+            WritableWorkbook wworkbook = null;
+            try {
+                wworkbook = Workbook.createWorkbook(new File(sdCardPath+"/Download/netwodtemplate.xls" ),originworkbook);
+
+            } catch (IOException e) {
+
+                e.printStackTrace();
+            }
+            //WritableSheet sheet = wworkbook.createSheet("Sheet1", 0);
+            WritableSheet sheet = wworkbook.getSheet(1);
+
+            jxl.write.WritableCellFormat  format= new WritableCellFormat();
+            jxl.write.WritableCellFormat  format0= new WritableCellFormat();
+            jxl.write.Label label = null;
+            jxl.write.Blank blank = null;
+            WritableCell fcell= sheet.getWritableCell(0,0);
+            System.out.println("00cell타입:" + fcell.getType());
+            //label = new jxl.write.Label(0,0,"넷와드 템플릿",format);
+            WritableCell heightcell= sheet.getWritableCell(13,8);
+            System.out.println("cell.label:"+CellType.LABEL);
+            System.out.println("heightcell타입:" + heightcell.getType());
+
+            if (heightcell.getType() == CellType.NUMBER) {
+                jxl.write.Number n=(jxl.write.Number) heightcell;
+               // Label heightlabel = (Label) heightcell;
+                //l.setString("")
+                n.setValue(Integer.parseInt(userinfo.getUserHeight()));
+                //heightlabel.setString(this.userinfo.getUserHeight());
+                System.out.println("수정키:" + this.userinfo.getUserHeight());
+
+                //sheet.addCell(l);
+
+            }
+            WritableCell namecell= sheet.getWritableCell(13,5);
+            System.out.println("namecell타입:" + namecell.getType());
+            if (namecell.getType() == CellType.LABEL) {
+
+                Label namelabel = (Label) namecell;
+                //l.setString("")
+                namelabel.setString(this.userinfo.getUserName());
+                System.out.println("수정유저이름:" + this.userinfo.getUserName());
+                //sheet.addCell(l);
+            }
+
+
+
+
+            try {
+                wworkbook.write();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                wworkbook.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (WriteException e) {
+                e.printStackTrace();
+            }
+            is.close();
+            originworkbook.close();
+
+
 
         }
-*/
+        public void readExcel(){
+            file=new File(sdCardPath+"/Download/netwodtemplate.xls" );
+            //File file = new File(sdCardPath+"/Download/netwodtemplate.xls" );
 
-        public void readExcel(InputStream is){
-
+            try {
+                is = new FileInputStream(file);
+                System.out.println("rea에서 인풋스트림 생성 성공");
+            } catch (FileNotFoundException e) {
+                System.out.println("rea에서 인풋스트림 생성 불가");
+                e.printStackTrace();
+            }
 
 
             try {
@@ -740,12 +737,13 @@ public class MainActivity extends AppCompatActivity {
                 //userwodlist.xls 읽기
 
 
-
+            workbook.close();
+                is.close();
             }
             catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+                }
     }
 }
 

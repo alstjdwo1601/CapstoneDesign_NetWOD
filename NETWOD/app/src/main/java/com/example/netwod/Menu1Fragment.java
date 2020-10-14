@@ -14,11 +14,16 @@ import android.widget.TextView;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+
+import jxl.read.biff.BiffException;
+import jxl.write.WriteException;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Menu1Fragment#newInstance} factory method to
@@ -113,7 +118,7 @@ public class Menu1Fragment extends Fragment {
         tv_username.setText(userName);
         tv_userheight.setText(userHeight);
         tv_userweight.setText(userWeight);
-
+        activity.excelscrapper.readExcel();
 
         btn_fragment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,25 +151,5 @@ public class Menu1Fragment extends Fragment {
         //이 메소드가 호출될떄는 프래그먼트가 엑티비티위에 올라와있는거니깐 getActivity메소드로 엑티비티참조가능
         activity = (MainActivity) getActivity();
     }
-    public void saveuserprofile(){
-        try {
-            String data ;
-            //TextView t=(TextView)findViewById(R.id.NametextView);
-            data=tv_username.getText().toString();
 
-            FileOutputStream fos=activity.openFileOutput("Data.txt",activity.MODE_APPEND);
-            // mode에는 두가지가 있다. MODE_PRIVATE은 덮어쓰기, MODE_APPEND는 이어 붙이기
-            //위 바이트스트림(FileOutputStream)을 문자 스트림(Writer)으로 변환
-            PrintWriter writer= new PrintWriter(fos);
-
-            //writer.write(data+"\n"); //아래 한줄과 같은 의미
-            writer.println(data);
-            writer.flush();
-            writer.close();
-
-        }
-        catch (FileNotFoundException e) {e.printStackTrace();}
-
-
-    }
 }
