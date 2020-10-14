@@ -120,37 +120,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
-        //user = new UserInfo();
 
 
-
-
+        //에뮬레이터 내부 sdcard 경로 받기
         String sdCardPath = null;
         sdCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
 
 
-
-
-        File file = new File(sdCardPath+"/Download/netwodtemplate.xls" );
-
-       // File tmpfile = new File(sdCardPath+"/Download/temporary.xls" );
-
-
-        FileInputStream fileInputStream = null;
-        try {
-            fileInputStream = new FileInputStream(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        //excelscrapper=new ExcelScrapper(sdCardPath,fileInputStream);
         excelscrapper=new ExcelScrapper(sdCardPath);
+        //netwodtemplate.xls 읽기
         excelscrapper.readExcel();
 
-            //excelscrapper.readExcel(fileInputStream);
-
-
-        //testexcel();
-
+        //wodlist.xls 읽기
+        excelscrapper.readExcel2();
 
 
 
@@ -220,16 +202,16 @@ public class MainActivity extends AppCompatActivity {
 
 
     class ExcelScrapper {
-        //변수들 특히 어레이리스트 1.동적할당 2.private썼으면 게터세터
-        //어플 키면 excelscrapper가 엑셀 읽고 Userinfo를 하나 줌. 난 그 userinfo.리스트 이걸로만 접근할거임
+
+
         UserInfo userinfo=new UserInfo();
         String sdCardPath;
         FileInputStream is=null;
         File file;
+
+
         public ExcelScrapper(String s){
             this.sdCardPath=s;
-
-
         }
 
         class UserInfo {
@@ -275,7 +257,6 @@ public class MainActivity extends AppCompatActivity {
             public void setUserwodlist(ArrayList<WOD> userwodlist) {
                 this.userwodlist = userwodlist;
             }
-
 
             public String getUserName() {
                 return UserName;
@@ -365,7 +346,6 @@ public class MainActivity extends AppCompatActivity {
                 Box = box;
             }
 
-
             public boolean isJumprope() {
                 return Jumprope;
             }
@@ -445,8 +425,6 @@ public class MainActivity extends AppCompatActivity {
                 this.movementnum = movementnum;
             }
 
-
-
             public ArrayList<String> getWeightlist() {
                 return weightlist;
             }
@@ -454,8 +432,6 @@ public class MainActivity extends AppCompatActivity {
             public void setWeightlist(ArrayList<String> weightlist) {
                 this.weightlist = weightlist;
             }
-
-
 
             public ArrayList<String> getEquipment() {
                 return equipment;
@@ -510,14 +486,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
-
-
-        //dfsd
-
-        public ArrayList<String> equipment = new ArrayList<String>();
-        public ArrayList<ArrayList<String>> schedule = new ArrayList<ArrayList<String>>();
-        public ArrayList<ArrayList<String>> record = new ArrayList<ArrayList<String>>();
 
 
         public void writeExcel() throws IOException, BiffException, WriteException {
@@ -604,8 +572,12 @@ public class MainActivity extends AppCompatActivity {
             originworkbook.close();
 
 
-
         }
+
+
+        //
+        //netwodtemplate.xls 읽기
+        //
         public void readExcel(){
             file=new File(sdCardPath+"/Download/netwodtemplate.xls" );
             //File file = new File(sdCardPath+"/Download/netwodtemplate.xls" );
@@ -618,41 +590,23 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-
             try {
-
 
                  // TODO : use is(InputStream).
                 Workbook workbook = null;
-                //WritableWorkbook f=Workbook.createWorkbook(os,workbook);
                 Sheet sheet;
-                //String p = System.getProperty("user.dir");
-
                 workbook = Workbook.getWorkbook(is);
+
                 if(workbook==null){
                 System.out.println("워크북이 NULL");
-
                 }
-                //InputStream df=new FileInputStream("")
-                // String p=System.getProperty("user.dir");
-
-
-
 
                 // TODO : use is(InputStream).
-
-
-
-
-
-
-
 
 
                 //netwodtemplate.xls 읽기
                 if(workbook != null){
                     System.out.println("워크북이 있다");
-
                     sheet = workbook.getSheet(1);
 
                     if(sheet != null) {
@@ -675,9 +629,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                         //운동 스케줄 엑셀에서 읽어오는 부분
-                        //int nMaxColumn = 9;
                         int nRowStartIndex = 9;
-                        int nRowEndIndex = 150;
                         int nColumnStartIndex = 2;
                         int wodrow;
                         int wodcol;
@@ -691,9 +643,9 @@ public class MainActivity extends AppCompatActivity {
                             wodcol=4; //movement
                             WOD wod=new WOD();
 
-                            wod.setWODname(sheet.getCell(2, nRowStartIndex).getContents()            );
+                            wod.setWODname(sheet.getCell(2, nRowStartIndex).getContents()    );
                             wod.setWODtype(sheet.getCell(3, nRowStartIndex).getContents()    );
-                            wod.setWODlevel(sheet.getCell(8, nRowStartIndex).getContents()    );
+                            wod.setWODlevel(sheet.getCell(8, nRowStartIndex).getContents()   );
 
                             while(sheet.getCell(4, wodrow).getContents()!=""){
                                 //System.out.println("NULL인가"+sheet.getCell(2, nRowStartIndex).getContents() );
@@ -706,7 +658,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 wodrow+=1;
                             }
-                            //System.out.println("와드네임"+sheet.getCell(2, nRowStartIndex).getContents() );
+
                             this.userinfo.wodrecord.wodlist.add(wod);
 
                         nRowStartIndex+=50;
@@ -721,29 +673,92 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println("Workbook is null");
                 }
 
-
-
-                //movement.xls 읽기
-
-
-                //equipment.xls 엑셀 읽기
-
-
-
-                //wodlist.xls 엑셀 읽기
-
-
-
-                //userwodlist.xls 읽기
-
-
             workbook.close();
                 is.close();
             }
             catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+
+
+
+        //
+        //wodlist.xls 읽기
+        //
+        public void readExcel2(){
+            file = new File(sdCardPath+"/Download/wodlist.xls" );
+            try {
+                is = new FileInputStream(file);
+                System.out.println("rea에서 인풋스트림 생성 성공");
+            } catch (FileNotFoundException e) {
+                System.out.println("rea에서 인풋스트림 생성 불가");
+                e.printStackTrace();
+            }
+
+            try {
+
+                // TODO : use is(InputStream).
+                Workbook workbook = null;
+                Sheet sheet;
+                workbook = Workbook.getWorkbook(is);
+
+                if(workbook==null){
+                    System.out.println("워크북이 NULL");
                 }
+
+                // TODO : use is(InputStream).
+                if(workbook != null){
+                    System.out.println("워크북이 있다");
+
+                    sheet = workbook.getSheet(0);
+
+                    if(sheet != null) {
+                        int nRowStartIndex = 1;
+                        int nColumnStartIndex = 0;
+                        int wodrow;
+                        int wodcol;
+
+
+                        while(sheet.getCell(nColumnStartIndex, nRowStartIndex).getContents()!=""){ //와드 두당한번씩돈다
+                            WOD wod2 =new WOD();
+
+                            wodrow=nRowStartIndex;
+                            wodcol=2; //movement
+
+
+                            wod2.setWODname(sheet.getCell(0, nRowStartIndex).getContents()    );
+                            wod2.setWODtype(sheet.getCell(1, nRowStartIndex).getContents()    );
+
+
+                            while(sheet.getCell(wodcol, wodrow).getContents()!=""){
+
+                                wod2.getMovement().add(sheet.getCell(2, wodrow).getContents());
+                                wod2.getEquipment().add(sheet.getCell(3, wodrow).getContents());
+                                wod2.getMovementnum().add(sheet.getCell(4, wodrow).getContents());
+                                wod2.getWeightlist().add(sheet.getCell(5, wodrow).getContents());
+
+                                wodrow+=1;
+                            }
+
+                            this.userinfo.wodrecord.wodlist.add(wod2);
+
+                            nRowStartIndex+=50;
+                        }
+                    }
+                    else{
+                        System.out.println("Sheet is null");
+                    }
+                }
+                else{
+                    System.out.println("Workbook is null");
+                }
+
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
 
