@@ -128,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         excelscrapper=new ExcelScrapper(sdCardPath);
+        
         //netwodtemplate.xls 읽기
         excelscrapper.readExcel();
 
@@ -241,6 +242,31 @@ public class MainActivity extends AppCompatActivity {
             private boolean Box;
             private boolean Jumprope;
             private boolean PullUpBar;
+
+
+            //개인 평균 스코어
+            private String avg_WODlevel;
+            private String avg_round_reps;
+            private String avg_time;
+            private String avg_score;
+
+            public String getAvg_WODlevel() { return avg_WODlevel; }
+
+            public void setAvg_WODlevel(String avg_WODlevel) { this.avg_WODlevel = avg_WODlevel; }
+
+            public String getAvg_round_reps() { return avg_round_reps; }
+
+            public void setAvg_round_reps(String avg_round_reps) { this.avg_round_reps = avg_round_reps; }
+
+            public String getAvg_time() { return avg_time; }
+
+            public void setAvg_time(String avg_time) { this.avg_time = avg_time; }
+
+            public String getAvg_score() { return avg_score; }
+
+            public void setAvg_score(String avg_score) { this.avg_score = avg_score; }
+
+
 
             public WODrecord getWodrecord() {
                 return wodrecord;
@@ -385,6 +411,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
+
             public String getWODlevel() {
                 return WODlevel;
             }
@@ -490,7 +519,7 @@ public class MainActivity extends AppCompatActivity {
 
         public void writeExcel() throws IOException, BiffException, WriteException {
             file=new File(sdCardPath+"/Download/netwodtemplate.xls" );
-            //File file = new File(sdCardPath+"/Download/netwodtemplate.xls" );
+
 
             try {
                 is = new FileInputStream(file);
@@ -501,57 +530,71 @@ public class MainActivity extends AppCompatActivity {
             }
 
             Workbook originworkbook = null;
-            //WritableWorkbook f=Workbook.createWorkbook(os,workbook);
-
-            //String p = System.getProperty("user.dir");
-
             originworkbook = Workbook.getWorkbook(is);
-
-
-
             WritableWorkbook wworkbook = null;
+
             try {
                 wworkbook = Workbook.createWorkbook(new File(sdCardPath+"/Download/netwodtemplate.xls" ),originworkbook);
-
             } catch (IOException e) {
-
                 e.printStackTrace();
             }
-            //WritableSheet sheet = wworkbook.createSheet("Sheet1", 0);
+
+
             WritableSheet sheet = wworkbook.getSheet(1);
 
             jxl.write.WritableCellFormat  format= new WritableCellFormat();
             jxl.write.WritableCellFormat  format0= new WritableCellFormat();
             jxl.write.Label label = null;
             jxl.write.Blank blank = null;
-            WritableCell fcell= sheet.getWritableCell(0,0);
-            System.out.println("00cell타입:" + fcell.getType());
-            //label = new jxl.write.Label(0,0,"넷와드 템플릿",format);
+
+
+            // 유저 정보 키 변경
             WritableCell heightcell= sheet.getWritableCell(13,8);
             System.out.println("cell.label:"+CellType.LABEL);
             System.out.println("heightcell타입:" + heightcell.getType());
 
             if (heightcell.getType() == CellType.NUMBER) {
                 jxl.write.Number n=(jxl.write.Number) heightcell;
-               // Label heightlabel = (Label) heightcell;
-                //l.setString("")
                 n.setValue(Integer.parseInt(userinfo.getUserHeight()));
-                //heightlabel.setString(this.userinfo.getUserHeight());
                 System.out.println("수정키:" + this.userinfo.getUserHeight());
-
-                //sheet.addCell(l);
-
             }
+
+            // 유저 정보 이름 변경
             WritableCell namecell= sheet.getWritableCell(13,5);
             System.out.println("namecell타입:" + namecell.getType());
             if (namecell.getType() == CellType.LABEL) {
-
                 Label namelabel = (Label) namecell;
-                //l.setString("")
                 namelabel.setString(this.userinfo.getUserName());
                 System.out.println("수정유저이름:" + this.userinfo.getUserName());
-                //sheet.addCell(l);
+
             }
+
+            // 유저 정보 점수 변경
+            /*
+            WritableCell scorecell= sheet.getWritableCell(16,9);
+
+            if (scorecell.getType() == CellType.LABEL) {
+                Label scorelabel = (Label) scorecell;
+                scorelabel.setString(this.userinfo.getAvg_score());
+                System.out.println("수정유저이름:" + this.userinfo.getAvg_score());
+
+            }
+
+            */
+
+
+
+            //유저 정보 몸무게 변경
+            WritableCell weightcell= sheet.getWritableCell(13,7);
+            System.out.println("cell.label:"+CellType.LABEL);
+            System.out.println("weightcell타입:" + heightcell.getType());
+
+            if (weightcell.getType() == CellType.NUMBER) {
+                jxl.write.Number n=(jxl.write.Number) weightcell;
+                n.setValue(Integer.parseInt(userinfo.getUserWeight()));
+                System.out.println("수정키:" + this.userinfo.getUserWeight());
+            }
+
 
 
 
@@ -584,9 +627,9 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 is = new FileInputStream(file);
-                System.out.println("rea에서 인풋스트림 생성 성공");
+                System.out.println("netwodtemplate에서 인풋스트림 생성 성공");
             } catch (FileNotFoundException e) {
-                System.out.println("rea에서 인풋스트림 생성 불가");
+                System.out.println("netwodtemplate에서 인풋스트림 생성 불가");
                 e.printStackTrace();
             }
 
@@ -614,16 +657,53 @@ public class MainActivity extends AppCompatActivity {
 
                         // 유저 정보 엑셀에서 읽어오는 부분
                         String name = sheet.getCell(13, 5).getContents();
-                        String age = sheet.getCell(13, 6).getContents();
                         String weight = sheet.getCell(13, 7).getContents();
                         String height = sheet.getCell(13, 8).getContents();
-                        String NumofTraining = sheet.getCell(13, 9).getContents();
+
 
                         this.userinfo.setUserName(name);
                         this.userinfo.setUserWeight(weight);
                         this.userinfo.setUserHeight(height);
-                        //this.user_info.add(age);
-                        //this.user_info.add(NumofTraining);
+
+
+
+                        // equipment boolean 형식으로 반환하기
+                        String barbell = sheet.getCell(13,14).getContents();
+                        String body = sheet.getCell(13,15).getContents();
+                        String pullupbar = sheet.getCell(13,16).getContents();
+                        String jumprope = sheet.getCell(13,17).getContents();
+                        String kettlebell = sheet.getCell(13,18).getContents();
+                        String wallball = sheet.getCell(13,19).getContents();
+                        String box = sheet.getCell(13,20).getContents();
+                        String dumbbell = sheet.getCell(13,21).getContents();
+
+                        if(barbell.equals("Y")){ this.userinfo.setBarbell(true); }
+                        else{ this.userinfo.setBarbell(false); }
+
+                        System.out.println(userinfo.isBarbell());
+
+                        if(body.equals("Y")){ this.userinfo.setBody(true); }
+                        else{ this.userinfo.setBody(false); }
+
+                        if(pullupbar.equals("Y")){ this.userinfo.setPullUpBar(true); }
+                        else{ this.userinfo.setPullUpBar(false); }
+
+                        if(jumprope.equals("Y")){ this.userinfo.setJumprope(true); }
+                        else{ this.userinfo.setJumprope(false); }
+
+                        if(kettlebell.equals("Y")){ this.userinfo.setKettlebell(true); }
+                        else{ this.userinfo.setKettlebell(false); }
+
+                        if(wallball.equals("Y")){ this.userinfo.setWallBall(true); }
+                        else{ this.userinfo.setWallBall(false); }
+
+                        if(box.equals("Y")){ this.userinfo.setBox(true); }
+                        else{ this.userinfo.setBox(false); }
+
+                        if(dumbbell.equals("Y")){ this.userinfo.setDumbbell(true); }
+                        else{ this.userinfo.setDumbbell(false); }
+
+
 
 
 
@@ -633,12 +713,28 @@ public class MainActivity extends AppCompatActivity {
                         int nColumnStartIndex = 2;
                         int wodrow;
                         int wodcol;
-                        //int nColumnEndIndex = 10;
-                        //무브먼트(4,X) ,
+
+                        int cnt = 0;
+                        float temp_score = 0;
+                        float temp_level = 0;
+                        int temp_time = 0;
+                        int minute = 0;
+                        int second = 0;
+
+
                         while(sheet.getCell(nColumnStartIndex, nRowStartIndex).getContents()!=""){ //와드 두당한번씩돈다
 
                         this.userinfo.wodrecord.recordlist.add(sheet.getCell(9, nRowStartIndex).getContents());
                         this.userinfo.wodrecord.scorelist.add(sheet.getCell(10, nRowStartIndex).getContents());
+
+
+                        minute = Integer.parseInt(sheet.getCell(9, nRowStartIndex).getContents().substring(0,2));
+                        second = Integer.parseInt(sheet.getCell(9, nRowStartIndex).getContents().substring(3,5));
+
+                        temp_time += minute * 60 + second;
+                        temp_score += Float.parseFloat(sheet.getCell(10,nRowStartIndex).getContents());
+
+
                             wodrow=nRowStartIndex;
                             wodcol=4; //movement
                             WOD wod=new WOD();
@@ -646,6 +742,8 @@ public class MainActivity extends AppCompatActivity {
                             wod.setWODname(sheet.getCell(2, nRowStartIndex).getContents()    );
                             wod.setWODtype(sheet.getCell(3, nRowStartIndex).getContents()    );
                             wod.setWODlevel(sheet.getCell(8, nRowStartIndex).getContents()   );
+
+                            temp_level += Float.parseFloat(sheet.getCell(8, nRowStartIndex).getContents() );
 
                             while(sheet.getCell(4, wodrow).getContents()!=""){
                                 //System.out.println("NULL인가"+sheet.getCell(2, nRowStartIndex).getContents() );
@@ -660,9 +758,29 @@ public class MainActivity extends AppCompatActivity {
                             }
 
                             this.userinfo.wodrecord.wodlist.add(wod);
+                            cnt ++;
 
                         nRowStartIndex+=50;
                         }
+
+
+                        // 개인 평균 기록
+                        float level_wod = (temp_level / (float)cnt);
+                        float score = (temp_score / (float)cnt) ;
+                        int time = (temp_time / cnt) ;
+
+                        @SuppressLint("DefaultLocale") String s_level_wod = String.format("%.2f", level_wod);
+                        @SuppressLint("DefaultLocale") String s_score = String.format("%.2f", score);
+                        String s_time = Integer.toString(time/60) +":"+Integer.toString(time%60);
+
+                        System.out.println("평균 와드 레벨은 : "+ s_level_wod);
+                        System.out.println("평균 스코어는 : "+s_score);
+                        System.out.println("평균 시간은 : "+s_time);
+                        this.userinfo.setAvg_WODlevel(s_level_wod);
+                        this.userinfo.setAvg_score(s_score);
+                        this.userinfo.setAvg_time(s_time);
+
+
 
                     }
                     else{
@@ -690,9 +808,9 @@ public class MainActivity extends AppCompatActivity {
             file = new File(sdCardPath+"/Download/wodlist.xls" );
             try {
                 is = new FileInputStream(file);
-                System.out.println("rea에서 인풋스트림 생성 성공");
+                System.out.println("wodlist.xls에서 인풋스트림 생성 성공");
             } catch (FileNotFoundException e) {
-                System.out.println("rea에서 인풋스트림 생성 불가");
+                System.out.println("wodlist.xls에서 인풋스트림 생성 불가");
                 e.printStackTrace();
             }
 
