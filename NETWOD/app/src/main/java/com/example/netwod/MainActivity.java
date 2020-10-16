@@ -474,6 +474,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
+
         class WODrecord{
             private ArrayList<WOD> wodlist; //{프란,신디,민성재,김정훈}
             private ArrayList<String> scorelist; //{"70","80","75","60"}
@@ -550,18 +551,16 @@ public class MainActivity extends AppCompatActivity {
 
             // 유저 정보 키 변경
             WritableCell heightcell= sheet.getWritableCell(13,8);
-            System.out.println("cell.label:"+CellType.LABEL);
-            System.out.println("heightcell타입:" + heightcell.getType());
 
             if (heightcell.getType() == CellType.NUMBER) {
                 jxl.write.Number n=(jxl.write.Number) heightcell;
                 n.setValue(Integer.parseInt(userinfo.getUserHeight()));
-                System.out.println("수정키:" + this.userinfo.getUserHeight());
+                System.out.println("수정 키:" + this.userinfo.getUserHeight());
             }
 
             // 유저 정보 이름 변경
             WritableCell namecell= sheet.getWritableCell(13,5);
-            System.out.println("namecell타입:" + namecell.getType());
+
             if (namecell.getType() == CellType.LABEL) {
                 Label namelabel = (Label) namecell;
                 namelabel.setString(this.userinfo.getUserName());
@@ -569,33 +568,44 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
+            //유저 정보 몸무게 변경
+            WritableCell weightcell= sheet.getWritableCell(13,7);
+
+            if (weightcell.getType() == CellType.NUMBER) {
+                jxl.write.Number n=(jxl.write.Number) weightcell;
+                n.setValue(Integer.parseInt(userinfo.getUserWeight()));
+                System.out.println("수정 몸무게:" + this.userinfo.getUserWeight());
+            }
+
             // 유저 정보 점수 변경
-            /*
             WritableCell scorecell= sheet.getWritableCell(16,9);
 
             if (scorecell.getType() == CellType.LABEL) {
                 Label scorelabel = (Label) scorecell;
                 scorelabel.setString(this.userinfo.getAvg_score());
-                System.out.println("수정유저이름:" + this.userinfo.getAvg_score());
+                System.out.println("수정된 스코어:" + this.userinfo.getAvg_score());
 
             }
 
-            */
+            // 유저 정보 평균 시간 변경
+            WritableCell timecell= sheet.getWritableCell(16,7);
 
+            if (timecell.getType() == CellType.LABEL) {
+                Label timelabel = (Label) timecell;
+                timelabel.setString(this.userinfo.getAvg_time());
+                System.out.println("수정된 시간:" + this.userinfo.getAvg_time());
 
-
-            //유저 정보 몸무게 변경
-            WritableCell weightcell= sheet.getWritableCell(13,7);
-            System.out.println("cell.label:"+CellType.LABEL);
-            System.out.println("weightcell타입:" + heightcell.getType());
-
-            if (weightcell.getType() == CellType.NUMBER) {
-                jxl.write.Number n=(jxl.write.Number) weightcell;
-                n.setValue(Integer.parseInt(userinfo.getUserWeight()));
-                System.out.println("수정키:" + this.userinfo.getUserWeight());
             }
 
+            // 유저 정보 평균 와드 레벨 변경
+            WritableCell wodlevelcell= sheet.getWritableCell(16,5);
 
+            if (wodlevelcell.getType() == CellType.LABEL) {
+                Label wodlevellabel = (Label) wodlevelcell;
+                wodlevellabel.setString(this.userinfo.getAvg_WODlevel());
+                System.out.println("수정된 와드레벨:" + this.userinfo.getAvg_WODlevel());
+
+            }
 
 
 
@@ -616,6 +626,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
+
+
+
 
 
         //
@@ -668,6 +681,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                         // equipment boolean 형식으로 반환하기
+                        // Y 이면 true , N이면 false
                         String barbell = sheet.getCell(13,14).getContents();
                         String body = sheet.getCell(13,15).getContents();
                         String pullupbar = sheet.getCell(13,16).getContents();
@@ -765,6 +779,8 @@ public class MainActivity extends AppCompatActivity {
 
 
                         // 개인 평균 기록
+                        // 평균 와드 레벨 , 평균 스코어는 소수점 2자리까지 출력
+                        // 평균 시간은 xx:yy 형식으로 출력
                         float level_wod = (temp_level / (float)cnt);
                         float score = (temp_score / (float)cnt) ;
                         int time = (temp_time / cnt) ;
@@ -776,6 +792,7 @@ public class MainActivity extends AppCompatActivity {
                         System.out.println("평균 와드 레벨은 : "+ s_level_wod);
                         System.out.println("평균 스코어는 : "+s_score);
                         System.out.println("평균 시간은 : "+s_time);
+
                         this.userinfo.setAvg_WODlevel(s_level_wod);
                         this.userinfo.setAvg_score(s_score);
                         this.userinfo.setAvg_time(s_time);
@@ -798,6 +815,8 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+
+
 
 
 
