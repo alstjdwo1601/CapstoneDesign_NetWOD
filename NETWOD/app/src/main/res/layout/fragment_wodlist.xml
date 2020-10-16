@@ -5,11 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:weightSum="10"
     tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_weight="2"
         android:orientation="horizontal"
         android:weightSum="10">
 
@@ -40,23 +42,43 @@
             android:text="Movements"
             android:textSize="16sp" />
     </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/rel"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_weight="7">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="40dp"></androidx.recyclerview.widget.RecyclerView>
+            android:paddingBottom="0dp">
 
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/listselectbutton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/recycler_view"
+            android:layout_weight="1"
             android:text="SELECT" />
-    </RelativeLayout>
+
+        <Button
+            android:id="@+id/listdeletebutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="DELETE" />
+    </LinearLayout>
+
 </LinearLayout>

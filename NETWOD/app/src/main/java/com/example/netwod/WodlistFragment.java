@@ -30,6 +30,7 @@ public class WodlistFragment extends Fragment {
     public RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter adapter;
     public Button listselectbutton;
+    public Button listdeletebutton;
     MainActivity activity;
     public WodlistFragment() {
         // Required empty public constructor
@@ -74,16 +75,33 @@ public class WodlistFragment extends Fragment {
 
 
        listselectbutton= rootView.findViewById(R.id.listselectbutton);
+      // listdeletebutton=rootView.findViewById(R.id.listdeletebutton);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new RecyclerViewA(activity.excelscrapper.userinfo);
+        adapter = new RecyclerViewA(activity);
         recyclerView.setAdapter(adapter);
         listselectbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.onFragmentChange(10);
+
+                System.out.println("현재인덱스:"+activity.excelscrapper.userinfo.getCurrentwodindex());
+
+                System.out.println("현재인덱스 와드타입:"+activity.excelscrapper.userinfo.getUserwodlist().get(activity.excelscrapper.userinfo.getCurrentwodindex()).getWODtype());
+                System.out.println("현재인덱스 와드사이즈:"+activity.excelscrapper.userinfo.getUserwodlist().get(activity.excelscrapper.userinfo.getCurrentwodindex()).getWODtype().length());
+
+
+                if(activity.excelscrapper.userinfo.getUserwodlist().get(activity.excelscrapper.userinfo.getCurrentwodindex()).getWODtype().equals("FORTIME")) {
+                    System.out.println("==FORTIME");
+
+                    activity.onFragmentChange(10);
+                }
+                else {
+                    activity.onFragmentChange(11);
+                    System.out.println("=!FORTIME");
+                }
             }
         });
+
         return rootView;
     }
 }

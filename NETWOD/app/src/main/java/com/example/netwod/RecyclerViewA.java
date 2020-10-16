@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,9 +21,9 @@ import java.util.List;
 public class RecyclerViewA extends RecyclerView.Adapter<RecyclerViewA.ViewHolder> {
     private String[] type;
 
-    private MainActivity.ExcelScrapper.UserInfo userinfo;
+   // public MainActivity.ExcelScrapper.activity.excelscrapper.userinfo activity.excelscrapper.userinfo;
     private String[] title;
-
+    public MainActivity activity;
     private String[] content;
     private OnItemClick mCallback;
 
@@ -34,7 +35,7 @@ public class RecyclerViewA extends RecyclerView.Adapter<RecyclerViewA.ViewHolder
         public TextView textView2;
         public ImageView imageView;
         public TextView textView3;
-
+        public Button listdeletebutton;
 
         public ViewHolder(View view) {
             super(view);
@@ -43,6 +44,7 @@ public class RecyclerViewA extends RecyclerView.Adapter<RecyclerViewA.ViewHolder
             this.textView2 = view.findViewById(R.id.textView2);
             this.textView3 = view.findViewById(R.id.textview3);
 
+            this.listdeletebutton=activity.findViewById(R.id.listdeletebutton);
 
         }
     }
@@ -51,11 +53,14 @@ public class RecyclerViewA extends RecyclerView.Adapter<RecyclerViewA.ViewHolder
     public RecyclerViewA.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
         RecyclerViewA.ViewHolder viewHolder = new ViewHolder(view);
+
         return viewHolder;
     }
-    RecyclerViewA(MainActivity.ExcelScrapper.UserInfo u) {
-        //this.userinfo=new MainActivity.ExcelScrapper.UserInfo();
-        this.userinfo=u;
+    RecyclerViewA(MainActivity a) {
+        //this.activity.excelscrapper.userinfo=new MainActivity.ExcelScrapper.activity.excelscrapper.userinfo();
+
+        this.activity=a;
+
     }
 
     @Override
@@ -64,41 +69,52 @@ public class RecyclerViewA extends RecyclerView.Adapter<RecyclerViewA.ViewHolder
 
         System.out.println("recyclerView에서 position:" + position);
         //holder.textView2.setText(type[position]);
-        for(int i=0;i<userinfo.getUserwodlist().size();i++){
+        
+        holder.listdeletebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+                activity.excelscrapper.userinfo.getUserwodlist().remove(activity.excelscrapper.userinfo.getCurrentwodindex());
+
+                notifyDataSetChanged();
+            }
+        });
+        for(int i=0;i<activity.excelscrapper.userinfo.getUserwodlist().size();i++){
             clickedlist.add(0);
 
 
         }
 
-        int msize = userinfo.getWodrecord().getWodlist().get(position).getMovement().size();
-        int titlesize = userinfo.getWodrecord().getWodlist().get(position).getWODname().length();
-        int typesize = userinfo.getWodrecord().getWodlist().get(position).getWODtype().length();
+        int msize = activity.excelscrapper.userinfo.getUserwodlist().get(position).getMovement().size();
+        int titlesize = activity.excelscrapper.userinfo.getUserwodlist().get(position).getWODname().length();
+        int typesize = activity.excelscrapper.userinfo.getUserwodlist().get(position).getWODtype().length();
         String movementstring="";
         String titlestring="";
         String typestring="";
         for(int i=0; i<titlesize;i++){
 
-            titlestring=titlestring+"\n"+userinfo.getWodrecord().getWodlist().get(position).getWODname().charAt(i);
+            titlestring=titlestring+"\n"+activity.excelscrapper.userinfo.getUserwodlist().get(position).getWODname().charAt(i);
 
 
         }
         for(int i=0; i<typesize;i++){
 
-            typestring=typestring+"\n"+userinfo.getWodrecord().getWodlist().get(position).getWODtype().charAt(i);
+            typestring=typestring+"\n"+activity.excelscrapper.userinfo.getUserwodlist().get(position).getWODtype().charAt(i);
 
 
         }
 
         for (int i = 0; i < msize; i++){
-            movementstring=movementstring+"\n"+userinfo.getWodrecord().getWodlist().get(position).getMovement().get(i);
-            if(userinfo.getWodrecord().getWodlist().get(position).getWeightlist().get(i)!=""){
-                movementstring=movementstring+" "+userinfo.getWodrecord().getWodlist().get(position).getWeightlist().get(i)+"kg";
+            movementstring=movementstring+"\n"+activity.excelscrapper.userinfo.getUserwodlist().get(position).getMovement().get(i);
+            if(activity.excelscrapper.userinfo.getUserwodlist().get(position).getWeightlist().get(i)!=""){
+                movementstring=movementstring+" "+activity.excelscrapper.userinfo.getUserwodlist().get(position).getWeightlist().get(i)+"kg";
             }
-            movementstring=movementstring+" "+userinfo.getWodrecord().getWodlist().get(position).getMovementnum().get(i)+"times";
+            movementstring=movementstring+" "+activity.excelscrapper.userinfo.getUserwodlist().get(position).getMovementnum().get(i)+"times";
     }
         holder.textView.setText(titlestring);
+
         holder.textView2.setText(typestring);
-        //movementstring=userinfo.getWodrecord().getWodlist().get(position).getMovement().get(0);
+        //movementstring=activity.excelscrapper.userinfo.getUserwodlist().get(position).getMovement().get(0);
 
         holder.textView3.setText(movementstring);
         if(clickedlist.get(position)==1) {
@@ -110,6 +126,7 @@ public class RecyclerViewA extends RecyclerView.Adapter<RecyclerViewA.ViewHolder
             @Override
             public void onClick(View v) {
                // Toast.makeText(v.getContext(), position+"번 째 이미지!", Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -125,11 +142,17 @@ public class RecyclerViewA extends RecyclerView.Adapter<RecyclerViewA.ViewHolder
             public void onClick(View v) {
                 //Toast.makeText(v.getContext(), position+"번 째!", Toast.LENGTH_SHORT).show();
                if(clickedlist.get(position)==0) {
-
+                   holder.textView.setBackgroundColor(Color.YELLOW);
+                   activity.excelscrapper.userinfo.setCurrentwodindex(position);
                    clickedlist.set(position, 1);
-               }
-               else clickedlist.set(position, 0);
 
+
+               }
+               else {
+                   holder.textView.setBackgroundColor(Color.WHITE);
+
+                   clickedlist.set(position, 0);
+               }
 System.out.println(position+"번째클릭됨");
 
 
@@ -144,9 +167,9 @@ System.out.println(position+"번째클릭됨");
 
     @Override
     public int getItemCount() {
-        //System.out.println(userinfo.getUserwodlist().size());
-        //return userinfo.getUserwodlist().size();
+        System.out.println("유저와드리스트사이즈:"+activity.excelscrapper.userinfo.getUserwodlist().size());
+        return activity.excelscrapper.userinfo.getUserwodlist().size();
 
-        return 3;
+        //return 3;
     }
 }

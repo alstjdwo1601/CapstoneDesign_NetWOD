@@ -232,6 +232,15 @@ public class MainActivity extends AppCompatActivity {
             private String UserHeight;
             private String User_NumOfTraining;
 
+            public int getCurrentwodindex() {
+                return currentwodindex;
+            }
+
+            public void setCurrentwodindex(int currentwodindex) {
+                this.currentwodindex = currentwodindex;
+            }
+
+            private int currentwodindex=0;
             public UserInfo(){
                 this.wodrecord=new WODrecord(); //템플릿에 있는 개인이 실제로 한 기록
                 this.userwodlist=new ArrayList<WOD>(); //와드 선택할때 리스트(뭐 할지 고를지)
@@ -830,7 +839,7 @@ public class MainActivity extends AppCompatActivity {
         //wodlist.xls 읽기
         //
         public void readExcel2(){
-            file = new File(sdCardPath+"/Download/wodlist.xls" );
+            file = new File(sdCardPath+"/Download/userwodlist.xls" );
             try {
                 is = new FileInputStream(file);
                 System.out.println("wodlist.xls에서 인풋스트림 생성 성공");
@@ -872,7 +881,7 @@ public class MainActivity extends AppCompatActivity {
 
                             wod2.setWODname(sheet.getCell(0, nRowStartIndex).getContents()    );
                             wod2.setWODtype(sheet.getCell(1, nRowStartIndex).getContents()    );
-
+                            System.out.println("와드이름:"+wod2.getWODname());
 
                             while(sheet.getCell(wodcol, wodrow).getContents()!=""){
 
@@ -884,8 +893,8 @@ public class MainActivity extends AppCompatActivity {
                                 wodrow+=1;
                             }
 
-                            this.userinfo.wodrecord.wodlist.add(wod2);
-
+                            //this.userinfo.wodrecord.wodlist.add(wod2);
+                                this.userinfo.getUserwodlist().add(wod2);
                             nRowStartIndex+=50;
                         }
                     }

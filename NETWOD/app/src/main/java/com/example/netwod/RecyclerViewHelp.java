@@ -272,6 +272,8 @@ public class RecyclerViewHelp extends RecyclerView.Adapter<RecyclerViewHelp.View
 
     @Override
     public int getItemCount() {
+
         return title.length;
+
     }
 }

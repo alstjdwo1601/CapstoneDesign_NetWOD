@@ -152,7 +152,7 @@ public class FortimeFragment extends Fragment {
             public void onFinish() {
 
                 // 변경 후
-                fortimetextview.setText("촬영종료!");
+                fortimetextview.setText("종료");
 
                 // TODO : 타이머가 모두 종료될때 어떤 이벤트를 진행할지
 
