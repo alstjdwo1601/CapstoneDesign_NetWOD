@@ -3,35 +3,28 @@ package com.example.netwod;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link WodlistFragment#newInstance} factory method to
+ * Use the {@link AmrapFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class WodlistFragment extends Fragment {
+public class AmrapFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private ViewGroup rootView;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private RecyclerView recyclerView;
-    public RecyclerView.LayoutManager layoutManager;
-    private RecyclerView.Adapter adapter;
-    public Button listselectbutton;
-    MainActivity activity;
-    public WodlistFragment() {
+
+    public AmrapFragment() {
         // Required empty public constructor
     }
 
@@ -41,11 +34,11 @@ public class WodlistFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment WodlistFragment.
+     * @return A new instance of fragment AmrapFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static WodlistFragment newInstance(String param1, String param2) {
-        WodlistFragment fragment = new WodlistFragment();
+    public static AmrapFragment newInstance(String param1, String param2) {
+        AmrapFragment fragment = new AmrapFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -66,24 +59,6 @@ public class WodlistFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        activity = (MainActivity) getActivity();
-        rootView = (ViewGroup) inflater.inflate(R.layout.fragment_wodlist , container, false);
-        recyclerView = rootView.findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(activity);
-
-
-       listselectbutton= rootView.findViewById(R.id.listselectbutton);
-        recyclerView.setLayoutManager(layoutManager);
-
-        adapter = new RecyclerViewA(activity.excelscrapper.userinfo);
-        recyclerView.setAdapter(adapter);
-        listselectbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.onFragmentChange(10);
-            }
-        });
-        return rootView;
+        return inflater.inflate(R.layout.fragment_menu3, container, false);
     }
 }

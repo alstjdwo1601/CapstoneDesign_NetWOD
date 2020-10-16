@@ -64,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
     private WodgenerateFragment wodgenerateFragment = new WodgenerateFragment();
     private HelpFragment helpFragment = new HelpFragment();
     public ChangeinfoFragment changeinfoFragment = new ChangeinfoFragment();
+    public FortimeFragment fortimeFragment=new FortimeFragment();
+    public AmrapFragment amrapFragment=new AmrapFragment();
     public ArrayList<String> list = new ArrayList<String>();
 
     LinearLayout selectwodlayout;
@@ -110,7 +112,11 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 10:
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, wodselectFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, fortimeFragment).commit();
+                break;
+            case 11:
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,amrapFragment).commit();
                 break;
         }
 

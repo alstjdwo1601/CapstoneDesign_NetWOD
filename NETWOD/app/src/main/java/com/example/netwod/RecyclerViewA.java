@@ -2,6 +2,7 @@ package com.example.netwod;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,23 +12,29 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class RecyclerViewA extends RecyclerView.Adapter<RecyclerViewA.ViewHolder> {
-    private String[] type={"FOR TIME","FOR TIME","AMRAP" ,};
+    private String[] type;
 
     private MainActivity.ExcelScrapper.UserInfo userinfo;
-    private String[] title = {"FRAN","CINDY","OPENS10.1", };
+    private String[] title;
 
-    private String[] content = {"WODmovements","WODmovements2","WODmovement3" };
+    private String[] content;
     private OnItemClick mCallback;
+
+
+    public ArrayList<Integer> clickedlist=new ArrayList<Integer>();
 
     public class ViewHolder extends  RecyclerView.ViewHolder {
         public TextView textView;
         public TextView textView2;
         public ImageView imageView;
         public TextView textView3;
+
 
         public ViewHolder(View view) {
             super(view);
@@ -57,6 +64,11 @@ public class RecyclerViewA extends RecyclerView.Adapter<RecyclerViewA.ViewHolder
 
         System.out.println("recyclerView에서 position:" + position);
         //holder.textView2.setText(type[position]);
+        for(int i=0;i<userinfo.getUserwodlist().size();i++){
+            clickedlist.add(0);
+
+
+        }
 
         int msize = userinfo.getWodrecord().getWodlist().get(position).getMovement().size();
         int titlesize = userinfo.getWodrecord().getWodlist().get(position).getWODname().length();
@@ -89,33 +101,52 @@ public class RecyclerViewA extends RecyclerView.Adapter<RecyclerViewA.ViewHolder
         //movementstring=userinfo.getWodrecord().getWodlist().get(position).getMovement().get(0);
 
         holder.textView3.setText(movementstring);
-
-
+        if(clickedlist.get(position)==1) {
+            holder.textView.setBackgroundColor(Color.YELLOW);
+        }
+        else holder.textView.setBackgroundColor(Color.WHITE);
 
         holder.textView3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), position+"번 째 이미지!", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(v.getContext(), position+"번 째 이미지!", Toast.LENGTH_SHORT).show();
             }
         });
 
         holder.textView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Test!", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(v.getContext(), "Test!", Toast.LENGTH_SHORT).show();
             }
         });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), position+"번 째!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(v.getContext(), position+"번 째!", Toast.LENGTH_SHORT).show();
+               if(clickedlist.get(position)==0) {
+
+                   clickedlist.set(position, 1);
+               }
+               else clickedlist.set(position, 0);
+
+System.out.println(position+"번째클릭됨");
+
+
+
             }
         });
+
+
+
+
     }
 
     @Override
     public int getItemCount() {
-        return title.length;
+        //System.out.println(userinfo.getUserwodlist().size());
+        //return userinfo.getUserwodlist().size();
+
+        return 3;
     }
 }
