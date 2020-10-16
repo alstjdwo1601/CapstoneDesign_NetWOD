@@ -138,8 +138,11 @@ public class MainActivity extends AppCompatActivity {
         //netwodtemplate.xls 읽기
         excelscrapper.readExcel();
 
-        //wodlist.xls 읽기
+        //wodlist.xls 읽기(유명한 와드 리스트들)
         excelscrapper.readExcel2();
+
+        //userwodlist.xls 읽기(나만의 와드 리스트들)
+        excelscrapper.readExcel3();
 
 
 
@@ -264,6 +267,15 @@ public class MainActivity extends AppCompatActivity {
             private String avg_round_reps;
             private String avg_time;
             private String avg_score;
+            private String avg_time_amrep;
+
+            public String getAvg_time_amrep() {
+                return avg_time_amrep;
+            }
+
+            public void setAvg_time_amrep(String avg_time_amrep) {
+                this.avg_time_amrep = avg_time_amrep;
+            }
 
             public String getAvg_WODlevel() { return avg_WODlevel; }
 
@@ -405,7 +417,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-
         class WOD{
             private String WODname;//ex) FRAN,고성주의 와드
             private String WODlevel;
@@ -532,7 +543,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+        // 개인 정보 , 기록정보 수정
         public void writeExcel() throws IOException, BiffException, WriteException {
             file=new File(sdCardPath+"/Download/netwodtemplate.xls" );
 
@@ -643,10 +654,43 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+        //와드 새로 쓰기
+        public void writeExcel2() throws IOException, BiffException, WriteException {
+            file = new File(sdCardPath + "/Download/netwodtemplate.xls");
+
+            try {
+                is = new FileInputStream(file);
+                System.out.println("write2에서 인풋스트림 생성 성공");
+            } catch (FileNotFoundException e) {
+                System.out.println("write2에서 인풋스트림 생성 불가");
+                e.printStackTrace();
+            }
+
+            Workbook originworkbook = null;
+            originworkbook = Workbook.getWorkbook(is);
+            WritableWorkbook wworkbook = null;
+
+            try {
+                wworkbook = Workbook.createWorkbook(new File(sdCardPath + "/Download/netwodtemplate.xls"), originworkbook);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            WritableSheet sheet = wworkbook.getSheet(1);
+
+            jxl.write.WritableCellFormat  format= new WritableCellFormat();
+            jxl.write.WritableCellFormat  format0= new WritableCellFormat();
+            jxl.write.Label label = null;
+            jxl.write.Blank blank = null;
+
+
+        }
 
 
 
-        //
+
+
+            //
         //netwodtemplate.xls 읽기
         //
         public void readExcel(){
@@ -744,9 +788,12 @@ public class MainActivity extends AppCompatActivity {
                         int wodcol;
 
                         int cnt = 0;
+                        int cnt_fortime = 0;
+                        int cnt_amrep = 1;
                         float temp_score = 0;
                         float temp_level = 0;
-                        int temp_time = 0;
+                        int temp_record_fortime = 0;
+                        int temp_record_amrep = 0;
                         int minute = 0;
                         int second = 0;
 
@@ -756,12 +803,6 @@ public class MainActivity extends AppCompatActivity {
                         this.userinfo.wodrecord.recordlist.add(sheet.getCell(9, nRowStartIndex).getContents());
                         this.userinfo.wodrecord.scorelist.add(sheet.getCell(10, nRowStartIndex).getContents());
 
-
-                        minute = Integer.parseInt(sheet.getCell(9, nRowStartIndex).getContents().substring(0,2));
-                        second = Integer.parseInt(sheet.getCell(9, nRowStartIndex).getContents().substring(3,5));
-
-                        temp_time += minute * 60 + second;
-                        temp_score += Float.parseFloat(sheet.getCell(10,nRowStartIndex).getContents());
 
 
                             wodrow=nRowStartIndex;
@@ -774,10 +815,26 @@ public class MainActivity extends AppCompatActivity {
 
                             temp_level += Float.parseFloat(sheet.getCell(8, nRowStartIndex).getContents() );
 
+                            minute = Integer.parseInt(sheet.getCell(9, nRowStartIndex).getContents().substring(0,2));
+                            second = Integer.parseInt(sheet.getCell(9, nRowStartIndex).getContents().substring(3,5));
+
+                            //FORTIME
+                            if(sheet.getCell(3, nRowStartIndex).getContents().equals("FORTIME")){
+                                temp_record_fortime += minute * 60 + second;
+                                cnt_fortime++;
+                            }
+
+                            //AMRAP
+                            else if (sheet.getCell(3, nRowStartIndex).getContents().equals("AMLAP")){
+                                temp_record_amrep = minute*Integer.parseInt(sheet.getCell(6, wodrow).getContents()) + second;
+                                cnt_amrep++;
+                            }
+
+                            temp_score += Float.parseFloat(sheet.getCell(10,nRowStartIndex).getContents());
+
                             while(sheet.getCell(4, wodrow).getContents()!=""){
                                 //System.out.println("NULL인가"+sheet.getCell(2, nRowStartIndex).getContents() );
                                 wod.getMovement().add(sheet.getCell(4, wodrow).getContents());
-
                                 wod.getEquipment().add(sheet.getCell(5, wodrow).getContents());
                                 wod.getMovementnum().add(sheet.getCell(6, wodrow).getContents());
                                 wod.getWeightlist().add(sheet.getCell(7, wodrow).getContents());
@@ -795,22 +852,28 @@ public class MainActivity extends AppCompatActivity {
 
                         // 개인 평균 기록
                         // 평균 와드 레벨 , 평균 스코어는 소수점 2자리까지 출력
-                        // 평균 시간은 xx:yy 형식으로 출력
+                        // 평균 기록은 FORTIME 인 경우 xx분 yy초 형식으로 출력
+                        // 평균 기록은 APRAP 인 경우 xx Round yy 형식으로 출력
                         float level_wod = (temp_level / (float)cnt);
                         float score = (temp_score / (float)cnt) ;
-                        int time = (temp_time / cnt) ;
+                        int record = (temp_record_fortime / cnt_fortime) ;
+                        int record2 = (temp_record_amrep / cnt_amrep);
 
                         @SuppressLint("DefaultLocale") String s_level_wod = String.format("%.2f", level_wod);
                         @SuppressLint("DefaultLocale") String s_score = String.format("%.2f", score);
-                        String s_time = Integer.toString(time/60) +":"+Integer.toString(time%60);
+                        String s_record = Integer.toString(record/60) +"분 "+Integer.toString(record%60)+"초";
+                        String s_record2 = Integer.toString(record2/15) +"Round "+Integer.toString(record2%15);
 
                         System.out.println("평균 와드 레벨은 : "+ s_level_wod);
                         System.out.println("평균 스코어는 : "+s_score);
-                        System.out.println("평균 시간은 : "+s_time);
+                        System.out.println("평균 기록시간은 : "+s_record);
+                        System.out.println("평균 암랩기록은 : "+s_record2);
 
                         this.userinfo.setAvg_WODlevel(s_level_wod);
                         this.userinfo.setAvg_score(s_score);
-                        this.userinfo.setAvg_time(s_time);
+                        this.userinfo.setAvg_time(s_record);
+                        this.userinfo.setAvg_time_amrep(s_record);
+
 
 
 
@@ -830,7 +893,6 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-
 
 
 
@@ -895,6 +957,85 @@ public class MainActivity extends AppCompatActivity {
 
                             //this.userinfo.wodrecord.wodlist.add(wod2);
                                 this.userinfo.getUserwodlist().add(wod2);
+                            nRowStartIndex+=50;
+                        }
+                    }
+                    else{
+                        System.out.println("Sheet is null");
+                    }
+                }
+                else{
+                    System.out.println("Workbook is null");
+                }
+
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
+
+        //
+        //userwodlist.xls 읽기
+        //
+        public void readExcel3(){
+            file = new File(sdCardPath+"/Download/userwodlist.xls" );
+            try {
+                is = new FileInputStream(file);
+                System.out.println("userwodlist.xls에서 인풋스트림 생성 성공");
+            } catch (FileNotFoundException e) {
+                System.out.println("userwodlist.xls에서 인풋스트림 생성 불가");
+                e.printStackTrace();
+            }
+
+            try {
+
+                // TODO : use is(InputStream).
+                Workbook workbook = null;
+                Sheet sheet;
+                workbook = Workbook.getWorkbook(is);
+
+                if(workbook==null){
+                    System.out.println("워크북이 NULL");
+                }
+
+                // TODO : use is(InputStream).
+                if(workbook != null){
+                    System.out.println("워크북이 있다");
+
+                    sheet = workbook.getSheet(0);
+
+                    if(sheet != null) {
+                        int nRowStartIndex = 1;
+                        int nColumnStartIndex = 0;
+                        int wodrow;
+                        int wodcol;
+
+
+                        while(sheet.getCell(nColumnStartIndex, nRowStartIndex).getContents()!=""){ //와드 두당한번씩돈다
+                            WOD wod3 =new WOD();
+
+                            wodrow=nRowStartIndex;
+                            wodcol=2; //movement
+
+
+                            wod3.setWODname(sheet.getCell(0, nRowStartIndex).getContents()    );
+                            wod3.setWODtype(sheet.getCell(1, nRowStartIndex).getContents()    );
+
+
+                            while(sheet.getCell(wodcol, wodrow).getContents()!=""){
+
+                                wod3.getMovement().add(sheet.getCell(2, wodrow).getContents());
+                                wod3.getEquipment().add(sheet.getCell(3, wodrow).getContents());
+                                wod3.getMovementnum().add(sheet.getCell(4, wodrow).getContents());
+                                wod3.getWeightlist().add(sheet.getCell(5, wodrow).getContents());
+
+                                wodrow+=1;
+                            }
+
+                            this.userinfo.wodrecord.wodlist.add(wod3);
+
                             nRowStartIndex+=50;
                         }
                     }
