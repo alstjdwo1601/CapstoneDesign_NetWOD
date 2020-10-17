@@ -309,8 +309,8 @@ public class MainActivity extends AppCompatActivity {
             if (bodycell.getType() == CellType.LABEL) {
                 Label bodylabel = (Label) bodycell;
 
-                if(this.userinfo.isBody()) { bodylabel.setString("N"); }
-                else {bodylabel.setString("Y");}
+                if(this.userinfo.isBody()) { bodylabel.setString("Y"); }
+                else {bodylabel.setString("N");}
                 System.out.println("수정된 맨몸:" + this.userinfo.isBody());
             }
 
@@ -320,8 +320,8 @@ public class MainActivity extends AppCompatActivity {
             if (pullupbarcell.getType() == CellType.LABEL) {
                 Label pullupbarlabel = (Label) pullupbarcell;
 
-                if(this.userinfo.isPullUpBar()) { pullupbarlabel.setString("N"); }
-                else {pullupbarlabel.setString("Y");}
+                if(this.userinfo.isPullUpBar()) { pullupbarlabel.setString("Y"); }
+                else {pullupbarlabel.setString("N");}
                 System.out.println("수정된 풀업바:" + this.userinfo.isPullUpBar());
             }
 
@@ -331,8 +331,8 @@ public class MainActivity extends AppCompatActivity {
             if (jumpropecell.getType() == CellType.LABEL) {
                 Label jumpropelabel = (Label) jumpropecell;
 
-                if(this.userinfo.isJumprope()) { jumpropelabel.setString("N"); }
-                else {jumpropelabel.setString("Y");}
+                if(this.userinfo.isJumprope()) { jumpropelabel.setString("Y"); }
+                else {jumpropelabel.setString("N");}
                 System.out.println("수정된 줄넘기 줄:" + this.userinfo.isJumprope());
             }
 
@@ -342,8 +342,8 @@ public class MainActivity extends AppCompatActivity {
             if (kettlebellcell.getType() == CellType.LABEL) {
                 Label kettlebelllabel = (Label) kettlebellcell;
 
-                if(this.userinfo.isKettlebell()) { kettlebelllabel.setString("N"); }
-                else {kettlebelllabel.setString("Y");}
+                if(this.userinfo.isKettlebell()) { kettlebelllabel.setString("Y"); }
+                else {kettlebelllabel.setString("N");}
                 System.out.println("수정된 케틀벨:" + this.userinfo.isKettlebell());
             }
 
@@ -353,8 +353,8 @@ public class MainActivity extends AppCompatActivity {
             if (wallballcell.getType() == CellType.LABEL) {
                 Label wallballlabel = (Label) wallballcell;
 
-                if(this.userinfo.isWallBall()) { wallballlabel.setString("N"); }
-                else {wallballlabel.setString("Y");}
+                if(this.userinfo.isWallBall()) { wallballlabel.setString("Y"); }
+                else {wallballlabel.setString("N");}
                 System.out.println("수정된 월볼:" + this.userinfo.isWallBall());
             }
 
@@ -364,8 +364,8 @@ public class MainActivity extends AppCompatActivity {
             if (boxcell.getType() == CellType.LABEL) {
                 Label boxlabel = (Label) boxcell;
 
-                if(this.userinfo.isBox()) { boxlabel.setString("N"); }
-                else {boxlabel.setString("Y");}
+                if(this.userinfo.isBox()) { boxlabel.setString("Y"); }
+                else {boxlabel.setString("N");}
                 System.out.println("수정된 박스:" + this.userinfo.isBox());
             }
 
@@ -375,8 +375,8 @@ public class MainActivity extends AppCompatActivity {
             if (dumbbellcell.getType() == CellType.LABEL) {
                 Label dumbbelllabel = (Label) dumbbellcell;
 
-                if(this.userinfo.isDumbbell()) { dumbbelllabel.setString("N"); }
-                else {dumbbelllabel.setString("Y");}
+                if(this.userinfo.isDumbbell()) { dumbbelllabel.setString("Y"); }
+                else {dumbbelllabel.setString("N");}
                 System.out.println("수정된 덤벨:" + this.userinfo.isDumbbell());
             }
 
