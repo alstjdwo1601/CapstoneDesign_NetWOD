@@ -1,16 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".FortimeFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:weightSum="15">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/Fortimetextview"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"
-        android:textSize="30sp" />
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:orientation="horizontal"
+        android:weightSum="10">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/fortimewodname"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="WOD name"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/fortimewodtype"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="WOD type"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/fortimewodmovement"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:gravity="center"
+            android:text="Movements"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/fortimetext"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:background="#cccccc"
+        android:gravity="center"
+        android:text="00:00:00"
+        android:textColor="#777777"
+        android:textSize="40sp" />
+
+    <TextView
+        android:id="@+id/fortimerecord"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:padding="10dp"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2">
+
+        <Button
+            android:id="@+id/fortimestartbutton"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="myOnClick"
+            android:text="시작" />
+
+        <Button
+            android:id="@+id/fortimerecordbutton"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:enabled="false"
+            android:onClick="myOnClick"
+            android:text="기록"
+
+            />
+    </LinearLayout>
+
+
+</LinearLayout>

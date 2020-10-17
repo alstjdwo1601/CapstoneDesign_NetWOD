@@ -90,7 +90,7 @@ public class Menu1Fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment_menu1 , container, false);
-
+        activity.excelscrapper.readExcel();
         //텍스트뷰 바운딩
 
         tv_username= rootView.findViewById(R.id.NametextView);
@@ -110,6 +110,16 @@ public class Menu1Fragment extends Fragment {
         pullupbarcheckbox=rootView.findViewById(R.id.PullUpBarcheckBox);
         wallballcheckbox=rootView.findViewById(R.id.WallBallcheckBox);
         //user 와 동기화
+
+        boxcheckbox.setChecked(activity.excelscrapper.userinfo.isBox());
+        jumpropecheckbox.setChecked(activity.excelscrapper.userinfo.isJumprope());
+        barbellcheckbox.setChecked(activity.excelscrapper.userinfo.isBarbell());
+        dumbbellcheckbox.setChecked(activity.excelscrapper.userinfo.isDumbbell());
+        bodycheckbox.setChecked(activity.excelscrapper.userinfo.isBody());
+        kettlebellcheckbox.setChecked(activity.excelscrapper.userinfo.isKettlebell());
+        pullupbarcheckbox.setChecked(activity.excelscrapper.userinfo.isPullUpBar());
+        wallballcheckbox.setChecked(activity.excelscrapper.userinfo.isWallBall());
+
         btn_fragment=rootView.findViewById(R.id.Editbutton);
 
 
@@ -118,7 +128,7 @@ public class Menu1Fragment extends Fragment {
         tv_username.setText(userName);
         tv_userheight.setText(userHeight);
         tv_userweight.setText(userWeight);
-        activity.excelscrapper.readExcel();
+
 
         btn_fragment.setOnClickListener(new View.OnClickListener() {
             @Override

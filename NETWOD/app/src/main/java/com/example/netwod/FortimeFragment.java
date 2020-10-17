@@ -6,6 +6,9 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Message;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,8 +37,21 @@ public class FortimeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    TextView fortimetextview;
+    final static int Init =0;
+    final static int Run =1;
+    final static int Pause =2;
 
+    int cur_Status = Init; //현재의 상태를 저장할변수를 초기화함.
+    int myCount=1;
+    long myBaseTime;
+    long myPauseTime;
+    Button fortimestartbutton;
+    Button fortimerecordbutton;
+    TextView fortimetextview;
+    TextView fortimerecordtextview;
+    TextView fortimewodnametextview;
+    TextView fortimewodtypetextview;
+    TextView fortimewodmovementtextview;
     MainActivity activity;
 
     private ViewGroup rootView;
@@ -76,91 +92,141 @@ public class FortimeFragment extends Fragment {
         // Inflate the layout for this fragment
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment_fortime , container, false);
 
+        fortimestartbutton=rootView.findViewById(R.id.fortimestartbutton);
+        fortimerecordbutton=rootView.findViewById(R.id.fortimerecordbutton);
+        fortimetextview=rootView.findViewById(R.id.fortimetext);
+        fortimerecordtextview=rootView.findViewById(R.id.fortimerecord);
+        fortimewodnametextview=rootView.findViewById(R.id.fortimewodname);
+        fortimewodtypetextview=rootView.findViewById(R.id.fortimewodtype);
+        fortimewodmovementtextview=rootView.findViewById(R.id.fortimewodmovement);
+        int currentindex=activity.excelscrapper.userinfo.getCurrentwodindex();
 
-        fortimetextview=rootView.findViewById(R.id.Fortimetextview);
+        int msize = activity.excelscrapper.userinfo.getUserwodlist().get(currentindex).getMovement().size();
+        int titlesize = activity.excelscrapper.userinfo.getUserwodlist().get(currentindex).getWODname().length();
+        int typesize = activity.excelscrapper.userinfo.getUserwodlist().get(currentindex).getWODtype().length();
+        String movementstring="";
+        String titlestring="";
+        String typestring="";
+        for(int i=0; i<titlesize;i++){
 
-        countDown("010111");
+            titlestring=titlestring+"\n"+activity.excelscrapper.userinfo.getUserwodlist().get(currentindex).getWODname().charAt(i);
+
+
+        }
+        for(int i=0; i<typesize;i++){
+
+            typestring=typestring+"\n"+activity.excelscrapper.userinfo.getUserwodlist().get(currentindex).getWODtype().charAt(i);
+
+
+        }
+
+        for (int i = 0; i < msize; i++){
+            movementstring=movementstring+"\n"+activity.excelscrapper.userinfo.getUserwodlist().get(currentindex).getMovement().get(i);
+            if(activity.excelscrapper.userinfo.getUserwodlist().get(currentindex).getWeightlist().get(i)!=""){
+                movementstring=movementstring+" "+activity.excelscrapper.userinfo.getUserwodlist().get(currentindex).getWeightlist().get(i)+"kg";
+            }
+            movementstring=movementstring+" "+activity.excelscrapper.userinfo.getUserwodlist().get(currentindex).getMovementnum().get(i)+"times";
+        }
+        fortimewodnametextview.setText(titlestring);
+
+        fortimewodtypetextview.setText(typestring);
+        //movementstring=activity.excelscrapper.userinfo.getUserwodlist().get(currentindex).getMovement().get(0);
+
+        fortimewodmovementtextview.setText(movementstring);
+
+
+
+
+
+        fortimestartbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (cur_Status) {
+                    case Init:
+                        myBaseTime = SystemClock.elapsedRealtime();
+                        System.out.println(myBaseTime);
+                        //myTimer이라는 핸들러를 빈 메세지를 보내서 호출
+                        myTimer.sendEmptyMessage(0);
+                        fortimestartbutton.setText("멈춤"); //버튼의 문자"시작"을 "멈춤"으로 변경
+                        fortimerecordbutton.setEnabled(true); //기록버튼 활성
+                        cur_Status = Run; //현재상태를 런상태로 변경
+                        break;
+                    case Run:
+                        myTimer.removeMessages(0);
+                        myPauseTime = SystemClock.elapsedRealtime();
+                        fortimestartbutton.setText("시작");
+                        fortimerecordbutton.setText("리셋");
+                        cur_Status = Pause;
+                        break;
+                    case Pause:
+                        long now = SystemClock.elapsedRealtime();
+                        myTimer.sendEmptyMessage(0);
+                        myBaseTime += (now - myPauseTime);
+                        fortimestartbutton.setText("멈춤");
+                        fortimerecordbutton.setText("기록");
+                        cur_Status = Run;
+                        break;
+
+
+                }
+            }
+        });
+        fortimerecordbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (cur_Status) {
+                    case Run:
+
+                        String str = fortimerecordtextview.getText().toString();
+                        str += String.format("%d. %s\n", myCount, getTimeOut());
+                        fortimerecordtextview.setText(str);
+                        myCount++; //카운트 증가
+
+                        break;
+                    case Pause:
+                        //핸들러를 멈춤
+                        myTimer.removeMessages(0);
+
+                        fortimestartbutton.setText("시작");
+                        fortimerecordbutton.setText("기록");
+                        fortimetextview.setText("00:00:00");
+
+                        cur_Status = Init;
+                        myCount = 1;
+                        fortimerecordtextview.setText("");
+                        fortimerecordbutton.setEnabled(false);
+                        break;
+
+
+                }
+
+            }
+
+        });
+
+
+
 
         return rootView;
-    }public void countDown(String time) {
+    }
+    Handler myTimer = new Handler(){
+        public void handleMessage(Message msg){
+            fortimetextview=rootView.findViewById(R.id.fortimetext);
+            fortimetextview.setText(getTimeOut());
 
-        long conversionTime = 0;
-
-        // 1000 단위가 1초
-        // 60000 단위가 1분
-        // 60000 * 3600 = 1시간
-
-        String getHour = time.substring(0, 2);
-        String getMin = time.substring(2, 4);
-        String getSecond = time.substring(4, 6);
-
-        // "00"이 아니고, 첫번째 자리가 0 이면 제거
-        if (getHour.substring(0, 1) == "0") {
-            getHour = getHour.substring(1, 2);
+            //sendEmptyMessage 는 비어있는 메세지를 Handler 에게 전송하는겁니다.
+            myTimer.sendEmptyMessage(0);
         }
+    };
 
-        if (getMin.substring(0, 1) == "0") {
-            getMin = getMin.substring(1, 2);
-        }
 
-        if (getSecond.substring(0, 1) == "0") {
-            getSecond = getSecond.substring(1, 2);
-        }
-
-        // 변환시간
-        conversionTime = Long.valueOf(getHour) * 1000 * 3600 + Long.valueOf(getMin) * 60 * 1000 + Long.valueOf(getSecond) * 1000;
-
-        // 첫번쨰 인자 : 원하는 시간 (예를들어 30초면 30 x 1000(주기))
-        // 두번쨰 인자 : 주기( 1000 = 1초)
-        new CountDownTimer(conversionTime, 1000) {
-
-            // 특정 시간마다 뷰 변경
-            public void onTick(long millisUntilFinished) {
-
-                // 시간단위
-                String hour = String.valueOf(millisUntilFinished / (60 * 60 * 1000));
-
-                // 분단위
-                long getMin = millisUntilFinished - (millisUntilFinished / (60 * 60 * 1000)) ;
-                String min = String.valueOf(getMin / (60 * 1000)); // 몫
-
-                // 초단위
-                String second = String.valueOf((getMin % (60 * 1000)) / 1000); // 나머지
-
-                // 밀리세컨드 단위
-                String millis = String.valueOf((getMin % (60 * 1000)) % 1000); // 몫
-
-                // 시간이 한자리면 0을 붙인다
-                if (hour.length() == 1) {
-                    hour = "0" + hour;
-                }
-
-                // 분이 한자리면 0을 붙인다
-                if (min.length() == 1) {
-                    min = "0" + min;
-                }
-
-                // 초가 한자리면 0을 붙인다
-                if (second.length() == 1) {
-                    second = "0" + second;
-                }
-
-                fortimetextview.setText(hour + ":" + min + ":" + second);
-            }
-
-            // 제한시간 종료시
-            public void onFinish() {
-
-                // 변경 후
-                fortimetextview.setText("종료");
-
-                // TODO : 타이머가 모두 종료될때 어떤 이벤트를 진행할지
-
-            }
-        }.start();
+    String getTimeOut(){
+        long now = SystemClock.elapsedRealtime(); //애플리케이션이 실행되고나서 실제로 경과된 시간(??)^^;
+        long outTime = now - myBaseTime;
+        String easy_outTime = String.format("%02d:%02d:%02d", outTime/1000 / 60, (outTime/1000)%60,(outTime%1000)/10);
+        return easy_outTime;
 
     }
-
     public void onAttach(Context context) {
         super.onAttach(context);
         //이 메소드가 호출될떄는 프래그먼트가 엑티비티위에 올라와있는거니깐 getActivity메소드로 엑티비티참조가능
