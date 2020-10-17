@@ -66,8 +66,9 @@ public class MainActivity extends AppCompatActivity {
     public ChangeinfoFragment changeinfoFragment = new ChangeinfoFragment();
     public FortimeFragment fortimeFragment=new FortimeFragment();
     public AmrapFragment amrapFragment=new AmrapFragment();
-    public ArrayList<String> list = new ArrayList<String>();
-
+    public NamedwodFragment namedwodFragment=new NamedwodFragment();
+    public ArrayList<WOD> namedwodlist=new ArrayList<WOD>();
+    int namedwodindex;
     LinearLayout selectwodlayout;
 
     /*
@@ -118,6 +119,10 @@ public class MainActivity extends AppCompatActivity {
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,amrapFragment).commit();
                 break;
+            case 12:
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,namedwodFragment).commit();
+                break;
         }
 
     }
@@ -139,11 +144,11 @@ public class MainActivity extends AppCompatActivity {
         excelscrapper.readExcel();
 
         //wodlist.xls 읽기(유명한 와드 리스트들)
-        excelscrapper.readExcel2();
-
-        //userwodlist.xls 읽기(나만의 와드 리스트들)
         excelscrapper.readExcel3();
 
+        //userwodlist.xls 읽기(나만의 와드 리스트들)
+
+        excelscrapper.readExcel2();
 
 
 
@@ -592,9 +597,9 @@ public class MainActivity extends AppCompatActivity {
             file = new File(sdCardPath+"/Download/userwodlist.xls" );
             try {
                 is = new FileInputStream(file);
-                System.out.println("wodlist.xls에서 인풋스트림 생성 성공");
+
             } catch (FileNotFoundException e) {
-                System.out.println("wodlist.xls에서 인풋스트림 생성 불가");
+
                 e.printStackTrace();
             }
 
@@ -606,12 +611,11 @@ public class MainActivity extends AppCompatActivity {
                 workbook = Workbook.getWorkbook(is);
 
                 if(workbook==null){
-                    System.out.println("워크북이 NULL");
+
                 }
 
                 // TODO : use is(InputStream).
                 if(workbook != null){
-                    System.out.println("워크북이 있다");
 
                     sheet = workbook.getSheet(0);
 
@@ -631,7 +635,7 @@ public class MainActivity extends AppCompatActivity {
 
                             wod2.setWODname(sheet.getCell(0, nRowStartIndex).getContents()    );
                             wod2.setWODtype(sheet.getCell(1, nRowStartIndex).getContents()    );
-                            System.out.println("와드이름:"+wod2.getWODname());
+
 
                             while(sheet.getCell(wodcol, wodrow).getContents()!=""){
 
@@ -668,12 +672,12 @@ public class MainActivity extends AppCompatActivity {
         //userwodlist.xls 읽기
         //
         public void readExcel3(){
-            file = new File(sdCardPath+"/Download/userwodlist.xls" );
+            file = new File(sdCardPath+"/Download/wodlist.xls" );
             try {
                 is = new FileInputStream(file);
-                System.out.println("userwodlist.xls에서 인풋스트림 생성 성공");
+
             } catch (FileNotFoundException e) {
-                System.out.println("userwodlist.xls에서 인풋스트림 생성 불가");
+
                 e.printStackTrace();
             }
 
@@ -721,8 +725,8 @@ public class MainActivity extends AppCompatActivity {
 
                                 wodrow+=1;
                             }
-
-                            this.userinfo.wodrecord.wodlist.add(wod3);
+                            namedwodlist.add(wod3);
+                            //this..add(wod3);
 
                             nRowStartIndex+=50;
                         }
