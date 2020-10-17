@@ -130,7 +130,7 @@ public class ChangeinfoFragment extends Fragment {
                 ((MainActivity)getActivity()).excelscrapper.userinfo.setWallBall((boolean)wallballcheckbox.isChecked());
                 ((MainActivity)getActivity()).excelscrapper.userinfo.setPullUpBar((boolean)pullupbarcheckbox.isChecked());
                 try {
-                     activity.excelscrapper.writeExcel();
+                     activity.excelscrapper.editUserInfo();
 
                 } catch (IOException e) {
                     e.printStackTrace();
