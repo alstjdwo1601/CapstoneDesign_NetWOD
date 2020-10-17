@@ -298,8 +298,8 @@ public class MainActivity extends AppCompatActivity {
             if (barbellcell.getType() == CellType.LABEL) {
                 Label barbelllabel = (Label) barbellcell;
 
-                if(this.userinfo.isDumbbell()) { barbelllabel.setString("N"); }
-                else {barbelllabel.setString("Y");}
+                if(this.userinfo.isDumbbell()) { barbelllabel.setString("Y"); }
+                else {barbelllabel.setString("N");}
                 System.out.println("수정된 바벨:" + this.userinfo.isBarbell());
             }
 
@@ -510,6 +510,102 @@ public class MainActivity extends AppCompatActivity {
             //
             // 새로 와드에 쓰는 부분
             //
+            if(sheet != null) {
+                int nRowStartIndex = 1;
+                int nColumnStartIndex = 0;
+                int wodrow;
+                int wodcol;
+
+
+                while(sheet.getCell(nColumnStartIndex, nRowStartIndex).getContents()!=""){ //와드 두당한번씩돈다
+                    WOD wod2 =new WOD();
+
+                    wodrow=nRowStartIndex;
+                    wodcol=2; //movement
+
+                    // 와드네임 변경
+                    WritableCell wodnamecell= sheet.getWritableCell(0,nRowStartIndex);
+
+                    if (wodnamecell.getType() == CellType.LABEL) {
+                        Label wodnamelabel = (Label) wodnamecell;
+                        wodnamelabel.setString(wod.getWODname());
+                        System.out.println("수정된 와드네임:" + wod.getWODname());
+
+                    }
+
+                    // 와드타입 변경
+                    WritableCell wodtypecell= sheet.getWritableCell(1,nRowStartIndex);
+
+                    if (wodtypecell.getType() == CellType.LABEL) {
+                        Label wodtypelabel = (Label) wodtypecell;
+                        wodtypelabel.setString(wod.getWODtype());
+                        System.out.println("수정된 와드타입:" + wod.getWODtype());
+
+                    }
+
+
+
+                    while(sheet.getCell(wodcol, wodrow).getContents()!=""){
+
+                        wod2.getMovement().add(sheet.getCell(2, wodrow).getContents());
+                        wod2.getEquipment().add(sheet.getCell(3, wodrow).getContents());
+                        wod2.getMovementnum().add(sheet.getCell(4, wodrow).getContents());
+                        wod2.getWeightlist().add(sheet.getCell(5, wodrow).getContents());
+
+                        // 무브먼트 변경
+                        WritableCell movementcell= sheet.getWritableCell(2,nRowStartIndex);
+
+                        if (movementcell.getType() == CellType.LABEL) {
+                            Label movementlabel = (Label) movementcell;
+                            movementlabel.setString(wod.getMovement().get(wodrow));
+                            System.out.println("수정된 무브먼트:" + wod.getMovement().get(wodrow));
+
+                        }
+
+                        // 장비 변경
+                        WritableCell equipmentcell= sheet.getWritableCell(3,nRowStartIndex);
+
+                        if (equipmentcell.getType() == CellType.LABEL) {
+                            Label equipmentlabel = (Label) equipmentcell;
+                            equipmentlabel.setString(wod.getEquipment().get(wodrow));
+                            System.out.println("수정된 장비:" + wod.getEquipment().get(wodrow));
+
+                        }
+
+                        // reps 변경
+                        WritableCell movementnumcell= sheet.getWritableCell(4,nRowStartIndex);
+
+                        if (movementnumcell.getType() == CellType.LABEL) {
+                            Label movementnumlabel = (Label) movementnumcell;
+                            movementnumlabel.setString(wod.getMovementnum().get(wodrow));
+                            System.out.println("수정된 수행횟수:" + wod.getMovementnum().get(wodrow));
+
+                        }
+
+                        // 장비 무게 변경
+                        WritableCell weightlistcell= sheet.getWritableCell(5,nRowStartIndex);
+
+                        if (weightlistcell.getType() == CellType.LABEL) {
+                            Label weightlistlabel = (Label) weightlistcell;
+                            weightlistlabel.setString(wod.getWeightlist().get(wodrow));
+                            System.out.println("수정된 장비 무게:" + wod.getWeightlist().get(wodrow));
+
+                        }
+
+
+
+                        wodrow+=1;
+                    }
+
+
+                    this.userinfo.getUserwodlist().add(wod2);
+                    nRowStartIndex+=50;
+                }
+            }
+            else{
+                System.out.println("Sheet is null");
+            }
+
 
 
 
