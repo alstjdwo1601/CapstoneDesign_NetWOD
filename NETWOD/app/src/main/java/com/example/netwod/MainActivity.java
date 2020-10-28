@@ -235,18 +235,18 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-        // 개인 정보 , 기록정보 수정
-        public void writeExcel() throws IOException, BiffException, WriteException {
+        //
+        // 개인 정보  , 운동기구 보유여부 수정 (홈화면에서 쓰는것)
+        //
+        public void editUserInfo() throws IOException, BiffException, WriteException {
             file=new File(sdCardPath+"/Download/netwodtemplate.xls" );
 
 
             try {
                 is = new FileInputStream(file);
-                System.out.println("write에서 인풋스트림 생성 성공");
+                System.out.println("editUserInfo에서 인풋스트림 생성 성공");
             } catch (FileNotFoundException e) {
-                System.out.println("write에서 인풋스트림 생성 불가");
+                System.out.println("editUserInfo에서 인풋스트림 생성 불가");
                 e.printStackTrace();
             }
 
@@ -260,23 +260,9 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-
+            assert wworkbook != null;
             WritableSheet sheet = wworkbook.getSheet(1);
 
-            jxl.write.WritableCellFormat  format= new WritableCellFormat();
-            jxl.write.WritableCellFormat  format0= new WritableCellFormat();
-            jxl.write.Label label = null;
-            jxl.write.Blank blank = null;
-
-
-            // 유저 정보 키 변경
-            WritableCell heightcell= sheet.getWritableCell(13,8);
-
-            if (heightcell.getType() == CellType.NUMBER) {
-                jxl.write.Number n=(jxl.write.Number) heightcell;
-                n.setValue(Integer.parseInt(userinfo.getUserHeight()));
-                System.out.println("수정 키:" + this.userinfo.getUserHeight());
-            }
 
             // 유저 정보 이름 변경
             WritableCell namecell= sheet.getWritableCell(13,5);
@@ -288,6 +274,16 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
+            // 유저 정보 키 변경
+            WritableCell heightcell= sheet.getWritableCell(13,8);
+
+            if (heightcell.getType() == CellType.NUMBER) {
+                jxl.write.Number n=(jxl.write.Number) heightcell;
+                n.setValue(Integer.parseInt(userinfo.getUserHeight()));
+                System.out.println("수정 키:" + this.userinfo.getUserHeight());
+            }
+
+
             //유저 정보 몸무게 변경
             WritableCell weightcell= sheet.getWritableCell(13,7);
 
@@ -296,6 +292,144 @@ public class MainActivity extends AppCompatActivity {
                 n.setValue(Integer.parseInt(userinfo.getUserWeight()));
                 System.out.println("수정 몸무게:" + this.userinfo.getUserWeight());
             }
+
+            // 바벨 Y / N 여부 수정
+            WritableCell barbellcell= sheet.getWritableCell(13,14);
+
+            if (barbellcell.getType() == CellType.LABEL) {
+                Label barbelllabel = (Label) barbellcell;
+
+                if(this.userinfo.isDumbbell()) { barbelllabel.setString("Y"); }
+                else {barbelllabel.setString("N");}
+                System.out.println("수정된 바벨:" + this.userinfo.isBarbell());
+            }
+
+            // 맨몸 Y / N 여부 수정
+            WritableCell bodycell= sheet.getWritableCell(13,15);
+
+            if (bodycell.getType() == CellType.LABEL) {
+                Label bodylabel = (Label) bodycell;
+
+                if(this.userinfo.isBody()) { bodylabel.setString("Y"); }
+                else {bodylabel.setString("N");}
+                System.out.println("수정된 맨몸:" + this.userinfo.isBody());
+            }
+
+            // 풀업 바 Y / N 여부 수정
+            WritableCell pullupbarcell= sheet.getWritableCell(13,16);
+
+            if (pullupbarcell.getType() == CellType.LABEL) {
+                Label pullupbarlabel = (Label) pullupbarcell;
+
+                if(this.userinfo.isPullUpBar()) { pullupbarlabel.setString("Y"); }
+                else {pullupbarlabel.setString("N");}
+                System.out.println("수정된 풀업바:" + this.userinfo.isPullUpBar());
+            }
+
+            // 줄넘기 줄 Y / N 여부 수정
+            WritableCell jumpropecell= sheet.getWritableCell(13,17);
+
+            if (jumpropecell.getType() == CellType.LABEL) {
+                Label jumpropelabel = (Label) jumpropecell;
+
+                if(this.userinfo.isJumprope()) { jumpropelabel.setString("Y"); }
+                else {jumpropelabel.setString("N");}
+                System.out.println("수정된 줄넘기 줄:" + this.userinfo.isJumprope());
+            }
+
+            // 케틀벨 Y / N 여부 수정
+            WritableCell kettlebellcell= sheet.getWritableCell(13,18);
+
+            if (kettlebellcell.getType() == CellType.LABEL) {
+                Label kettlebelllabel = (Label) kettlebellcell;
+
+                if(this.userinfo.isKettlebell()) { kettlebelllabel.setString("Y"); }
+                else {kettlebelllabel.setString("N");}
+                System.out.println("수정된 케틀벨:" + this.userinfo.isKettlebell());
+            }
+
+            // 월볼 Y / N 여부 수정
+            WritableCell wallballcell= sheet.getWritableCell(13,19);
+
+            if (wallballcell.getType() == CellType.LABEL) {
+                Label wallballlabel = (Label) wallballcell;
+
+                if(this.userinfo.isWallBall()) { wallballlabel.setString("Y"); }
+                else {wallballlabel.setString("N");}
+                System.out.println("수정된 월볼:" + this.userinfo.isWallBall());
+            }
+
+            // 박스 Y / N 여부 수정
+            WritableCell boxcell= sheet.getWritableCell(13,20);
+
+            if (boxcell.getType() == CellType.LABEL) {
+                Label boxlabel = (Label) boxcell;
+
+                if(this.userinfo.isBox()) { boxlabel.setString("Y"); }
+                else {boxlabel.setString("N");}
+                System.out.println("수정된 박스:" + this.userinfo.isBox());
+            }
+
+            // 덤벨 Y / N 여부 수정
+            WritableCell dumbbellcell= sheet.getWritableCell(13,21);
+
+            if (dumbbellcell.getType() == CellType.LABEL) {
+                Label dumbbelllabel = (Label) dumbbellcell;
+
+                if(this.userinfo.isDumbbell()) { dumbbelllabel.setString("Y"); }
+                else {dumbbelllabel.setString("N");}
+                System.out.println("수정된 덤벨:" + this.userinfo.isDumbbell());
+            }
+
+
+
+            try {
+                wworkbook.write();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                wworkbook.close();
+            } catch (IOException | WriteException e) {
+                e.printStackTrace();
+            }
+            is.close();
+            originworkbook.close();
+
+        }
+
+
+        //
+        // 개인 기록 수정
+        //
+        public void editUserRecord(WODrecord woDrecord) throws IOException, BiffException, WriteException {
+            file = new File(sdCardPath + "/Download/netwodtemplate.xls");
+
+            try {
+                is = new FileInputStream(file);
+                System.out.println("editUserRecord에서 인풋스트림 생성 성공");
+            } catch (FileNotFoundException e) {
+                System.out.println("editUserRecord에서 인풋스트림 생성 불가");
+                e.printStackTrace();
+            }
+
+            Workbook originworkbook = null;
+            originworkbook = Workbook.getWorkbook(is);
+            WritableWorkbook wworkbook = null;
+
+            try {
+                wworkbook = Workbook.createWorkbook(new File(sdCardPath + "/Download/netwodtemplate.xls"), originworkbook);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            assert wworkbook != null;
+            WritableSheet sheet = wworkbook.getSheet(1);
+
+            jxl.write.WritableCellFormat  format= new WritableCellFormat();
+            jxl.write.WritableCellFormat  format0= new WritableCellFormat();
+            jxl.write.Label label = null;
+            jxl.write.Blank blank = null;
 
             // 유저 정보 점수 변경
             WritableCell scorecell= sheet.getWritableCell(16,9);
@@ -327,6 +461,153 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
+            try {
+                wworkbook.write();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                wworkbook.close();
+            } catch (IOException | WriteException e) {
+                e.printStackTrace();
+            }
+            is.close();
+            originworkbook.close();
+
+
+
+        }
+
+
+        //
+        // 사용자 와드를 새로 쓰기
+        //
+        public void editUserWodList(WOD wod) throws IOException, BiffException, WriteException{
+            file=new File(sdCardPath+"/Download/userwodlist.xls" );
+
+
+            try {
+                is = new FileInputStream(file);
+                System.out.println("editUserWodList에서 인풋스트림 생성 성공");
+            } catch (FileNotFoundException e) {
+                System.out.println("editUserWodList에서 인풋스트림 생성 불가");
+                e.printStackTrace();
+            }
+
+            Workbook originworkbook = null;
+            originworkbook = Workbook.getWorkbook(is);
+            WritableWorkbook wworkbook = null;
+
+            try {
+                wworkbook = Workbook.createWorkbook(new File(sdCardPath+"/Download/userwodlist.xls" ),originworkbook);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            assert wworkbook != null;
+            WritableSheet sheet = wworkbook.getSheet(0);
+
+
+            //
+            // 새로 와드에 쓰는 부분
+            //
+            if(sheet != null) {
+                int nRowStartIndex = 1;
+                int nColumnStartIndex = 0;
+                int wodrow;
+                int wodcol;
+
+
+                while(sheet.getCell(nColumnStartIndex, nRowStartIndex).getContents()!=""){ //와드 두당한번씩돈다
+                    WOD wod2 =new WOD();
+
+                    wodrow=nRowStartIndex;
+                    wodcol=2; //movement
+
+                    // 와드네임 변경
+                    WritableCell wodnamecell= sheet.getWritableCell(0,nRowStartIndex);
+
+                    if (wodnamecell.getType() == CellType.LABEL) {
+                        Label wodnamelabel = (Label) wodnamecell;
+                        wodnamelabel.setString(wod.getWODname());
+                        System.out.println("수정된 와드네임:" + wod.getWODname());
+
+                    }
+
+                    // 와드타입 변경
+                    WritableCell wodtypecell= sheet.getWritableCell(1,nRowStartIndex);
+
+                    if (wodtypecell.getType() == CellType.LABEL) {
+                        Label wodtypelabel = (Label) wodtypecell;
+                        wodtypelabel.setString(wod.getWODtype());
+                        System.out.println("수정된 와드타입:" + wod.getWODtype());
+
+                    }
+
+
+
+                    while(sheet.getCell(wodcol, wodrow).getContents()!=""){
+
+                        wod2.getMovement().add(sheet.getCell(2, wodrow).getContents());
+                        wod2.getEquipment().add(sheet.getCell(3, wodrow).getContents());
+                        wod2.getMovementnum().add(sheet.getCell(4, wodrow).getContents());
+                        wod2.getWeightlist().add(sheet.getCell(5, wodrow).getContents());
+
+                        // 무브먼트 변경
+                        WritableCell movementcell= sheet.getWritableCell(2,nRowStartIndex);
+
+                        if (movementcell.getType() == CellType.LABEL) {
+                            Label movementlabel = (Label) movementcell;
+                            movementlabel.setString(wod.getMovement().get(wodrow));
+                            System.out.println("수정된 무브먼트:" + wod.getMovement().get(wodrow));
+
+                        }
+
+                        // 장비 변경
+                        WritableCell equipmentcell= sheet.getWritableCell(3,nRowStartIndex);
+
+                        if (equipmentcell.getType() == CellType.LABEL) {
+                            Label equipmentlabel = (Label) equipmentcell;
+                            equipmentlabel.setString(wod.getEquipment().get(wodrow));
+                            System.out.println("수정된 장비:" + wod.getEquipment().get(wodrow));
+
+                        }
+
+                        // reps 변경
+                        WritableCell movementnumcell= sheet.getWritableCell(4,nRowStartIndex);
+
+                        if (movementnumcell.getType() == CellType.LABEL) {
+                            Label movementnumlabel = (Label) movementnumcell;
+                            movementnumlabel.setString(wod.getMovementnum().get(wodrow));
+                            System.out.println("수정된 수행횟수:" + wod.getMovementnum().get(wodrow));
+
+                        }
+
+                        // 장비 무게 변경
+                        WritableCell weightlistcell= sheet.getWritableCell(5,nRowStartIndex);
+
+                        if (weightlistcell.getType() == CellType.LABEL) {
+                            Label weightlistlabel = (Label) weightlistcell;
+                            weightlistlabel.setString(wod.getWeightlist().get(wodrow));
+                            System.out.println("수정된 장비 무게:" + wod.getWeightlist().get(wodrow));
+
+                        }
+
+
+
+                        wodrow+=1;
+                    }
+
+
+                    this.userinfo.getUserwodlist().add(wod2);
+                    nRowStartIndex+=50;
+                }
+            }
+            else{
+                System.out.println("Sheet is null");
+            }
+
+
 
 
             try {
@@ -336,55 +617,23 @@ public class MainActivity extends AppCompatActivity {
             }
             try {
                 wworkbook.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (WriteException e) {
+            } catch (IOException | WriteException e) {
                 e.printStackTrace();
             }
             is.close();
             originworkbook.close();
-
-
-        }
-
-
-        //와드 새로 쓰기
-        public void writeExcel2() throws IOException, BiffException, WriteException {
-            file = new File(sdCardPath + "/Download/netwodtemplate.xls");
-
-            try {
-                is = new FileInputStream(file);
-                System.out.println("write2에서 인풋스트림 생성 성공");
-            } catch (FileNotFoundException e) {
-                System.out.println("write2에서 인풋스트림 생성 불가");
-                e.printStackTrace();
-            }
-
-            Workbook originworkbook = null;
-            originworkbook = Workbook.getWorkbook(is);
-            WritableWorkbook wworkbook = null;
-
-            try {
-                wworkbook = Workbook.createWorkbook(new File(sdCardPath + "/Download/netwodtemplate.xls"), originworkbook);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            WritableSheet sheet = wworkbook.getSheet(1);
-
-            jxl.write.WritableCellFormat  format= new WritableCellFormat();
-            jxl.write.WritableCellFormat  format0= new WritableCellFormat();
-            jxl.write.Label label = null;
-            jxl.write.Blank blank = null;
-
-
         }
 
 
 
 
 
-            //
+
+
+
+
+
+        //
         //netwodtemplate.xls 읽기
         //
         public void readExcel(){
@@ -592,7 +841,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //
-        //wodlist.xls 읽기
+        //userwodlist.xls 읽기
         //
         public void readExcel2(){
             file = new File(sdCardPath+"/Download/userwodlist.xls" );
@@ -670,7 +919,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //
-        //userwodlist.xls 읽기
+        //wodlist.xls 읽기
         //
         public void readExcel3(){
             file = new File(sdCardPath+"/Download/wodlist.xls" );
