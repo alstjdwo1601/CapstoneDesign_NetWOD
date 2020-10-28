@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
     public FortimeFragment fortimeFragment=new FortimeFragment();
     public AmrapFragment amrapFragment=new AmrapFragment();
     public NamedwodFragment namedwodFragment=new NamedwodFragment();
+    public RecordlistFragment recordlistFragment=new RecordlistFragment();
     public ArrayList<WOD> namedwodlist=new ArrayList<WOD>();
     int namedwodindex;
     LinearLayout selectwodlayout;
@@ -91,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, menu2Fragment).commit();
                 break;
             case 3:
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, menu3Fragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, recordlistFragment).commit();
                 break;
             case 4:
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, menu4Fragment).commit();

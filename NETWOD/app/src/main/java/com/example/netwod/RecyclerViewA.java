@@ -92,18 +92,11 @@ public class RecyclerViewA extends RecyclerView.Adapter<RecyclerViewA.ViewHolder
         String titlestring="";
         String typestring="";
         for(int i=0; i<titlesize;i++){
-
             titlestring=titlestring+"\n"+activity.excelscrapper.userinfo.getUserwodlist().get(position).getWODname().charAt(i);
-
-
         }
         for(int i=0; i<typesize;i++){
-
             typestring=typestring+"\n"+activity.excelscrapper.userinfo.getUserwodlist().get(position).getWODtype().charAt(i);
-
-
         }
-
         for (int i = 0; i < msize; i++){
             movementstring=movementstring+"\n"+activity.excelscrapper.userinfo.getUserwodlist().get(position).getMovement().get(i);
             if(activity.excelscrapper.userinfo.getUserwodlist().get(position).getWeightlist().get(i)!=""){
@@ -112,10 +105,7 @@ public class RecyclerViewA extends RecyclerView.Adapter<RecyclerViewA.ViewHolder
             movementstring=movementstring+" "+activity.excelscrapper.userinfo.getUserwodlist().get(position).getMovementnum().get(i)+"times";
     }
         holder.textView.setText(titlestring);
-
         holder.textView2.setText(typestring);
-        //movementstring=activity.excelscrapper.userinfo.getUserwodlist().get(position).getMovement().get(0);
-
         holder.textView3.setText(movementstring);
         if(clickedlist.get(position)==1) {
             holder.textView.setBackgroundColor(Color.YELLOW);

@@ -100,6 +100,7 @@ public class Menu1Fragment extends Fragment {
         String userName=activity.excelscrapper.userinfo.getUserName();
         String userHeight=activity.excelscrapper.userinfo.getUserHeight();
         String userWeight=activity.excelscrapper.userinfo.getUserWeight();
+
         //체크박스 바운딩
         boxcheckbox=rootView.findViewById(R.id.BoxcheckBox);
         jumpropecheckbox=rootView.findViewById(R.id.JumpRopecheckBox);
