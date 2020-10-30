@@ -21,6 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -132,7 +134,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
-
+      FirebaseAuth mAuth;
+       mAuth=FirebaseAuth.getInstance();
+       FirebaseUser currentUser=mAuth.getCurrentUser();
 
         //에뮬레이터 내부 sdcard 경로 받기
         String sdCardPath = null;

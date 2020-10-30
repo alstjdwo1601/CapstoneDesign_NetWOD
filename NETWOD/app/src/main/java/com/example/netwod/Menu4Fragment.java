@@ -8,6 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
+
+import com.google.firebase.auth.FirebaseUser;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Menu4Fragment#newInstance} factory method to
@@ -23,6 +27,13 @@ public class Menu4Fragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private FirebaseAuth mAuth;
+    // [START declare_auth]
+
+
+    // [END declare_auth]
+
 
     public Menu4Fragment() {
         // Required empty public constructor
@@ -42,6 +53,7 @@ public class Menu4Fragment extends Fragment {
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,12 +65,16 @@ public class Menu4Fragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+       // mAuth = FirebaseAuth.getInstance();
+       // FirebaseUser currentUser = mAuth.getCurrentUser();
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_menu4, container, false);
+        return inflater.inflate(R.layout.fragment_login, container, false);
     }
 }
