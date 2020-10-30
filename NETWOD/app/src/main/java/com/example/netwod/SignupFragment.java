@@ -3,8 +3,10 @@ package com.example.netwod;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +15,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -23,6 +29,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import jxl.read.biff.BiffException;
 import jxl.write.WriteException;
@@ -97,6 +105,29 @@ public class SignupFragment extends Fragment {
             public void onClick(View v) {
             String userid=signupid.getText().toString();
             String userpassword=signuppassword.getText().toString();
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                Map<String, Object> user = new HashMap<>();
+                user.put("id", userid);
+                user.put("password", userpassword);
+
+
+                // Add a new document with a generated ID
+                String excelname;
+                excelname=activity.excelscrapper.userinfo.getUserName();
+                db.collection("UserInfo").document(excelname)
+                        .set(user)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                          System.out.println("실ㄹ패");
+                            }
+                        });
 
                 //boxcheckbox.performClick();
 
