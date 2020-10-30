@@ -10,7 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -26,10 +29,10 @@ import jxl.write.WriteException;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Menu4Fragment#newInstance} factory method to
+ * Use the {@link SignupFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Menu4Fragment extends Fragment {
+public class SignupFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -39,22 +42,15 @@ public class Menu4Fragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    TextView tv_username;
-    TextView tv_userheight;
-    TextView tv_userweight;
-    Button btn_fragment;
+    EditText signupid;
+    EditText signuppassword;
+    EditText signuppasswordcheck;
+    Button signupbutton;
+
     MainActivity activity;
-    CheckBox bodycheckbox;
-    CheckBox barbellcheckbox;
-    CheckBox dumbbellcheckbox;
-    CheckBox boxcheckbox;
-    CheckBox pullupbarcheckbox;
-    CheckBox jumpropecheckbox;
-    CheckBox kettlebellcheckbox;
-    CheckBox wallballcheckbox;
 
     private ViewGroup rootView;
-    public Menu4Fragment() {
+    public SignupFragment() {
         // Required empty public constructor
     }
 
@@ -64,11 +60,11 @@ public class Menu4Fragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Menu4Fragment.
+     * @return A new instance of fragment SignupFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static Menu4Fragment newInstance(String param1, String param2) {
-        Menu4Fragment fragment = new Menu4Fragment();
+    public static SignupFragment newInstance(String param1, String param2) {
+        SignupFragment fragment = new SignupFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -89,57 +85,23 @@ public class Menu4Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView = (ViewGroup) inflater.inflate(R.layout.fragment_menu4 , container, false);
-        activity.excelscrapper.readExcel();
-        //텍스트뷰 바운딩
-
-        tv_username= rootView.findViewById(R.id.NametextView);
-        tv_userheight= rootView.findViewById(R.id.HeighttextView);
-        tv_userweight= rootView.findViewById(R.id.WeightTextView);
-
-        String userName=activity.excelscrapper.userinfo.getUserName();
-        String userHeight=activity.excelscrapper.userinfo.getUserHeight();
-        String userWeight=activity.excelscrapper.userinfo.getUserWeight();
-
-        //체크박스 바운딩
-        boxcheckbox=rootView.findViewById(R.id.BoxcheckBox);
-        jumpropecheckbox=rootView.findViewById(R.id.JumpRopecheckBox);
-        barbellcheckbox=rootView.findViewById(R.id.BarbellcheckBox);
-        dumbbellcheckbox=rootView.findViewById(R.id.DumbbellcheckBox);
-        bodycheckbox=rootView.findViewById(R.id.BodycheckBox);
-        kettlebellcheckbox=rootView.findViewById(R.id.KettlebellcheckBox);
-        pullupbarcheckbox=rootView.findViewById(R.id.PullUpBarcheckBox);
-        wallballcheckbox=rootView.findViewById(R.id.WallBallcheckBox);
-        //user 와 동기화
-
-        boxcheckbox.setChecked(activity.excelscrapper.userinfo.isBox());
-        jumpropecheckbox.setChecked(activity.excelscrapper.userinfo.isJumprope());
-        barbellcheckbox.setChecked(activity.excelscrapper.userinfo.isBarbell());
-        dumbbellcheckbox.setChecked(activity.excelscrapper.userinfo.isDumbbell());
-        bodycheckbox.setChecked(activity.excelscrapper.userinfo.isBody());
-        kettlebellcheckbox.setChecked(activity.excelscrapper.userinfo.isKettlebell());
-        pullupbarcheckbox.setChecked(activity.excelscrapper.userinfo.isPullUpBar());
-        wallballcheckbox.setChecked(activity.excelscrapper.userinfo.isWallBall());
-
-        btn_fragment=rootView.findViewById(R.id.Editbutton);
+        rootView = (ViewGroup) inflater.inflate(R.layout.fragment_signup , container, false);
+        signupid=rootView.findViewById(R.id.signupid);
+        signuppassword=rootView.findViewById(R.id.signuppassword);
+        signuppasswordcheck=rootView.findViewById(R.id.signuppasswordcheck);
+        signupbutton=rootView.findViewById(R.id.signupbutton);
 
 
-
-
-        tv_username.setText(userName);
-        tv_userheight.setText(userHeight);
-        tv_userweight.setText(userWeight);
-
-
-        btn_fragment.setOnClickListener(new View.OnClickListener() {
+        signupbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+            String userid=signupid.getText().toString();
+            String userpassword=signuppassword.getText().toString();
 
                 //boxcheckbox.performClick();
 
 
-                activity.onFragmentChange(8);
+
 
 
             }

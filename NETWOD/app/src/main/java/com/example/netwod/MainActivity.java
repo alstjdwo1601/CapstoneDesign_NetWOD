@@ -70,8 +70,10 @@ public class MainActivity extends AppCompatActivity {
     public AmrapFragment amrapFragment=new AmrapFragment();
     public NamedwodFragment namedwodFragment=new NamedwodFragment();
     public RecordlistFragment recordlistFragment=new RecordlistFragment();
+    public SignupFragment signupFragment=new SignupFragment();
     public ArrayList<WOD> namedwodlist=new ArrayList<WOD>();
     int namedwodindex;
+    public FirebaseAuth mAuth=FirebaseAuth.getInstance();
     LinearLayout selectwodlayout;
 
     /*
