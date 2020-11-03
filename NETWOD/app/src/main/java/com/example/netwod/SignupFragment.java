@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -103,8 +104,13 @@ public class SignupFragment extends Fragment {
         signupbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            String userid=signupid.getText().toString();
-            String userpassword=signuppassword.getText().toString();
+
+
+                String userid = signupid.getText().toString();
+                String userpassword = signuppassword.getText().toString();
+                String userpasswordcheck = signuppasswordcheck.getText().toString();
+
+            if(userpassword.equals(userpasswordcheck)) {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 Map<String, Object> user = new HashMap<>();
                 user.put("id", userid);
@@ -113,7 +119,7 @@ public class SignupFragment extends Fragment {
 
                 // Add a new document with a generated ID
                 String excelname;
-                excelname=activity.excelscrapper.userinfo.getUserName();
+                excelname = activity.excelscrapper.userinfo.getUserName();
                 db.collection("UserInfo").document(excelname)
                         .set(user)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -125,16 +131,19 @@ public class SignupFragment extends Fragment {
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                          System.out.println("실ㄹ패");
+                                System.out.println("실ㄹ패");
                             }
                         });
 
                 //boxcheckbox.performClick();
 
+            }
+            else{
 
+            Toast.makeText(getContext(),"Your passwork confirmation does not match.",Toast.LENGTH_LONG).show();
 
-
-
+            }
+///
             }
         });
 

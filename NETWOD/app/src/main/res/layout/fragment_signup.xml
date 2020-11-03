@@ -12,11 +12,22 @@
         android:layout_height="45dp"
         android:layout_marginTop="30dp"
         android:ems="10"
-        android:hint="Email"
+        android:hint="ID"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <EditText
+        android:id="@+id/signupname"
+        android:layout_width="200dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="NAME"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/signupid"
+        app:layout_constraintStart_toStartOf="@+id/signupid"
+        app:layout_constraintTop_toBottomOf="@+id/signupid" />
 
     <EditText
         android:id="@+id/signuppassword"
@@ -24,27 +35,23 @@
         android:layout_height="45dp"
         android:layout_marginTop="20dp"
         android:ems="10"
-        android:hint="패스워드"
+        android:hint="PASSWORD"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/signupid"
-        app:layout_constraintStart_toStartOf="@+id/signupid"
-        app:layout_constraintTop_toBottomOf="@+id/signupid" />
+        app:layout_constraintEnd_toEndOf="@+id/signupname"
+        app:layout_constraintStart_toStartOf="@+id/signupname"
+        app:layout_constraintTop_toBottomOf="@+id/signupname" />
+
     <EditText
         android:id="@+id/signuppasswordcheck"
         android:layout_width="200dp"
         android:layout_height="45dp"
         android:layout_marginTop="20dp"
         android:ems="10"
-        android:hint="패스워드 확인"
+        android:hint="PASSWORDCHECK"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="@+id/signuppassword"
         app:layout_constraintStart_toStartOf="@+id/signuppassword"
         app:layout_constraintTop_toBottomOf="@+id/signuppassword" />
-
-
-
-
-
 
 
     <Button
@@ -52,7 +59,7 @@
         android:layout_width="200dp"
         android:layout_height="45dp"
         android:layout_marginTop="20dp"
-        android:text="회원가입"
+        android:text="SIGN UP"
         app:layout_constraintEnd_toEndOf="@+id/signuppasswordcheck"
         app:layout_constraintStart_toStartOf="@+id/signuppasswordcheck"
         app:layout_constraintTop_toBottomOf="@+id/signuppasswordcheck" />
@@ -62,7 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:layout_marginTop="28dp"
-        android:text="중복확인"
+        android:text="CONFIRM"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.058"
         app:layout_constraintStart_toEndOf="@+id/signupid"

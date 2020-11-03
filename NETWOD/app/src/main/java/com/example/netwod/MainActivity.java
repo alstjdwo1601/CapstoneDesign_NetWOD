@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, recordlistFragment).commit();
                 break;
             case 4:
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, signupFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, menu4Fragment).commit();
                 break;
             case 5:
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, wodlistFragment).commit();
