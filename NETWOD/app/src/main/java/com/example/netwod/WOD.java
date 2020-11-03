@@ -1,134 +1,318 @@
-package wod;
+package com.example.netwod;
 
 import java.util.ArrayList;
 
-public class Wod {
-	private String name;
-	private String level;  //
-	private ArrayList<Movement> movement_list = new ArrayList<Movement>();
-	private String type;
-	private Wod_manager manager = new Wod_manager(this);
+class WOD{
+    private String WODname;//ex) FRAN,ê³ ì„±ì£¼ì˜ ì™€ë“œ
+    private String WODlevel;
+    private String WODtype; //í¬íƒ€ì„, ì•”ë© ë“±ë“±
 
-public Wod() {
-	
-	
-	
-} // ÃßÃµ ¿Íµå »ı¼ºÇÏ±â
-public Wod(String name,int level) {} //
-public Wod(String name,String[] equipment) {
-	boolean count = true;
-	this.name = name;
-	this.setWODlevel("±¸ÇöÁß");
-	this.setWODtype("ARMAP");
-	Data_Movement data = new Data_Movement();
-	ArrayList<String> equipment_array = new ArrayList<>();
-	ArrayList<String> movement_recommend = manager.stimulation();
-	for(String item : equipment) {
-		equipment_array.add(item);
-	}
-	for(int i = 0; i < equipment.length ;i++) {
-		movement_recommend = manager.stimulation();
-		for(int j = 0 ; j < movement_recommend.size(); j++ ) {
-			if(!data.get_equipment(data.get_index(movement_recommend.get(j))).equals(equipment[i])) {count =false;}} // ÃßÃµ µ¿ÀÛ 1~3°³
-		if(count) {
-			continue;
-		}
-		count = true;
-	}
-	this.manager.AMRAP(movement_recommend.toArray(new String[movement_recommend.size()]));
-	
+    //ë°ë“œ21,ì›”ë³¼21 + ë°ë“œ15,ì›”ë³¼15 ì™€ë“œ ì˜ˆì‹œ
+    private ArrayList<String> movement;//{ë°ë“œ,ì›”ë³¼,ë°ë“œ,ì›”ë³¼,ë°ë“œ,ì›”ë³¼}
+    private ArrayList<String> movementnum;//={21,21,21,15,15,15};
+    private ArrayList<String> weightlist;//ê°ê° ë¬´ê²Œ
+    private ArrayList<String> equipment;// ì‚¬ìš©í•œ ê¸°êµ¬
+
+    public WOD(){
+        this.movement=new ArrayList<String>();
+        this.movementnum=new ArrayList<String>();
+        this.weightlist=new ArrayList<String>();
+        this.equipment=new ArrayList<String>();
+    }
+
+
+
+
+
+
+    public String getWODlevel() {
+        return WODlevel;
+    }
+
+    public void setWODlevel(String WODlevel) {
+        this.WODlevel = WODlevel;
+    }
+
+    public String getWODname() {
+        return WODname;
+    }
+
+    public void setWODname(String WODname) {
+        this.WODname = WODname;
+    }
+
+    public String getWODtype() {
+        return WODtype;
+    }
+
+    public void setWODtype(String WODtype) {
+        this.WODtype = WODtype;
+    }
+
+    public ArrayList<String> getMovement() {
+        return movement;
+    }
+
+    public void setMovement(ArrayList<String> movement) {
+        this.movement = movement;
+    }
+
+    public ArrayList<String> getMovementnum() {
+        return movementnum;
+    }
+
+    public void setMovementnum(ArrayList<String> movementnum) {
+        this.movementnum = movementnum;
+    }
+
+    public ArrayList<String> getWeightlist() {
+        return weightlist;
+    }
+
+    public void setWeightlist(ArrayList<String> weightlist) {
+        this.weightlist = weightlist;
+    }
+
+    public ArrayList<String> getEquipment() {
+        return equipment;
+    }
+
+    public void setEquipment(ArrayList<String> equipment) {
+        this.equipment = equipment;
+    }
+
+
+
+
 }
-
-// Á¤º¸¸¦ ¾ò´Â ºÎºĞ
-
-
-
-// ÀÏ´Ü 11/3 ¿©±â¿¡ ³õ°í Å×½ºÆ® ³¡³ª¸é WOD manager·Î ³Ö±â ¤¡¤¡
+class WODrecord{
+    public ArrayList<WOD> wodlist; //{í”„ë€,ì‹ ë””,ë¯¼ì„±ì¬,ê¹€ì •í›ˆ}
+    public ArrayList<String> scorelist; //{"70","80","75","60"}
+    public ArrayList<String> recordlist; //{"4:32","3:53","2:10","6:34"}
 
 
-public ArrayList<String> getMovement(){
-	ArrayList<String> output = new ArrayList<String>();
-	for(int i = 0; i < movement_list.size(); i++) {
-		output.add(this.movement_list.get(i).get_name());
-		
-	}
-	
-	return output;  
+    public WODrecord(){
+        wodlist=new ArrayList<WOD>();
+        scorelist=new ArrayList<String>();
+        recordlist=new ArrayList<String>();
+
+    }
+
+    public ArrayList<WOD> getWodlist() {
+        return wodlist;
+    }
+
+    public void setWodlist(ArrayList<WOD> wodlist) {
+        this.wodlist = wodlist;
+    }
+
+    public ArrayList<String> getScorelist() {
+        return scorelist;
+    }
+
+    public void setScorelist(ArrayList<String> scorelist) {
+        this.scorelist = scorelist;
+    }
+
+    public ArrayList<String> getRecordlist() {
+        return recordlist;
+    }
+
+    public void setRecordlist(ArrayList<String> recordlist) {
+        this.recordlist = recordlist;
+    }
+
+
 }
-public ArrayList<String> getEquipment(){
-	Data_Movement data = new Data_Movement();
-	ArrayList<String> output = new ArrayList<String>();
-	for(int i = 0; i < movement_list.size(); i++) {
-		String name = data.get_equipment(data.get_index(this.movement_list.get(i).get_name()));
-		output.add(name);
-		
-	}
-	
-	return output;  
-}
-public ArrayList<String> getMovementnum(){
-	ArrayList<String> output = new ArrayList<String>();
-	for(int i = 0; i < movement_list.size(); i++) {
-		output.add(Integer.toString(this.movement_list.get(i).get_rep()));
-		
-	}
-	
-	return output;  
-}
-public ArrayList<String> getWeightlist(){
-	ArrayList<String> output = new ArrayList<String>();
-	for(int i = 0; i < movement_list.size(); i++) {
-		output.add(Integer.toString((int)this.movement_list.get(i).get_weight()));
-		
-	}
-	
-	return output;  
-}
+class UserInfo {
+
+    public WODrecord wodrecord; //í…œí”Œë¦¿ì— ìˆëŠ” ê°œì¸ì´ ì‹¤ì œë¡œ í•œ ê¸°ë¡
+    public ArrayList<WOD> userwodlist; //ì™€ë“œ ì„ íƒí• ë•Œ ë¦¬ìŠ¤íŠ¸(ë­ í• ì§€ ê³ ë¥¼ì§€)
+
+    private String UserName;
+    private String UserAge;
+    private String UserWeight;
+    private String UserHeight;
+    private String User_NumOfTraining;
+
+    public int getCurrentwodindex() {
+        return currentwodindex;
+    }
+
+    public void setCurrentwodindex(int currentwodindex) {
+        this.currentwodindex = currentwodindex;
+    }
+
+    private int currentwodindex=0;
+    public UserInfo(){
+        this.wodrecord=new WODrecord(); //í…œí”Œë¦¿ì— ìˆëŠ” ê°œì¸ì´ ì‹¤ì œë¡œ í•œ ê¸°ë¡
+        this.userwodlist=new ArrayList<WOD>(); //ì™€ë“œ ì„ íƒí• ë•Œ ë¦¬ìŠ¤íŠ¸(ë­ í• ì§€ ê³ ë¥¼ì§€)
+
+    }
+
+
+    //ìš´ë™ ê¸°êµ¬ê°€ ìˆëŠ”ì§€ ì—†ëŠ”ì§€
+    private boolean Dumbbell;
+    private boolean Body;
+    private boolean Kettlebell;
+    private boolean Barbell;
+    private boolean WallBall;
+    private boolean Box;
+    private boolean Jumprope;
+    private boolean PullUpBar;
+
+
+    //ê°œì¸ í‰ê·  ìŠ¤ì½”ì–´
+    private String avg_WODlevel;
+    private String avg_round_reps;
+    private String avg_time;
+    private String avg_score;
+    private String avg_time_amrep;
+
+    public String getAvg_time_amrep() {
+        return avg_time_amrep;
+    }
+
+    public void setAvg_time_amrep(String avg_time_amrep) {
+        this.avg_time_amrep = avg_time_amrep;
+    }
+
+    public String getAvg_WODlevel() { return avg_WODlevel; }
+
+    public void setAvg_WODlevel(String avg_WODlevel) { this.avg_WODlevel = avg_WODlevel; }
+
+    public String getAvg_round_reps() { return avg_round_reps; }
+
+    public void setAvg_round_reps(String avg_round_reps) { this.avg_round_reps = avg_round_reps; }
+
+    public String getAvg_time() { return avg_time; }
+
+    public void setAvg_time(String avg_time) { this.avg_time = avg_time; }
+
+    public String getAvg_score() { return avg_score; }
+
+    public void setAvg_score(String avg_score) { this.avg_score = avg_score; }
 
 
 
+    public WODrecord getWodrecord() {
+        return wodrecord;
+    }
 
+    public void setWodrecord(WODrecord wodrecord) {
+        this.wodrecord = wodrecord;
+    }
 
-public Wod_manager manage_wod() {
-	return this.manager;
-}
+    public ArrayList<WOD> getUserwodlist() {
+        return userwodlist;
+    }
 
-public ArrayList<Movement> get_movement_Arraylist(){
-	return this.movement_list;
-}
+    public void setUserwodlist(ArrayList<WOD> userwodlist) {
+        this.userwodlist = userwodlist;
+    }
 
-// Á¤º¸¸¦ ÀúÀåÇÏ´Â ºÎºĞºĞ
-public void setWODname(String input) {
-	this.name = input;
-}
-public void setWODtype(String input) {
-	this.type = input;
-}
-public void setWODlevel(String input) {
-	this.level = input;
-}
+    public String getUserName() {
+        return UserName;
+    }
 
-public String getWODname() {
-	return this.name;
-}
-public String getWODtype() {
-	return this.type;
-}
-public String getWODlevel() {
-	return this.level;
-}
+    public void setUserName(String userName) {
+        UserName = userName;
+    }
 
+    public String getUserAge() {
+        return UserAge;
+    }
 
+    public void setUserAge(String userAge) {
+        UserAge = userAge;
+    }
 
-public void set_movement_add(Movement input) {
-	this.movement_list.add(input);
-}
-public void set_movement_remove(int index) {
-	this.movement_list.remove(index);
-}
+    public String getUserWeight() {
+        return UserWeight;
+    }
 
+    public void setUserWeight(String userWeight) {
+        UserWeight = userWeight;
+    }
 
+    public String getUserHeight() {
+        return UserHeight;
+    }
 
+    public void setUserHeight(String userHeight) {
+        UserHeight = userHeight;
+    }
 
+    public String getUser_NumOfTraining() {
+        return User_NumOfTraining;
+    }
+
+    public void setUser_NumOfTraining(String user_NumOfTraining) {
+        User_NumOfTraining = user_NumOfTraining;
+    }
+
+    public boolean isDumbbell() {
+        return Dumbbell;
+    }
+
+    public void setDumbbell(boolean dumbbell) {
+        Dumbbell = dumbbell;
+    }
+
+    public boolean isBody() {
+        return Body;
+    }
+
+    public void setBody(boolean body) {
+        Body = body;
+    }
+
+    public boolean isKettlebell() {
+        return Kettlebell;
+    }
+
+    public void setKettlebell(boolean kettlebell) {
+        Kettlebell = kettlebell;
+    }
+
+    public boolean isBarbell() {
+        return Barbell;
+    }
+
+    public void setBarbell(boolean barbell) {
+        Barbell = barbell;
+    }
+
+    public boolean isWallBall() {
+        return WallBall;
+    }
+
+    public void setWallBall(boolean wallBall) {
+        WallBall = wallBall;
+    }
+
+    public boolean isBox() {
+        return Box;
+    }
+
+    public void setBox(boolean box) {
+        Box = box;
+    }
+
+    public boolean isJumprope() {
+        return Jumprope;
+    }
+
+    public void setJumprope(boolean jumprope) {
+        Jumprope = jumprope;
+    }
+
+    public boolean isPullUpBar() {
+        return PullUpBar;
+    }
+
+    public void setPullUpBar(boolean pullUpBar) {
+        PullUpBar = pullUpBar;
+    }
 
 }

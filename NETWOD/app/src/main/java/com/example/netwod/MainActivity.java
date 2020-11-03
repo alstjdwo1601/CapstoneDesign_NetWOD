@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, recordlistFragment).commit();
                 break;
             case 4:
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, menu4Fragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, signupFragment).commit();
                 break;
             case 5:
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, wodlistFragment).commit();
@@ -136,9 +136,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
-      FirebaseAuth mAuth;
-       mAuth=FirebaseAuth.getInstance();
-       FirebaseUser currentUser=mAuth.getCurrentUser();
+        FirebaseAuth mAuth;
+        mAuth=FirebaseAuth.getInstance();
+        FirebaseUser currentUser=mAuth.getCurrentUser();
 
         //에뮬레이터 내부 sdcard 경로 받기
         String sdCardPath = null;
@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         excelscrapper=new ExcelScrapper(sdCardPath);
-        
+
         //netwodtemplate.xls 읽기
         excelscrapper.readExcel();
 
@@ -656,13 +656,13 @@ public class MainActivity extends AppCompatActivity {
 
             try {
 
-                 // TODO : use is(InputStream).
+                // TODO : use is(InputStream).
                 Workbook workbook = null;
                 Sheet sheet;
                 workbook = Workbook.getWorkbook(is);
 
                 if(workbook==null){
-                System.out.println("워크북이 NULL");
+                    System.out.println("워크북이 NULL");
                 }
 
                 // TODO : use is(InputStream).
@@ -749,8 +749,8 @@ public class MainActivity extends AppCompatActivity {
 
                         while(sheet.getCell(nColumnStartIndex, nRowStartIndex).getContents()!=""){ //와드 두당한번씩돈다
 
-                        this.userinfo.wodrecord.recordlist.add(sheet.getCell(9, nRowStartIndex).getContents());
-                        this.userinfo.wodrecord.scorelist.add(sheet.getCell(10, nRowStartIndex).getContents());
+                            this.userinfo.wodrecord.recordlist.add(sheet.getCell(9, nRowStartIndex).getContents());
+                            this.userinfo.wodrecord.scorelist.add(sheet.getCell(10, nRowStartIndex).getContents());
 
 
 
@@ -795,7 +795,7 @@ public class MainActivity extends AppCompatActivity {
                             this.userinfo.wodrecord.wodlist.add(wod);
                             cnt ++;
 
-                        nRowStartIndex+=50;
+                            nRowStartIndex+=50;
                         }
 
 
@@ -835,7 +835,7 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println("Workbook is null");
                 }
 
-            workbook.close();
+                workbook.close();
                 is.close();
             }
             catch (Exception e) {
@@ -904,7 +904,7 @@ public class MainActivity extends AppCompatActivity {
                             }
 
                             //this.userinfo.wodrecord.wodlist.add(wod2);
-                                this.userinfo.getUserwodlist().add(wod2);
+                            this.userinfo.getUserwodlist().add(wod2);
                             nRowStartIndex+=50;
                         }
                     }

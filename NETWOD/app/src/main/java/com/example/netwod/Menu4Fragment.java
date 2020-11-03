@@ -81,14 +81,14 @@ public class Menu4Fragment extends Fragment {
         signincard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, activity.signinfragement).commit();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, activity.signin).commit();
             }
         });
-        wodgeneratecard = rootView.findViewById(R.id.WODgeneratecard);
-        wodgeneratecard.setOnClickListener(new View.OnClickListener() {
+        signupcard = rootView.findViewById(R.id.Signupcard);
+        signupcard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.onFragmentChange(6);
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, activity.signupFragment).commit();
             }
         });
         helpcard = rootView.findViewById(R.id.Helpcard);
