@@ -71,9 +71,15 @@ public class MainActivity extends AppCompatActivity {
     public NamedwodFragment namedwodFragment=new NamedwodFragment();
     public RecordlistFragment recordlistFragment=new RecordlistFragment();
     public SignupFragment signupFragment=new SignupFragment();
+    public SigninFragment signinFragment= new SigninFragment();
+    public UserwodgenerateFragment userwodgenerateFragment= new UserwodgenerateFragment();
+    public FortimewodgenerateFragment fortimewodgenerateFragment=new FortimewodgenerateFragment();
+    public AmrapwodgenerateFragment amrapwodgenerateFragment=new AmrapwodgenerateFragment();
     public ArrayList<WOD> namedwodlist=new ArrayList<WOD>();
     int namedwodindex;
-    public FirebaseAuth mAuth=FirebaseAuth.getInstance();
+    public FirebaseAuth mAuth;
+    WOD tmpwod=new WOD();
+
     LinearLayout selectwodlayout;
 
     /*
@@ -99,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, recordlistFragment).commit();
                 break;
             case 4:
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, signupFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, menu4Fragment).commit();
                 break;
             case 5:
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, wodlistFragment).commit();
@@ -136,9 +142,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
-        FirebaseAuth mAuth;
-        mAuth=FirebaseAuth.getInstance();
-        FirebaseUser currentUser=mAuth.getCurrentUser();
 
         //에뮬레이터 내부 sdcard 경로 받기
         String sdCardPath = null;
@@ -158,31 +161,12 @@ public class MainActivity extends AppCompatActivity {
         excelscrapper.readExcel2();
 
 
-
-
-
-
-
-        //user.setPullUpBar(false);
-        //user.setBarbell(true);
-        //user.setKettlebell(false);
-        //user.setBody(true);
-        //user.setDumbbell(false);
-        //user.setPullUpBar(false);
-        //user.setBox(true);
-        //user.setJumprope(false);
-        //user.setWallBall(false);
-        //System.out.println("메인엑티비티에서"+excelscrapper.userinfo.wodrecord.wodlist.get(0).getWODname());
-
         setContentView(R.layout.activity_main);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         // 첫 화면 지정
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.frame_layout, menu1Fragment).commitAllowingStateLoss();
-        //fragment 요소마다 하나씩
-        //fragment 1 홈
-        //fragment 2 와드
 
 
         // bottomNavigationView의 아이템이 선택될 때 호출될 리스너 등록
@@ -250,9 +234,9 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 is = new FileInputStream(file);
-                System.out.println("editUserInfo에서 인풋스트림 생성 성공");
+
             } catch (FileNotFoundException e) {
-                System.out.println("editUserInfo에서 인풋스트림 생성 불가");
+
                 e.printStackTrace();
             }
 
@@ -276,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
             if (namecell.getType() == CellType.LABEL) {
                 Label namelabel = (Label) namecell;
                 namelabel.setString(this.userinfo.getUserName());
-                System.out.println("수정유저이름:" + this.userinfo.getUserName());
+
 
             }
 
@@ -286,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
             if (heightcell.getType() == CellType.NUMBER) {
                 jxl.write.Number n=(jxl.write.Number) heightcell;
                 n.setValue(Integer.parseInt(userinfo.getUserHeight()));
-                System.out.println("수정 키:" + this.userinfo.getUserHeight());
+
             }
 
 
@@ -296,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
             if (weightcell.getType() == CellType.NUMBER) {
                 jxl.write.Number n=(jxl.write.Number) weightcell;
                 n.setValue(Integer.parseInt(userinfo.getUserWeight()));
-                System.out.println("수정 몸무게:" + this.userinfo.getUserWeight());
+
             }
 
             // 바벨 Y / N 여부 수정
@@ -307,7 +291,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if(this.userinfo.isDumbbell()) { barbelllabel.setString("Y"); }
                 else {barbelllabel.setString("N");}
-                System.out.println("수정된 바벨:" + this.userinfo.isBarbell());
+
             }
 
             // 맨몸 Y / N 여부 수정
@@ -318,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if(this.userinfo.isBody()) { bodylabel.setString("Y"); }
                 else {bodylabel.setString("N");}
-                System.out.println("수정된 맨몸:" + this.userinfo.isBody());
+
             }
 
             // 풀업 바 Y / N 여부 수정
@@ -329,7 +313,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if(this.userinfo.isPullUpBar()) { pullupbarlabel.setString("Y"); }
                 else {pullupbarlabel.setString("N");}
-                System.out.println("수정된 풀업바:" + this.userinfo.isPullUpBar());
+
             }
 
             // 줄넘기 줄 Y / N 여부 수정
@@ -340,7 +324,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if(this.userinfo.isJumprope()) { jumpropelabel.setString("Y"); }
                 else {jumpropelabel.setString("N");}
-                System.out.println("수정된 줄넘기 줄:" + this.userinfo.isJumprope());
+
             }
 
             // 케틀벨 Y / N 여부 수정
@@ -351,7 +335,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if(this.userinfo.isKettlebell()) { kettlebelllabel.setString("Y"); }
                 else {kettlebelllabel.setString("N");}
-                System.out.println("수정된 케틀벨:" + this.userinfo.isKettlebell());
+
             }
 
             // 월볼 Y / N 여부 수정
@@ -362,7 +346,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if(this.userinfo.isWallBall()) { wallballlabel.setString("Y"); }
                 else {wallballlabel.setString("N");}
-                System.out.println("수정된 월볼:" + this.userinfo.isWallBall());
+
             }
 
             // 박스 Y / N 여부 수정
@@ -373,7 +357,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if(this.userinfo.isBox()) { boxlabel.setString("Y"); }
                 else {boxlabel.setString("N");}
-                System.out.println("수정된 박스:" + this.userinfo.isBox());
+
             }
 
             // 덤벨 Y / N 여부 수정
@@ -813,10 +797,7 @@ public class MainActivity extends AppCompatActivity {
                         String s_record = Integer.toString(record/60) +"분 "+Integer.toString(record%60)+"초";
                         String s_record2 = Integer.toString(record2/15) +"Round "+Integer.toString(record2%15);
 
-                        System.out.println("평균 와드 레벨은 : "+ s_level_wod);
-                        System.out.println("평균 스코어는 : "+s_score);
-                        System.out.println("평균 기록시간은 : "+s_record);
-                        System.out.println("평균 암랩기록은 : "+s_record2);
+
 
                         this.userinfo.setAvg_WODlevel(s_level_wod);
                         this.userinfo.setAvg_score(s_score);
@@ -909,11 +890,11 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     else{
-                        System.out.println("Sheet is null");
+
                     }
                 }
                 else{
-                    System.out.println("Workbook is null");
+
                 }
 
             }
@@ -945,12 +926,11 @@ public class MainActivity extends AppCompatActivity {
                 workbook = Workbook.getWorkbook(is);
 
                 if(workbook==null){
-                    System.out.println("워크북이 NULL");
+
                 }
 
                 // TODO : use is(InputStream).
                 if(workbook != null){
-                    System.out.println("워크북이 있다");
 
                     sheet = workbook.getSheet(0);
 
@@ -988,11 +968,11 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     else{
-                        System.out.println("Sheet is null");
+
                     }
                 }
                 else{
-                    System.out.println("Workbook is null");
+
                 }
 
             }

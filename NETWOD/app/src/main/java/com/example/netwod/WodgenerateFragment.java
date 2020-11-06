@@ -88,7 +88,10 @@ public class WodgenerateFragment extends Fragment {
         wodgeneratecard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.onFragmentChange(6);
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, activity.userwodgenerateFragment).commit();
+
+
+
             }
         });
         helpcard = rootView.findViewById(R.id.FamousWODcard);

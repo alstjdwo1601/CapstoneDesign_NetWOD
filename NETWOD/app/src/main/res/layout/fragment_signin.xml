@@ -1,14 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SigninFragment">
+    tools:context=".MainActivity">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <EditText
+        android:id="@+id/signinid"
+        android:layout_width="200dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:hint="ID"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+
+    <EditText
+        android:id="@+id/signinpassword"
+        android:layout_width="200dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="PASSWORD"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/signinid"
+        app:layout_constraintStart_toStartOf="@+id/signinid"
+        app:layout_constraintTop_toBottomOf="@+id/signinid" />
+
+
+
+
+    <Button
+        android:id="@+id/signinbutton"
+        android:layout_width="200dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="20dp"
+        android:text="SIGN IN"
+        app:layout_constraintEnd_toEndOf="@+id/signinpassword"
+        app:layout_constraintStart_toStartOf="@+id/signinpassword"
+        app:layout_constraintTop_toBottomOf="@+id/signinpassword" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

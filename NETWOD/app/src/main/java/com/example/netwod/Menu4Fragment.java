@@ -12,8 +12,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
 
 
 /**
@@ -81,7 +79,7 @@ public class Menu4Fragment extends Fragment {
         signincard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, activity.signin).commit();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, activity.signinFragment).commit();
             }
         });
         signupcard = rootView.findViewById(R.id.Signupcard);
@@ -91,13 +89,7 @@ public class Menu4Fragment extends Fragment {
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, activity.signupFragment).commit();
             }
         });
-        helpcard = rootView.findViewById(R.id.Helpcard);
-        helpcard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.onFragmentChange(7);
-            }
-        });
+
         /*
         LinearLayout selectwodlayout = rootView.findViewById(R.id.SelectWODlayout);
         selectwodlayout.setOnClickListener(new View.OnClickListener() {

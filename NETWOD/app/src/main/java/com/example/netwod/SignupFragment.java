@@ -16,9 +16,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -111,6 +115,31 @@ public class SignupFragment extends Fragment {
                 String userpasswordcheck = signuppasswordcheck.getText().toString();
 
             if(userpassword.equals(userpasswordcheck)) {
+       //시작
+                activity.mAuth=FirebaseAuth.getInstance();
+                activity.mAuth.createUserWithEmailAndPassword(userid, userpassword).addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success, update UI with the signed-in user's information
+        System.out.println("회원가입 성공ID와 비번은"+userid+userpassword);
+                                    FirebaseUser user = activity.mAuth.getCurrentUser();
+                                    //updateUI(user);
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    System.out.println("회원가입 실패ID와 비번은"+userid+userpassword);
+                                    //Toast.makeText(getContext(), "Authentication failed.",Toast.LENGTH_SHORT).show();
+
+                                }
+
+                                // [START_EXCLUDE]
+
+                                // [END_EXCLUDE]
+                            }
+                        });
+
+//끝
+                /*
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 Map<String, Object> user = new HashMap<>();
                 user.put("id", userid);
@@ -131,11 +160,11 @@ public class SignupFragment extends Fragment {
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                System.out.println("실ㄹ패");
+
                             }
                         });
 
-                //boxcheckbox.performClick();
+      */
 
             }
             else{
