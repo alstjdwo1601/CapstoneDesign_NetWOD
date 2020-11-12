@@ -75,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
     public UserwodgenerateFragment userwodgenerateFragment= new UserwodgenerateFragment();
     public FortimewodgenerateFragment fortimewodgenerateFragment=new FortimewodgenerateFragment();
     public AmrapwodgenerateFragment amrapwodgenerateFragment=new AmrapwodgenerateFragment();
+    public CreateWODFragment createwodFragment=new CreateWODFragment();
+    public CreateWODselectionFragment createwodselectionFragment=new CreateWODselectionFragment();
     public ArrayList<WOD> namedwodlist=new ArrayList<WOD>();
     int namedwodindex;
     public FirebaseAuth mAuth;

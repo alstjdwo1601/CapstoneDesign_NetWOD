@@ -13,10 +13,10 @@ import android.widget.Button;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link WodlistFragment#newInstance} factory method to
+ * Use the {@link CreateWODselectionFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class WodlistFragment extends Fragment {
+public class CreateWODselectionFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,10 +29,10 @@ public class WodlistFragment extends Fragment {
     private RecyclerView recyclerView;
     public RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter adapter;
-    public Button listselectbutton;
+    //public Button listselectbutton;
 
     MainActivity activity;
-    public WodlistFragment() {
+    public CreateWODselectionFragment() {
         // Required empty public constructor
     }
 
@@ -42,11 +42,11 @@ public class WodlistFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment WodlistFragment.
+     * @return A new instance of fragment CreateWODselectionFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static WodlistFragment newInstance(String param1, String param2) {
-        WodlistFragment fragment = new WodlistFragment();
+    public static CreateWODselectionFragment newInstance(String param1, String param2) {
+        CreateWODselectionFragment fragment = new CreateWODselectionFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -68,39 +68,18 @@ public class WodlistFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         activity = (MainActivity) getActivity();
-        rootView = (ViewGroup) inflater.inflate(R.layout.fragment_wodlist , container, false);
+        rootView = (ViewGroup) inflater.inflate(R.layout.fragment_create_w_o_dselection , container, false);
         recyclerView = rootView.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(activity);
 
 
-       listselectbutton= rootView.findViewById(R.id.listselectbutton);
-      // listdeletebutton=rootView.findViewById(R.id.listdeletebutton);
+
+        // listdeletebutton=rootView.findViewById(R.id.listdeletebutton);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new RecyclerViewA(activity);
+        adapter = new RecyclerViewtmpWOD(activity);
         recyclerView.setAdapter(adapter);
-        listselectbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                System.out.println("현재인덱스:"+activity.excelscrapper.userinfo.getCurrentwodindex());
-
-                System.out.println("현재인덱스 와드타입:"+activity.excelscrapper.userinfo.getUserwodlist().get(activity.excelscrapper.userinfo.getCurrentwodindex()).getWODtype());
-                System.out.println("현재인덱스 와드사이즈:"+activity.excelscrapper.userinfo.getUserwodlist().get(activity.excelscrapper.userinfo.getCurrentwodindex()).getWODtype().length());
-
-
-                if(activity.excelscrapper.userinfo.getUserwodlist().get(activity.excelscrapper.userinfo.getCurrentwodindex()).getWODtype().equals("FORTIME")) {
-                    System.out.println("==FORTIME");
-
-                    activity.onFragmentChange(10);
-                }
-                else {
-                    activity.onFragmentChange(11);
-                    System.out.println("=!FORTIME");
-                }
-            }
-        });
 
         return rootView;
     }
