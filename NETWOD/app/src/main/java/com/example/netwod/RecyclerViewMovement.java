@@ -23,6 +23,7 @@ public class RecyclerViewMovement extends RecyclerView.Adapter<RecyclerViewMovem
     public ArrayList<String> movementarraylist=new ArrayList<String>(Arrays.asList("NAME"));
     public ArrayList<String> repetitionarraylist=new ArrayList<String>(Arrays.asList("REP"));
     public ArrayList<String> weightarraylist=new ArrayList<String>(Arrays.asList("WEIGHT"));
+    public String roundnum;
     public MainActivity activity;
 
 
@@ -32,16 +33,21 @@ public class RecyclerViewMovement extends RecyclerView.Adapter<RecyclerViewMovem
 
         public TextView movementtextview;
         public TextView repetitiontextview;
+        public TextView roundnumtextview;
         public TextView weighttextview;
         public Button movementaddbutton;
-
+        public Button generatewodaddbutton;
 
         public ViewHolder(View view) {
             super(view);
             this.movementtextview=view.findViewById(R.id.recyclermovement);
             this.repetitiontextview=view.findViewById(R.id.recyclerrepetition);
             this.weighttextview=view.findViewById(R.id.recyclerweight);
+
+            this.roundnumtextview=activity.findViewById(R.id.fortimeroundedittext);
             this.movementaddbutton=activity.findViewById(R.id.fortimeaddmovementbutton);
+            this.generatewodaddbutton=activity.findViewById(R.id.fortimeaddbutton);
+
         }
     }
     RecyclerViewMovement(MainActivity a) {
@@ -72,8 +78,10 @@ public class RecyclerViewMovement extends RecyclerView.Adapter<RecyclerViewMovem
         holder.movementaddbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-Spinner movementname=activity.findViewById(R.id.movementspinner);
-String movementnamestring=movementname.getSelectedItem().toString();
+
+
+                Spinner movementname=activity.findViewById(R.id.movementspinner);
+                String movementnamestring=movementname.getSelectedItem().toString();
 
 
                 movementarraylist.add(movementnamestring         );
@@ -90,6 +98,26 @@ String movementnamestring=movementname.getSelectedItem().toString();
                 //System.out.println("데이터 세트 바뀜");
             }
         });
+        holder.generatewodaddbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                roundnum=holder.roundnumtextview.getText().toString();
+                int roundnumint=Integer.parseInt(roundnum);
+                for(int j=0;j<roundnumint;j++) {
+                    for (int i = 1; i < movementarraylist.size(); i++) {
+                        activity.tmpwod.getMovement().add(movementarraylist.get(i));
+
+                        activity.tmpwod.getWeightlist().add(weightarraylist.get(i));
+                        activity.tmpwod.getMovementnum().add(repetitionarraylist.get(i));
+
+
+                    }
+                }
+                activity.excelscrapper.userinfo.getUserwodlist().add(activity.tmpwod);
+                activity.tmpwod=new WOD();
+            }
+        });
+
 
         holder.movementtextview.setOnClickListener(new View.OnClickListener() {
             @Override

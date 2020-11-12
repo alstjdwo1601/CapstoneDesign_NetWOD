@@ -18,8 +18,19 @@ class WOD{
         this.movementnum=new ArrayList<String>();
         this.weightlist=new ArrayList<String>();
         this.equipment=new ArrayList<String>();
-    }
 
+
+    }
+    public void clearWOD(){
+        this.WODname="default";
+        this.WODlevel="default";
+        this.WODtype="default";
+        this.movement.clear();;
+        this.movementnum.clear();
+        this.weightlist.clear();
+        this.equipment.clear();
+
+    }
 
 
 
