@@ -99,10 +99,10 @@ public class RecyclerViewA extends RecyclerView.Adapter<RecyclerViewA.ViewHolder
         }
         for (int i = 0; i < msize; i++){
             movementstring=movementstring+"\n"+activity.excelscrapper.userinfo.getUserwodlist().get(position).getMovement().get(i);
-            if(activity.excelscrapper.userinfo.getUserwodlist().get(position).getWeightlist().get(i)!=""){
+            if(!activity.excelscrapper.userinfo.getUserwodlist().get(position).getWeightlist().get(i).equals("0")&&!activity.excelscrapper.userinfo.getUserwodlist().get(position).getWeightlist().get(i).equals("")){
                 movementstring=movementstring+" "+activity.excelscrapper.userinfo.getUserwodlist().get(position).getWeightlist().get(i)+"kg";
             }
-            movementstring=movementstring+" "+activity.excelscrapper.userinfo.getUserwodlist().get(position).getMovementnum().get(i)+"times";
+            movementstring=movementstring+" "+activity.excelscrapper.userinfo.getUserwodlist().get(position).getMovementnum().get(i)+"times/meters";
     }
         holder.textView.setText(titlestring);
         holder.textView2.setText(typestring);

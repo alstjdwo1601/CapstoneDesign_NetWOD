@@ -36,14 +36,14 @@ public class RecyclerViewtmpWOD extends RecyclerView.Adapter<RecyclerViewtmpWOD.
         public ImageView imageView;
         public TextView textView3;
         public Button refreshbutton;
-
+        public Button addbutton;
         public ViewHolder(View view) {
             super(view);
 
             this.textView = view.findViewById(R.id.textView);
             this.textView2 = view.findViewById(R.id.textView2);
             this.textView3 = view.findViewById(R.id.textview3);
-
+            this.addbutton=activity.findViewById(R.id.createdwodaddbutton);
             this.refreshbutton=activity.findViewById(R.id.createnewwodbutton);
 
         }
@@ -77,8 +77,15 @@ public class RecyclerViewtmpWOD extends RecyclerView.Adapter<RecyclerViewtmpWOD.
                 //System.out.println("새로고침 눌렀을때 와드타입:"+wodtype);
               activity.tmpwod=new WOD(activity.excelscrapper.userinfo,wodtype);
               activity.tmpwod.setWODname(wodname);
-              System.out.println("새로고침 눌러서 갱신되었을때 와드타입:"+activity.tmpwod.getWODtype());
+
                 notifyDataSetChanged();
+            }
+        });
+        holder.addbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.excelscrapper.userinfo.getUserwodlist().add(activity.tmpwod);
+                Toast.makeText(v.getContext(), "Created WOD adding complete", Toast.LENGTH_SHORT).show();
             }
         });
         /* 이거필요없으려나?
@@ -102,10 +109,13 @@ public class RecyclerViewtmpWOD extends RecyclerView.Adapter<RecyclerViewtmpWOD.
         }
         for (int i = 0; i < msize; i++){
             movementstring=movementstring+"\n"+activity.tmpwod.getMovement().get(i);
-            if(activity.tmpwod.getWeightlist().get(i)!=""){
+            if(!activity.tmpwod.getWeightlist().get(i).equals("")&&!activity.tmpwod.getWeightlist().get(i).equals("0")){
+
                 movementstring=movementstring+" "+activity.tmpwod.getWeightlist().get(i)+"kg";
             }
-            movementstring=movementstring+" "+activity.tmpwod.getMovementnum().get(i)+"times";
+            else{}
+
+            movementstring=movementstring+" "+activity.tmpwod.getMovementnum().get(i)+"times/meters";
         }
         holder.textView.setText(titlestring);
         holder.textView2.setText(typestring);

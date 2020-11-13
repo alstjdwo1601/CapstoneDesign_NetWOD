@@ -20,9 +20,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -35,7 +38,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import jxl.CellType;
 import jxl.Sheet;
@@ -150,6 +156,12 @@ public class MainActivity extends AppCompatActivity {
         sdCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
 
 
+
+
+
+
+
+
         excelscrapper=new ExcelScrapper(sdCardPath);
 
         //netwodtemplate.xls 읽기
@@ -169,6 +181,37 @@ public class MainActivity extends AppCompatActivity {
         // 첫 화면 지정
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.frame_layout, menu1Fragment).commitAllowingStateLoss();
+//여기서부터
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Map<String, Object> user = new HashMap<>();
+        WOD w= new WOD();
+        ArrayList<String> e= new ArrayList<String>();
+        e.add("3");
+        e.add("Oh");
+        user.put("WODRECORD", excelscrapper.userinfo.wodrecord);
+        user.put("RANKING", 0);
+        user.put("Username",excelscrapper.userinfo.getUserName());
+        user.put("Date","등록시점날짜찾는법모름");
+
+
+        // Add a new document with a generated ID
+        String excelname;
+
+        db.collection("UserInfo").document("test")
+                .set(user)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+//여기까지
 
 
         // bottomNavigationView의 아이템이 선택될 때 호출될 리스너 등록
@@ -532,7 +575,7 @@ public class MainActivity extends AppCompatActivity {
                     if (wodtypecell.getType() == CellType.LABEL) {
                         Label wodtypelabel = (Label) wodtypecell;
                         wodtypelabel.setString(wod.getWODtype());
-                        System.out.println("수정된 와드타입:" + wod.getWODtype());
+
 
                     }
 
@@ -551,7 +594,7 @@ public class MainActivity extends AppCompatActivity {
                         if (movementcell.getType() == CellType.LABEL) {
                             Label movementlabel = (Label) movementcell;
                             movementlabel.setString(wod.getMovement().get(wodrow));
-                            System.out.println("수정된 무브먼트:" + wod.getMovement().get(wodrow));
+
 
                         }
 

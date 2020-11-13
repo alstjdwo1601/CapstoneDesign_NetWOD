@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -35,6 +36,12 @@ public class AmrapFragment extends Fragment {
     private String mParam2;
 
     TextView amraptextview;
+    TextView amrapwodnametextview;
+    TextView amrapwodtypetextview;
+    TextView amrapwodmovementtextview;
+    Button amraprecordaddbutton;
+    EditText amraproundtext;
+    EditText amraptimestext;
 
     MainActivity activity;
 
@@ -76,13 +83,80 @@ public class AmrapFragment extends Fragment {
         // Inflate the layout for this fragment
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment_amrap , container, false);
 
-
+        amrapwodnametextview=rootView.findViewById(R.id.amrapwodname);
+        amrapwodtypetextview=rootView.findViewById(R.id.amrapwodtype);
+        amrapwodmovementtextview=rootView.findViewById(R.id.amrapwodmovement);
         amraptextview=rootView.findViewById(R.id.amraptextview);
+        amraprecordaddbutton=rootView.findViewById(R.id.amraprecordaddbutton);
+        amraproundtext=rootView.findViewById(R.id.amraproundtextview);
+        amraptimestext=rootView.findViewById(R.id.amraptimestextview);
+        int currentindex=activity.excelscrapper.userinfo.getCurrentwodindex();
 
-        countDown("010111");
+        int msize = activity.excelscrapper.userinfo.getUserwodlist().get(currentindex).getMovement().size();
+        int titlesize = activity.excelscrapper.userinfo.getUserwodlist().get(currentindex).getWODname().length();
+        int typesize = activity.excelscrapper.userinfo.getUserwodlist().get(currentindex).getWODtype().length();
+        String movementstring="";
+        String titlestring="";
+        String typestring="";
+        for(int i=0; i<titlesize;i++){
+
+            titlestring=titlestring+"\n"+activity.excelscrapper.userinfo.getUserwodlist().get(currentindex).getWODname().charAt(i);
+
+
+        }
+        for(int i=0; i<typesize;i++){
+
+            typestring=typestring+"\n"+activity.excelscrapper.userinfo.getUserwodlist().get(currentindex).getWODtype().charAt(i);
+
+
+        }
+
+        for (int i = 0; i < msize; i++){
+            movementstring=movementstring+"\n"+activity.excelscrapper.userinfo.getUserwodlist().get(currentindex).getMovement().get(i);
+            if(activity.excelscrapper.userinfo.getUserwodlist().get(currentindex).getWeightlist().get(i)!=""){
+                movementstring=movementstring+" "+activity.excelscrapper.userinfo.getUserwodlist().get(currentindex).getWeightlist().get(i)+"kg";
+            }
+            movementstring=movementstring+" "+activity.excelscrapper.userinfo.getUserwodlist().get(currentindex).getMovementnum().get(i)+"times";
+        }
+        amrapwodnametextview.setText(titlestring);
+
+        amrapwodtypetextview.setText(typestring);
+        //movementstring=activity.excelscrapper.userinfo.getUserwodlist().get(currentindex).getMovement().get(0);
+
+        amrapwodmovementtextview.setText(movementstring);
+        countDown("000700");
+
+        amraprecordaddbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String resultround = amraproundtext.getText().toString();
+                String resulttimes = amraptimestext.getText().toString();
+                if(resultround.length()==1){
+                    resultround="0"+resultround;
+                }
+                if(resulttimes.length()==1){
+                    resulttimes="0"+resulttimes;
+                }
+                String result=resultround+":"+resulttimes;
+
+                activity.tmpwod=new WOD();
+                activity.tmpwod=activity.excelscrapper.userinfo.getUserwodlist().get(currentindex);
+                activity.excelscrapper.userinfo.getWodrecord().wodlist.add(activity.tmpwod);
+                activity.excelscrapper.userinfo.getWodrecord().recordlist.add(result);
+                activity.excelscrapper.userinfo.getWodrecord().scorelist.add("TE");
+                System.out.println(result);
+            }
+        });
+
+
+
+
+
+
 
         return rootView;
-    }public void countDown(String time) {
+    }
+    public void countDown(String time) {
 
         long conversionTime = 0;
 
@@ -152,7 +226,7 @@ public class AmrapFragment extends Fragment {
             public void onFinish() {
 
                 // 변경 후
-                amraptextview.setText("종료");
+                amraptextview.setText("FINISH");
 
                 // TODO : 타이머가 모두 종료될때 어떤 이벤트를 진행할지
 

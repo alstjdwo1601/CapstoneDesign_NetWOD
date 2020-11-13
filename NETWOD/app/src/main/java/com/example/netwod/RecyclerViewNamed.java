@@ -105,7 +105,7 @@ public class RecyclerViewNamed extends RecyclerView.Adapter<RecyclerViewNamed.Vi
 
         for (int i = 0; i < msize; i++){
             movementstring=movementstring+"\n"+activity.namedwodlist.get(position).getMovement().get(i);
-            if(activity.namedwodlist.get(position).getWeightlist().get(i)!=""){
+            if(!activity.namedwodlist.get(position).getWeightlist().get(i).equals("")&&!activity.namedwodlist.get(position).getWeightlist().get(i).equals("0")){
                 movementstring=movementstring+" "+activity.namedwodlist.get(position).getWeightlist().get(i)+"kg";
             }
             movementstring=movementstring+" "+activity.namedwodlist.get(position).getMovementnum().get(i)+"times";

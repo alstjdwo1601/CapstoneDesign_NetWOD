@@ -47,6 +47,7 @@ public class FortimeFragment extends Fragment {
     long myPauseTime;
     Button fortimestartbutton;
     Button fortimerecordbutton;
+    Button fortimeaddbutton;
     TextView fortimetextview;
     TextView fortimerecordtextview;
     TextView fortimewodnametextview;
@@ -99,6 +100,7 @@ public class FortimeFragment extends Fragment {
         fortimewodnametextview=rootView.findViewById(R.id.fortimewodname);
         fortimewodtypetextview=rootView.findViewById(R.id.fortimewodtype);
         fortimewodmovementtextview=rootView.findViewById(R.id.fortimewodmovement);
+        fortimeaddbutton=rootView.findViewById(R.id.fortimeaddbutton);
         int currentindex=activity.excelscrapper.userinfo.getCurrentwodindex();
 
         int msize = activity.excelscrapper.userinfo.getUserwodlist().get(currentindex).getMovement().size();
@@ -134,7 +136,18 @@ public class FortimeFragment extends Fragment {
 
         fortimewodmovementtextview.setText(movementstring);
 
-
+        fortimeaddbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String result = fortimetextview.getText().toString().substring(0,5);
+                activity.tmpwod=new WOD();
+                activity.tmpwod=activity.excelscrapper.userinfo.getUserwodlist().get(currentindex);
+                activity.excelscrapper.userinfo.getWodrecord().wodlist.add(activity.tmpwod);
+                activity.excelscrapper.userinfo.getWodrecord().recordlist.add(result);
+                activity.excelscrapper.userinfo.getWodrecord().scorelist.add("TE");
+                System.out.println(result);
+            }
+        });
 
 
 

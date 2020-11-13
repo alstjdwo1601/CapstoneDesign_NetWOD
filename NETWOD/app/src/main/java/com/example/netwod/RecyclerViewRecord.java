@@ -11,12 +11,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RecyclerViewRecord extends RecyclerView.Adapter<RecyclerViewRecord.ViewHolder> {
     private String[] type;
@@ -36,14 +44,14 @@ public class RecyclerViewRecord extends RecyclerView.Adapter<RecyclerViewRecord.
         public ImageView imageView;
         public TextView textView3;
         public Button listdeletebutton;
-
+        public Button rankaddbutton;
         public ViewHolder(View view) {
             super(view);
 
             this.textView = view.findViewById(R.id.recordwodnametextview);
             this.textView2 = view.findViewById(R.id.recordwodrecordtextview);
             this.textView3 = view.findViewById(R.id.recordwodscoretextview);
-
+            this.rankaddbutton=activity.findViewById(R.id.rankingaddbutton);
             this.listdeletebutton=activity.findViewById(R.id.recorddeltebutton);
 
         }
@@ -69,21 +77,56 @@ public class RecyclerViewRecord extends RecyclerView.Adapter<RecyclerViewRecord.
 
         System.out.println("recyclerView에서 position:" + position);
         //holder.textView2.setText(type[position]);
-
-        holder.listdeletebutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                activity.excelscrapper.userinfo.getUserwodlist().remove(activity.excelscrapper.userinfo.getCurrentwodindex());
-
-                notifyDataSetChanged();
-            }
-        });
-        for(int i=0;i<activity.excelscrapper.userinfo.getUserwodlist().size();i++){
+        for(int i=0;i<activity.excelscrapper.userinfo.getWodrecord().wodlist.size();i++){
             clickedlist.add(0);
 
 
         }
+        holder.listdeletebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                activity.excelscrapper.userinfo.getWodrecord().wodlist.remove(activity.excelscrapper.userinfo.getCurrentwodindex());
+                activity.excelscrapper.userinfo.getWodrecord().getRecordlist().remove(activity.excelscrapper.userinfo.getCurrentwodindex());
+                activity.excelscrapper.userinfo.getWodrecord().getScorelist().remove(activity.excelscrapper.userinfo.getCurrentwodindex());
+
+                notifyDataSetChanged();
+            }
+        });
+        holder.rankaddbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                long now = System.currentTimeMillis();
+                Date date = new Date(now);
+                SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy/MM/dd");
+                String formatDate = sdfNow.format(date);
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                Map<String, Object> user = new HashMap<>();
+                user.put("WOD", activity.excelscrapper.userinfo.wodrecord.getWodlist().get(activity.excelscrapper.userinfo.getCurrentwodindex()));
+                user.put("SCORE", activity.excelscrapper.userinfo.wodrecord.getScorelist().get(activity.excelscrapper.userinfo.getCurrentwodindex()));
+                user.put("RECORD", activity.excelscrapper.userinfo.wodrecord.getRecordlist().get(activity.excelscrapper.userinfo.getCurrentwodindex()));
+                user.put("RANKING", 0); //아직 랭킹정렬 미구현
+                user.put("Username",activity.excelscrapper.userinfo.getUserName());
+                user.put("Date",formatDate);
+                db.collection("UserInfo").document()
+                        .set(user)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                            }
+                        });
+            }
+
+        });
+
 
         int recordsize =activity.excelscrapper.userinfo.getWodrecord().recordlist.get(position).length();
         int namesize = activity.excelscrapper.userinfo.getWodrecord().wodlist.get(position).getWODname().length();
@@ -99,9 +142,21 @@ public class RecyclerViewRecord extends RecyclerView.Adapter<RecyclerViewRecord.
         for(int i=0; i<scoresize;i++){
             scorestring=scorestring+activity.excelscrapper.userinfo.getWodrecord().scorelist.get(position).charAt(i);
         }
-        for (int i = 0; i < recordsize; i++){
-            recordstring=recordstring+activity.excelscrapper.userinfo.getWodrecord().recordlist.get(position).charAt(i);
-             }
+        if(activity.excelscrapper.userinfo.getWodrecord().wodlist.get(position).getWODtype().equals("FORTIME")) {
+            for (int i = 0; i < recordsize; i++) {
+                recordstring = recordstring + activity.excelscrapper.userinfo.getWodrecord().recordlist.get(position).charAt(i);
+            }
+        }
+        else{
+            for (int i = 0; i < 2; i++) {
+                recordstring = recordstring + activity.excelscrapper.userinfo.getWodrecord().recordlist.get(position).charAt(i);
+            }
+            recordstring=recordstring+"rounds";
+            for (int i = 2; i < 4; i++) {
+                recordstring = recordstring + activity.excelscrapper.userinfo.getWodrecord().recordlist.get(position).charAt(i);
+            }
+            recordstring=recordstring+"times";
+        }
         holder.textView.setText(namestring);
         holder.textView2.setText(recordstring);
         holder.textView3.setText(scorestring);
@@ -110,20 +165,8 @@ public class RecyclerViewRecord extends RecyclerView.Adapter<RecyclerViewRecord.
         }
         else holder.textView.setBackgroundColor(Color.WHITE);
 
-        holder.textView3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Toast.makeText(v.getContext(), position+"번 째 이미지!", Toast.LENGTH_SHORT).show();
 
-            }
-        });
 
-        holder.textView2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Toast.makeText(v.getContext(), "Test!", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

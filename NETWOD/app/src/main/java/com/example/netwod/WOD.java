@@ -466,11 +466,12 @@ class Wod_manager{
             for(int i = 0; i < algorithm[0]; i++) {
                 int index = movement_data.get_index(movements.get(i));
                 Movement movement = new Movement(index);
-                movement.set_rep(movement.get_rep()*algorithm[1+j]);
+                movement.set_rep((int)(movement.get_rep()*algorithm[1+j]/15));
                 this.wod.set_movement_add(movement);
             }
         }
     }
+
 
 
 
@@ -483,12 +484,11 @@ class Wod_manager{
         for(int i = 0 ; i < algorithm[0]; i++ ) {
             int index = movement_data.get_index(movements.get(i));
             Movement movement = new Movement(index);
-            movement.set_rep(movement.get_rep()*algorithm[i+1]);
+            movement.set_rep((int)(movement.get_rep()*algorithm[i+1]/15));
             this.wod.set_movement_add(movement);
         }
         this.basic_time = algorithm[algorithm.length-1];
     }
-
 
 
     public int get_time() {
