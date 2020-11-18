@@ -1,7 +1,10 @@
 package com.example.netwod;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,6 +13,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,7 +43,7 @@ public class WodlistFragment extends Fragment {
     public RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter adapter;
     public Button listselectbutton;
-
+    public Button listadddashboardbutton;
     MainActivity activity;
     public WodlistFragment() {
         // Required empty public constructor
@@ -75,6 +88,7 @@ public class WodlistFragment extends Fragment {
 
 
        listselectbutton= rootView.findViewById(R.id.listselectbutton);
+       listadddashboardbutton=rootView.findViewById(R.id.listadddashboardbutton);
       // listdeletebutton=rootView.findViewById(R.id.listdeletebutton);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -101,6 +115,73 @@ public class WodlistFragment extends Fragment {
                 }
             }
         });
+        listadddashboardbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder ad = new AlertDialog.Builder(activity);
+
+                ad.setTitle("Comment");       // 제목 설정
+                ad.setMessage("Description for WOD");   // 내용 설정
+
+// EditText 삽입하기
+                final EditText et = new EditText(activity);
+
+                ad.setView(et);
+
+// 확인 버튼 설정
+                ad.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+
+                        // Text 값 받아서 로그 남기기
+                        String value = et.getText().toString();
+
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        Map<String, Object> user = new HashMap<>();
+                        user.put("WOD", activity.excelscrapper.userinfo.wodrecord.getWodlist().get(activity.excelscrapper.userinfo.getCurrentwodindex()));
+                        user.put("Username",activity.excelscrapper.userinfo.getUserName());
+                        user.put("Description",value);
+                        db.collection("WODdashboard").document()
+                                .set(user)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+
+                                    }
+                                });
+                        dialog.dismiss();     //닫기
+                        // Event
+                    }
+                });
+
+// 취소 버튼 설정
+                ad.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();     //닫기
+                        // Event
+                    }
+                });
+
+// 창 띄우기
+                ad.show();
+
+
+
+
+                    //
+
+            }
+        });
+
 
         return rootView;
     }

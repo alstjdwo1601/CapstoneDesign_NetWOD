@@ -71,14 +71,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="SELECT" />
+            android:text="SELECT"
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/listdeletebutton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="DELETE" />
+            android:text="DELETE"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/listadddashboardbutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="ADD DASHBOARD"
+            android:textSize="12sp" />
     </LinearLayout>
 
 </LinearLayout>

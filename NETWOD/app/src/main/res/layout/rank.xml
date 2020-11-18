@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_marginEnd="0dp"
+    android:background="#3D7474"
+    android:backgroundTint="#2196F3"
+    android:orientation="horizontal"
+    android:paddingTop="3dp"
+    android:weightSum="22"
+    app:barrierMargin="0dp">
+
+
+    <TextView
+        android:id="@+id/rankusernametextview"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_margin="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_weight="3"
+        android:background="#FFFFFF"
+        android:backgroundTint="#FFFFFF"
+        android:backgroundTintMode="multiply"
+        android:gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:shadowColor="#FBFBFB"
+        android:text="이름"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/rankdatatextview"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_margin="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_weight="3"
+        android:background="#FFFFFF"
+        android:backgroundTintMode="multiply"
+        android:gravity="center"
+        android:paddingStart="0dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="날짜"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/rankwodnametextview"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_margin="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_weight="3"
+        android:background="#FFFFFF"
+        android:backgroundTintMode="multiply"
+        android:gravity="center"
+        android:text="와드이름"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/rankwodtypetextview"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_margin="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_weight="3"
+        android:background="#FFFFFF"
+        android:backgroundTintMode="multiply"
+        android:gravity="center"
+        android:text="타입"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/rankwodmovementtextview"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_margin="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_weight="5"
+        android:background="#FFFFFF"
+        android:backgroundTintMode="multiply"
+        android:gravity="center"
+        android:text="무브먼트"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/rankwodrecordtextview"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_margin="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_weight="2"
+        android:background="#FFFFFF"
+        android:backgroundTintMode="multiply"
+        android:gravity="center"
+        android:text="기록"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/rankwodscoretextview"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_margin="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_weight="2"
+        android:background="#FFFFFF"
+        android:backgroundTintMode="multiply"
+        android:gravity="center"
+        android:text="점수"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/rankwodranktextview"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_margin="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_weight="1"
+        android:background="#FFFFFF"
+        android:backgroundTintMode="multiply"
+        android:gravity="center"
+        android:text="랭크"
+        android:textSize="10sp" />
+</LinearLayout>

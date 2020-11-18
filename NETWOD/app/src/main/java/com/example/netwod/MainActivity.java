@@ -27,6 +27,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.apache.poi.ss.formula.functions.Rank;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -83,8 +85,12 @@ public class MainActivity extends AppCompatActivity {
     public AmrapwodgenerateFragment amrapwodgenerateFragment=new AmrapwodgenerateFragment();
     public CreateWODFragment createwodFragment=new CreateWODFragment();
     public CreateWODselectionFragment createwodselectionFragment=new CreateWODselectionFragment();
+    public MaincommunityFragment maincommunityFragment = new MaincommunityFragment();
+    public RankingFragment rankingFragment=new RankingFragment();
+    public DashboardFragment dashboardFragment=new DashboardFragment();
     public ArrayList<WOD> namedwodlist=new ArrayList<WOD>();
     int namedwodindex;
+    String loginname="default";
     public FirebaseAuth mAuth;
     WOD tmpwod=new WOD();
 
@@ -236,7 +242,17 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     }
                     case R.id.navigation_menu4: {
-                        onFragmentChange(4);
+                        if(loginname.equals("default")){
+
+                            getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, menu4Fragment).commit();
+
+                        }
+                        else{
+                            getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, maincommunityFragment).commit();
+
+                        }
+
+
                         break;
                     }
                 }
