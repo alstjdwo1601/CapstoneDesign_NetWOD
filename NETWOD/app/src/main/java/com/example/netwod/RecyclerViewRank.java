@@ -21,6 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -39,18 +40,30 @@ public class RecyclerViewRank extends RecyclerView.Adapter<RecyclerViewRank.View
     public ArrayList<Integer> clickedlist=new ArrayList<Integer>();
 
     public class ViewHolder extends  RecyclerView.ViewHolder {
-        public TextView textView;
-        public TextView textView2;
-        public ImageView imageView;
-        public TextView textView3;
+        public TextView ranknametextview;
+        public TextView rankdatetextview;
+        public TextView rankwodnametextview;
+        public TextView rankwodtypetextview;
+        public TextView rankwodmovementtextview;
+        public TextView rankwodrecordtextview;
+        public TextView rankwodscoretextview;
+        public TextView rankwodranktextview;
+
 
 
         public ViewHolder(View view) {
             super(view);
+            this.ranknametextview=view.findViewById(R.id.rankusernametextview);
+            this.rankdatetextview=view.findViewById(R.id.rankdatetextview);
+            this.rankwodnametextview=view.findViewById(R.id.rankwodnametextview);
+            this.rankwodtypetextview=view.findViewById(R.id.rankwodtypetextview);
+            this.rankwodmovementtextview=view.findViewById(R.id.rankwodmovementtextview);
+            this.rankwodrecordtextview=view.findViewById(R.id.rankwodrecordtextview);
+            this.rankwodscoretextview=view.findViewById(R.id.rankwodscoretextview);
+            this.rankwodranktextview=view.findViewById(R.id.rankwodranktextview);
 
-            this.textView = view.findViewById(R.id.recordwodnametextview);
-            this.textView2 = view.findViewById(R.id.recordwodrecordtextview);
-            this.textView3 = view.findViewById(R.id.recordwodscoretextview);
+
+
 
 
 
@@ -59,7 +72,7 @@ public class RecyclerViewRank extends RecyclerView.Adapter<RecyclerViewRank.View
 
     @Override
     public RecyclerViewRank.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.userrecord, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rank, parent, false);
         RecyclerViewRank.ViewHolder viewHolder = new ViewHolder(view);
 
         return viewHolder;
@@ -76,77 +89,91 @@ public class RecyclerViewRank extends RecyclerView.Adapter<RecyclerViewRank.View
         //holder.textView.setText(title[position]);
 
         System.out.println("recyclerView에서 position:" + position);
-        //holder.textView2.setText(type[position]);
-        for(int i=0;i<activity.excelscrapper.userinfo.getWodrecord().wodlist.size();i++){
-            clickedlist.add(0);
 
 
-        }
+        //int recordsize =activity.rankwodrecordarraylist.get(position).recordlist.length();
+        int rankusernamesize=activity.rankusernamelist.get(position).length(); //끝 ,X
+        int rankdate=activity.rankwoddatelist.get(position).length(); //끝,x
+        int rankwodnamesize=activity.rankwodrecord.wodlist.get(position).getWODname().length();//끝,x
+        int rankwodtypesize=activity.rankwodrecord.wodlist.get(position).getWODtype().length();
+        int rankwodmovementsize=activity.rankwodrecord.wodlist.get(position).getMovement().size();//끝,x
+        int rankwodrecordsize=activity.rankwodrecord.recordlist.get(position).length();
+        int rankwodscoresize=activity.rankwodrecord.scorelist.get(position).length();
+        int ranksize=activity.ranklist.get(position).length();
 
 
 
-        int recordsize =activity.excelscrapper.userinfo.getWodrecord().recordlist.get(position).length();
-        int namesize = activity.excelscrapper.userinfo.getWodrecord().wodlist.get(position).getWODname().length();
-        int scoresize = activity.excelscrapper.userinfo.getWodrecord().scorelist.get(position).length();
+
         //System.out.println("리코드와드이름:"+activity.excelscrapper.userinfo.getWodrecord().wodlist.get(position).getWODname());
+        String usernamestring="";
+        String rankdatestring="";
+        String wodtypestring="";
         String scorestring="";
         String namestring="";
         String recordstring="";
-        for(int i=0; i<namesize;i++){
-            namestring=namestring+activity.excelscrapper.userinfo.getWodrecord().wodlist.get(position).getWODname().charAt(i);
+        String movementstring="";
+        String rankstring="";
+        for(int i=0; i<rankusernamesize;i++){
+            usernamestring=usernamestring+"\n"+activity.rankusernamelist.get(position).charAt(i);
 
         }
-        for(int i=0; i<scoresize;i++){
-            scorestring=scorestring+activity.excelscrapper.userinfo.getWodrecord().scorelist.get(position).charAt(i);
+        for(int i=0; i<rankdate;i++){
+           rankdatestring=rankdatestring+"\n"+activity.rankwoddatelist.get(position).charAt(i);
+
         }
-        if(activity.excelscrapper.userinfo.getWodrecord().wodlist.get(position).getWODtype().equals("FORTIME")) {
-            for (int i = 0; i < recordsize; i++) {
-                recordstring = recordstring + activity.excelscrapper.userinfo.getWodrecord().recordlist.get(position).charAt(i);
+        for(int i=0; i<rankwodtypesize;i++){
+           wodtypestring=wodtypestring+"\n"+activity.rankwodrecord.wodlist.get(position).getWODtype().charAt(i);
+
+        }
+        for(int i=0; i<rankwodscoresize;i++){
+           scorestring=scorestring+"\n"+activity.rankwodrecord.scorelist.get(position).charAt(i);
+
+        }
+        for(int i=0; i<rankwodnamesize;i++){
+           namestring=namestring+"\n"+activity.rankwodrecord.wodlist.get(position).getWODname().charAt(i);
+
+        }
+        if(activity.rankwodrecord.wodlist.get(position).getWODtype().equals("FORTIME")) {
+            for (int i = 0; i < rankwodrecordsize; i++) {
+                recordstring = recordstring + activity.rankwodrecord.recordlist.get(position).charAt(i);
             }
         }
         else{
             for (int i = 0; i < 2; i++) {
-                recordstring = recordstring + activity.excelscrapper.userinfo.getWodrecord().recordlist.get(position).charAt(i);
+                recordstring = recordstring + activity.rankwodrecord.recordlist.get(position).charAt(i);
             }
             recordstring=recordstring+"rounds";
-            for (int i = 2; i < 4; i++) {
-                recordstring = recordstring + activity.excelscrapper.userinfo.getWodrecord().recordlist.get(position).charAt(i);
+            for (int i = 3; i < 5; i++) {
+                recordstring = recordstring + activity.rankwodrecord.recordlist.get(position).charAt(i);
             }
             recordstring=recordstring+"times";
         }
-        holder.textView.setText(namestring);
-        holder.textView2.setText(recordstring);
-        holder.textView3.setText(scorestring);
-        if(clickedlist.get(position)==1) {
-            holder.textView.setBackgroundColor(Color.YELLOW);
+        for(int i=0; i<ranksize;i++){
+           rankstring=rankstring+"\n"+activity.rankusernamelist.get(position).charAt(i);
+
         }
-        else holder.textView.setBackgroundColor(Color.WHITE);
-
-
-
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Toast.makeText(v.getContext(), position+"번 째!", Toast.LENGTH_SHORT).show();
-                if(clickedlist.get(position)==0) {
-                    holder.textView.setBackgroundColor(Color.YELLOW);
-                    activity.excelscrapper.userinfo.setCurrentwodindex(position);
-                    clickedlist.set(position, 1);
-
-
-                }
-                else {
-                    holder.textView.setBackgroundColor(Color.WHITE);
-
-                    clickedlist.set(position, 0);
-                }
-                System.out.println(position+"번째클릭됨");
-
-
-
+        for (int i = 0; i < rankwodmovementsize; i++){
+            movementstring=movementstring+"\n"+activity.rankwodrecord.getWodlist().get(position).getMovement().get(i);
+            if(!activity.rankwodrecord.getWodlist().get(position).getWeightlist().get(i).equals("0")&&!activity.rankwodrecord.getWodlist().get(position).getWeightlist().get(i).equals("")){
+                movementstring=movementstring+" "+activity.rankwodrecord.getWodlist().get(position).getWeightlist().get(i)+"kg";
             }
-        });
+            movementstring=movementstring+" "+activity.rankwodrecord.getWodlist().get(position).getMovementnum().get(i)+"times/meters";
+        }
+
+
+        holder.ranknametextview.setText(usernamestring);
+        holder.rankdatetextview.setText(rankdatestring);
+        holder.rankwodnametextview.setText(namestring);
+        holder.rankwodtypetextview.setText(wodtypestring);
+        holder.rankwodmovementtextview.setText(movementstring);
+        holder.rankwodrecordtextview.setText(recordstring);
+        holder.rankwodscoretextview.setText(scorestring);
+        holder.rankwodranktextview.setText(rankstring);
+        System.out.println("와드이름스트링:"+namestring);
+
+
+
+
 
 
 
@@ -155,8 +182,8 @@ public class RecyclerViewRank extends RecyclerView.Adapter<RecyclerViewRank.View
 
     @Override
     public int getItemCount() {
-        System.out.println("유저와드리스트사이즈:"+activity.excelscrapper.userinfo.getUserwodlist().size());
-        return activity.excelscrapper.userinfo.getWodrecord().wodlist.size();
+        System.out.println("랭크:"+activity.rankwodrecord.wodlist.size());
+        return activity.rankwodrecord.wodlist.size();
 
         //return 3;
     }

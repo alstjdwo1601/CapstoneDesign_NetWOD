@@ -90,10 +90,13 @@ public class MainActivity extends AppCompatActivity {
     public DashboardFragment dashboardFragment=new DashboardFragment();
     public ArrayList<WOD> namedwodlist=new ArrayList<WOD>();
     int namedwodindex;
-    String loginname="default";
+    String loginname="sex";
     public FirebaseAuth mAuth;
     WOD tmpwod=new WOD();
-
+    public WODrecord rankwodrecord=new WODrecord();
+    public ArrayList<String> rankwoddatelist=new ArrayList<String>();
+    public ArrayList<String> rankusernamelist=new ArrayList<String>();
+    public ArrayList<String> ranklist=new ArrayList<String>();
     LinearLayout selectwodlayout;
 
     /*
@@ -120,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 4:
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, menu4Fragment).commit();
+
                 break;
             case 5:
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, wodlistFragment).commit();

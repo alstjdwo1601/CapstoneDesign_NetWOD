@@ -1,7 +1,9 @@
 package com.example.netwod;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,6 +12,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,14 +73,95 @@ public class RankingFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
+
     }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        //이 메소드가 호출될떄는 프래그먼트가 엑티비티위에 올라와있는거니깐 getActivity메소드로 엑티비티참조가능
+        activity = (MainActivity) getActivity();
+
+
+    }
+
+
+
+    @Override
+    public void onDestroyView(){
+        activity = (MainActivity) getActivity();
+        activity.rankwodrecord.wodlist.clear();
+        activity.rankwodrecord.scorelist.clear();
+        activity.rankwodrecord.recordlist.clear();
+        activity.rankusernamelist.clear();
+        activity.rankwoddatelist.clear();
+        activity.ranklist.clear();
+        System.out.println("destroyview");
+        super.onDestroyView();
+    }
+
+
+
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        activity = (MainActivity) getActivity();
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment_ranking , container, false);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("RankInfo")
+                .orderBy("SCORE", Query.Direction.DESCENDING).limit(10)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                activity.rankusernamelist.add(document.getString("Username"));
+                                activity.rankwoddatelist.add(document.getString("Date"));
+                                activity.ranklist.add(document.getString("RANKING"));
+                                WOD wod=new WOD();
+                                HashMap a=(HashMap)document.get("WOD");
+                                wod.setWODname(a.get("wodname").toString());
+                                wod.setWODtype(a.get("wodtype").toString());
+                                wod.setEquipment((ArrayList<String>) a.get("equipment"));
+                                wod.setMovement((ArrayList<String>) a.get("movement"));
+                                wod.setMovementnum((ArrayList<String>) a.get("movementnum"));
+                                wod.setWeightlist((ArrayList<String>) a.get("weightlist"));
+
+                                //WOD wod=(WOD)document.getData().get("WOD");
+                                activity.rankwodrecord.wodlist.add(wod);
+                                System.out.println("  activity.rankwodrecord.wodlist.add(wod);:"+activity.rankwodrecord.wodlist.size());
+
+                                activity.rankwodrecord.scorelist.add(document.getString("SCORE"));
+                                activity.rankwodrecord.recordlist.add(document.getString("RECORD"));
+
+
+                            }
+                            recyclerView = rootView.findViewById(R.id.recycler_view);
+                            recyclerView.setHasFixedSize(true);
+                            layoutManager = new LinearLayoutManager(activity);
+
+
+
+                            recyclerView.setLayoutManager(layoutManager);
+
+                            adapter = new RecyclerViewRank(activity);
+                            recyclerView.setAdapter(adapter);
+                        } else {
+
+                        }
+                    }
+                });
+
+
+
+        //Firestore에서 게시판 정보 저장된 값 불러오기
+
+      /*
         recyclerView = rootView.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(activity);
@@ -78,6 +172,9 @@ public class RankingFragment extends Fragment {
 
         adapter = new RecyclerViewRank(activity);
         recyclerView.setAdapter(adapter);
+*/
+//끝
+
 
 
         return rootView;
