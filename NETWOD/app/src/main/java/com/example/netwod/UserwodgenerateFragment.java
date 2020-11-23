@@ -125,14 +125,12 @@ public class UserwodgenerateFragment extends Fragment {
                 String wodtype = spinner2.getSelectedItem().toString();
 
                 if (wodtype.equals("FORTIME")) {
-                    activity.tmpwod=new WOD();
                     activity.tmpwod.setWODtype("FORTIME");
                     activity.tmpwod.setWODname(userwodgeneratename.getText().toString());
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, activity.fortimewodgenerateFragment).commit();
 
 
                 } else {
-                    activity.tmpwod=new WOD();
                     activity.tmpwod.setWODtype("AMRAP");
                     activity.tmpwod.setWODname(userwodgeneratename.getText().toString());
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, activity.amrapwodgenerateFragment).commit();

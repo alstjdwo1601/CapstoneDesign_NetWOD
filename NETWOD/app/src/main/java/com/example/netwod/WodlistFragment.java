@@ -139,9 +139,7 @@ public class WodlistFragment extends Fragment {
 
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
                         Map<String, Object> user = new HashMap<>();
-                        user.put("WOD", activity.excelscrapper.userinfo.userwodlist.get(activity.excelscrapper.userinfo.getCurrentwodindex()));
-                        System.out.println("디비추가시인덱스:"+activity.excelscrapper.userinfo.getCurrentwodindex());
-                        System.out.println("디비추가시와드이름:"+activity.excelscrapper.userinfo.userwodlist.get(activity.excelscrapper.userinfo.getCurrentwodindex()).getWODname());
+                        user.put("WOD", activity.excelscrapper.userinfo.wodrecord.getWodlist().get(activity.excelscrapper.userinfo.getCurrentwodindex()));
                         user.put("Username",activity.excelscrapper.userinfo.getUserName());
                         user.put("Description",value);
                         db.collection("WODdashboard").document()

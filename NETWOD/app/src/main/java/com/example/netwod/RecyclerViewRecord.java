@@ -103,14 +103,13 @@ public class RecyclerViewRecord extends RecyclerView.Adapter<RecyclerViewRecord.
                 String formatDate = sdfNow.format(date);
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 Map<String, Object> user = new HashMap<>();
-
                 user.put("WOD", activity.excelscrapper.userinfo.wodrecord.getWodlist().get(activity.excelscrapper.userinfo.getCurrentwodindex()));
                 user.put("SCORE", activity.excelscrapper.userinfo.wodrecord.getScorelist().get(activity.excelscrapper.userinfo.getCurrentwodindex()));
                 user.put("RECORD", activity.excelscrapper.userinfo.wodrecord.getRecordlist().get(activity.excelscrapper.userinfo.getCurrentwodindex()));
-                user.put("RANKING", "0"); //아직 랭킹정렬 미구현
+                user.put("RANKING", 0); //아직 랭킹정렬 미구현
                 user.put("Username",activity.excelscrapper.userinfo.getUserName());
                 user.put("Date",formatDate);
-                db.collection("RankInfo").document()
+                db.collection("UserInfo").document()
                         .set(user)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -153,7 +152,7 @@ public class RecyclerViewRecord extends RecyclerView.Adapter<RecyclerViewRecord.
                 recordstring = recordstring + activity.excelscrapper.userinfo.getWodrecord().recordlist.get(position).charAt(i);
             }
             recordstring=recordstring+"rounds";
-            for (int i = 3; i < 5; i++) {
+            for (int i = 2; i < 4; i++) {
                 recordstring = recordstring + activity.excelscrapper.userinfo.getWodrecord().recordlist.get(position).charAt(i);
             }
             recordstring=recordstring+"times";
