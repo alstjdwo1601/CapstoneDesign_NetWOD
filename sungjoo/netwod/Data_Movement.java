@@ -21,16 +21,6 @@ public class Data_Movement {
     	return this.ArraySize;
     }
     
-    public int getArrayIndex(String movementName) {
-    	setArraySize();
-    	for(int i = 0; i < ArraySize; i++) {
-    		if(movement.get(i).equals(movementName)) {
-    			return i;
-    		}	
-    	}
-    	return -1;
-    }
-    
     public ArrayList<String> getMovement() {
     	return movement;
     }
