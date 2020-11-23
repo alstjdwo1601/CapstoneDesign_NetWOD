@@ -1,14 +1,18 @@
 package com.example.netwod;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.Environment;
@@ -61,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
     // FrameLayout에 각 메뉴의 Fragment를 바꿔 줌
     //UserInfo user;
-
+    private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STROAGE = 1001;
     ExcelScrapper excelscrapper;
     private FragmentManager fragmentManager = getSupportFragmentManager();
     // 4개의 메뉴에 들어갈 Fragment들
@@ -156,10 +160,71 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults){
+        switch (requestCode){
+            case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STROAGE: {
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    Toast.makeText(this, "권한이 허가되어 있습니다.", Toast.LENGTH_LONG).show();
+                    System.out.println("권한허가.");
+                }
+                else{
+                    Toast.makeText(this, "아직 승인받지 않았습니다.", Toast.LENGTH_LONG).show();
+                    System.out.println("아직승인x");
+                }
+                return;
+            }
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme);
-        super.onCreate(savedInstanceState);
+
+
+        int permissioncheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        //권한이 없을 때 :
+        if(permissioncheck != PackageManager.PERMISSION_GRANTED) {
+
+            //사용자가 거부를 한 경우
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                Toast.makeText(this, "외부 저장소 접근을 위해 저장소 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STROAGE);
+
+                System.out.println("거부한경우외부 저장소 접근을 위해 저장소 접근 권한이 필요합니다.");
+            }
+            //최초 요청
+            else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STROAGE);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+
+                Toast.makeText(this, "외부 저장소 접근을 위해 저장소 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
+                System.out.println("최초요청외부 저장소 접근을 위해 저장소 접근 권한이 필요합니다.");
+            }
+        }
+        int permissionwritecheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        //권한이 없을 때 :
+        if(permissionwritecheck != PackageManager.PERMISSION_GRANTED) {
+
+            //사용자가 거부를 한 경우
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                Toast.makeText(this, "외부 저장소 쓰기을 위해 저장소 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+
+                System.out.println("거부한경우외부 저장소 쓰기을 위해 저장소 접근 권한이 필요합니다.");
+            }
+            //최초 요청
+            else {
+               ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+
+                Toast.makeText(this, "외부 저장소 접근을 위해 저장소 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
+                System.out.println("최초요청외부 저장소 읽기을 위해 저장소 접근 권한이 필요합니다.");
+            }
+        }
+
+
+
+
+
 
         //에뮬레이터 내부 sdcard 경로 받기
         String sdCardPath = null;
@@ -183,7 +248,8 @@ public class MainActivity extends AppCompatActivity {
         //userwodlist.xls 읽기(나만의 와드 리스트들)
 
         excelscrapper.readExcel2();
-
+        setTheme(R.style.AppTheme);
+        super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
 
