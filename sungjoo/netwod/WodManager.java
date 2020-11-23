@@ -5,11 +5,18 @@ import java.util.Collections;
 
 
 public class WodManager {
-	ArrayList<WOD> wod = new ArrayList<WOD>();
+	ArrayList<WOD> wodList = new ArrayList<WOD>();
 	ArrayList<String> err = new ArrayList<String>();
-	
+	Data_Movement data;
+	UserInfo info;
 	public WodManager() {
 		
+	}
+	
+	
+	public WodManager(Data_Movement _data,UserInfo _info) {
+		data=_data;
+		info=_info;
 	}
 	
 	
@@ -18,13 +25,13 @@ public class WodManager {
 	
 	
 	/* WodManager
-	 * wod를 입력 받으면 저장하거나 새로운 와드를 만들어줌
+	 * wodList를 입력 받으면 저장하거나 새로운 와드를 만들어줌
 	 * 
 	 *
 	 * 구현 필요
 	 * - Arraylist 으로 체계적 관리 o
 	 * - 로그기능 o
-	 * - 빈 wod를 받으면 채우는 함수 o
+	 * - 빈 wodList를 받으면 채우는 함수 o
 	 *
 	 *
 	 * Data_Movement
@@ -45,45 +52,53 @@ public class WodManager {
 	 *  사용자 랭킹 x
 	 *  사용자 레벨 x
 	 *  
-	 *  사용자가 했던 wod에 따라서 (0/2)
-	 *  stimulation x
+	 *  사용자가 했던 wodList에 따라서 (1/2)  - 개발
+	 *  stimulation o
 	 *  area x
 	 *  
-	 *  +와드데이터를 통해서 학습하고 추천(0/2) 
+	 *  +와드데이터를 통해서 학습하고 추천(0/0) // 제거
+	 *	//와드 데이터가 모일리가 없음 그렇게
 	 *  data collection x
 	 *  lerning tool x
 	 *  
 	 *  WodLearning
 	 *  
+	 *  11/20
 	 *  
 	 */
 	
 	
 	public WOD makeWod(WOD wod) {
-		
-		return wod;
+		WodAlgorithm algorithm = new WodAlgorithm(data,info);
+		algorithm._makeWod("FORTIME", 0);
+		return algorithm.getWod();
+	}
+	
+	public WOD makeWod() {
+		WodAlgorithm algorithm = new WodAlgorithm(data,info);
+		algorithm._makeWod("FORTIME", 0);
+		return algorithm.getWod();
 	}
 	
 	
 	
-	
 	public ArrayList<WOD> _getWod(){
-		return wod;
+		return wodList;
 	}
 	
 	
 	public WOD _getWod(int index) {
 	
-		if(rangeArray(index,wod.size())) {
-			return wod.get(index);}
+		if(rangeArray(index,wodList.size())) {
+			return wodList.get(index);}
 		else {
-			err.add("getWod/ wod / out of index ");
+			err.add("getWod/ wodList / out of index ");
 			return null;}
 	}
 	
 	
 	public int _getWodSize() {
-		return this.wod.size();
+		return this.wodList.size();
 	}
 	
 	
@@ -91,11 +106,11 @@ public class WodManager {
 	
 	public boolean _addWod(WOD input) {
 		if(input != null) {
-			this.wod.add(input);
+			this.wodList.add(input);
 			return true;
 		}
 		else {
-			err.add("addWod/ wod / input is null ");
+			err.add("addWod/ wodList / input is null ");
 			return false;
 		}
 		
@@ -116,12 +131,12 @@ public class WodManager {
 	
 	
 	public boolean _delWod(int index) {
-		if(rangeArray(index,wod.size())) {
-			wod.remove(index);
+		if(rangeArray(index,wodList.size())) {
+			wodList.remove(index);
 			return true;
 		}
 		else {
-			err.add("delWod/ wod / out of size ");
+			err.add("delWod/ wodList / out of size ");
 			return false;
 		}
 	}
@@ -138,9 +153,9 @@ public class WodManager {
 	
 	
 	public boolean _setWod(int index,WOD input) {
-		if(rangeArray(index,wod.size())){
-			wod.remove(index);
-			wod.add(index,input);
+		if(rangeArray(index,wodList.size())){
+			wodList.remove(index);
+			wodList.add(index,input);
 			return true;
 		}
 		else {
