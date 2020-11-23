@@ -21,8 +21,6 @@ class WOD{
     }
 
 
-
-
     public String getWODlevel() {
         return WODlevel;
     }
