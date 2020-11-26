@@ -16,19 +16,71 @@
         android:orientation="horizontal"
         android:weightSum="100">
 
-        <ImageView
-            android:id="@+id/imageView5"
+        <LinearLayout
+            android:id="@+id/userinfo2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="50"
-            android:visibility="visible"
-            tools:src="@tools:sample/avatars" />
+            android:layout_weight="30"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/Namet"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:autoText="false"
+                android:clickable="false"
+                android:contextClickable="false"
+                android:ems="10"
+                android:focusableInTouchMode="false"
+                android:gravity="center"
+                android:hint="NAME"
+                android:inputType="textPersonName"
+                android:text="NAME:"
+                android:textColor="#040404"
+                android:textIsSelectable="false"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/Heightt"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:contextClickable="false"
+                android:ems="10"
+                android:focusableInTouchMode="false"
+                android:gravity="center"
+                android:hint="HEIGHT"
+                android:inputType="textPersonName"
+                android:text="HEIGHT:"
+                android:textColor="#040404"
+                android:textIsSelectable="false"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/Weightt"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:contextClickable="false"
+                android:ems="10"
+                android:focusableInTouchMode="false"
+                android:gravity="center"
+                android:hint="WEIGHT"
+                android:inputType="textPersonName"
+                android:text="WEIGHT:"
+                android:textColor="#040404"
+                android:textIsSelectable="false"
+                android:textSize="20dp" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/userinfo"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="50"
+            android:layout_weight="70"
             android:orientation="vertical">
 
             <TextView
@@ -44,8 +96,9 @@
                 android:gravity="center_vertical"
                 android:hint="NAME"
                 android:inputType="textPersonName"
+                android:textColor="#000000"
                 android:textIsSelectable="false"
-                android:textSize="15dp" />
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/HeighttextView"
@@ -59,8 +112,9 @@
                 android:gravity="center_vertical"
                 android:hint="HEIGHT"
                 android:inputType="textPersonName"
+                android:textColor="#000000"
                 android:textIsSelectable="false"
-                android:textSize="15dp" />
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/WeightTextView"
@@ -74,8 +128,9 @@
                 android:gravity="center_vertical"
                 android:hint="WEIGHT"
                 android:inputType="textPersonName"
+                android:textColor="#000000"
                 android:textIsSelectable="false"
-                android:textSize="15dp" />
+                android:textSize="20dp" />
         </LinearLayout>
     </LinearLayout>
 

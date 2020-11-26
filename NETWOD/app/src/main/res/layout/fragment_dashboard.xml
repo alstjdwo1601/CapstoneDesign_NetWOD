@@ -1,14 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".DashboardFragment">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:weightSum="20"
+    tools:context=".MainActivity">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/textView11"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:text="Click to view user comments and add WODs"
+        android:textSize="18sp" />
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="horizontal"
+        android:weightSum="7">
+
+        <TextView
+            android:id="@+id/dashboardusernametextview2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="0dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_weight="1"
+            android:background="#FFFFFF"
+            android:backgroundTintMode="multiply"
+            android:gravity="center"
+            android:paddingStart="0dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="USER NAME"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/dashboardwodnametextview2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="0dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_weight="1"
+            android:background="#FFFFFF"
+            android:backgroundTintMode="multiply"
+            android:gravity="center"
+            android:paddingStart="0dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="WOD NAME"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/dashboardwodtypetextview2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_weight="1"
+            android:background="#FFFFFF"
+            android:backgroundTintMode="multiply"
+            android:gravity="center"
+            android:text="WOD TYPE"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/dashboardmovementtextview2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_weight="3"
+            android:background="#FFFFFF"
+            android:backgroundTintMode="multiply"
+            android:gravity="center"
+            android:text="MOVEMENT"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/dashboardwodleveltextview2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_weight="1"
+            android:background="#FFFFFF"
+            android:backgroundTintMode="multiply"
+            android:gravity="center"
+            android:text="WOD LEVEL"
+            android:textSize="10sp" />
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rel"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="16">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="0dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

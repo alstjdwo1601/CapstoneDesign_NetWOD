@@ -131,7 +131,7 @@ public class RankingFragment extends Fragment {
                                 wod.setMovement((ArrayList<String>) a.get("movement"));
                                 wod.setMovementnum((ArrayList<String>) a.get("movementnum"));
                                 wod.setWeightlist((ArrayList<String>) a.get("weightlist"));
-
+                                wod.setWODlevel(a.get("wodlevel").toString());
                                 //WOD wod=(WOD)document.getData().get("WOD");
                                 activity.rankwodrecord.wodlist.add(wod);
 

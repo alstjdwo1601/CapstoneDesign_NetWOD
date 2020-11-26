@@ -106,7 +106,7 @@ public class WodlistFragment extends Fragment {
                 }
                 else {
                     activity.onFragmentChange(11);
-                 
+
                 }
             }
         });

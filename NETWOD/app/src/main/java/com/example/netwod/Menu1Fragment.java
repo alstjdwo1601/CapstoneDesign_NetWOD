@@ -127,8 +127,8 @@ public class Menu1Fragment extends Fragment {
 
 
         tv_username.setText(userName);
-        tv_userheight.setText(userHeight);
-        tv_userweight.setText(userWeight);
+        tv_userheight.setText(userHeight+"cm");
+        tv_userweight.setText(userWeight+"kg");
 
 
         btn_fragment.setOnClickListener(new View.OnClickListener() {

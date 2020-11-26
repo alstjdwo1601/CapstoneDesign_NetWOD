@@ -102,6 +102,9 @@ public class MainActivity extends AppCompatActivity {
     public ArrayList<String> rankwoddatelist=new ArrayList<String>();
     public ArrayList<String> rankusernamelist=new ArrayList<String>();
     public ArrayList<String> ranklist=new ArrayList<String>();
+    public ArrayList<WOD> dashboardwodlist=new ArrayList<WOD>();
+    public ArrayList<String> dashboardusernamelist=new ArrayList<String>();
+    public ArrayList<String> dashboardboardcommentlist=new ArrayList<String>();
     LinearLayout selectwodlayout;
     Data_Movement datamovement=new Data_Movement();
 
