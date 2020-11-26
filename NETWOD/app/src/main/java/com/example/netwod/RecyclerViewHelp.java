@@ -43,7 +43,7 @@ public class RecyclerViewHelp extends RecyclerView.Adapter<RecyclerViewHelp.View
 
         public ViewHolder(View view) {
             super(view);
-            System.out.println("헬퍼뷰홀더생성자");
+
             this.textView = view.findViewById(R.id.textView);
             this.textView2 = view.findViewById(R.id.textView2);
 

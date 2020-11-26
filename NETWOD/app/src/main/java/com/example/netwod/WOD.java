@@ -1,8 +1,12 @@
 package com.example.netwod;
 
+
 import java.util.ArrayList;
-import java.util.Arrays;
+
+import java.util.Collections;
 import java.util.Random;
+
+
 
 class WOD{
     private String WODname;//ex) FRAN,고성주의 와드
@@ -13,59 +17,14 @@ class WOD{
     private ArrayList<String> movementnum;//={21,21,21,15,15,15};
     private ArrayList<String> weightlist;//각각 무게
     private ArrayList<String> equipment;// 사용한 기구
-    private Wod_function wodData;
+
 
     public WOD(){
-        wodData = new Wod_function();  // 기존에 만들어 놓은 wod 형식
-        this.movement=wodData.getMovement();
-        this.movementnum=wodData.getMovementnum();
-        this.weightlist=wodData.getWeightlist();
-        this.equipment=wodData.getEquipment();
+   movement=new ArrayList<String>();
+        movementnum=new ArrayList<String>();
+        weightlist=new ArrayList<String>();
+        equipment=new ArrayList<String>();
     }
-
-    // 이름 받을 떄
-    public WOD(String name){
-        this.WODname = name;
-        wodData = new Wod_function();  // 기존에 만들어 놓은 wod 형식
-        this.movement=wodData.getMovement();
-        this.movementnum=wodData.getMovementnum();
-        this.weightlist=wodData.getWeightlist();
-        this.equipment=wodData.getEquipment();
-    }
-    public WOD(UserInfo info) {
-        wodData = new Wod_function(info);
-
-
-        this.movement=wodData.getMovement();
-        this.movementnum=wodData.getMovementnum();
-        this.weightlist=wodData.getWeightlist();
-        this.equipment=wodData.getEquipment();
-    }
-
-
-    public WOD(UserInfo info,String type) {
-        wodData = new Wod_function(info,type);
-
-        this.setWODtype(type);
-        this.movement=wodData.getMovement();
-        this.movementnum=wodData.getMovementnum();
-        this.weightlist=wodData.getWeightlist();
-        this.equipment=wodData.getEquipment();
-    }
-
-
-    // 이름 레벨
-    public WOD(String name,String level){
-        this.WODname =name;
-        wodData = new Wod_function();  // 기존에 만들어 놓은 wod 형식
-        this.movement=wodData.getMovement();
-        this.movementnum=wodData.getMovementnum();
-        this.weightlist=wodData.getWeightlist();
-        this.equipment=wodData.getEquipment();
-    }
-
-
-
 
 
     public String getWODlevel() {
@@ -129,38 +88,6 @@ class WOD{
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class WODrecord{
     public ArrayList<WOD> wodlist; //{프란,신디,민성재,김정훈}
     public ArrayList<String> scorelist; //{"70","80","75","60"}
@@ -200,23 +127,6 @@ class WODrecord{
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 class UserInfo {
 
@@ -410,65 +320,208 @@ class UserInfo {
     }
 
 }
+//ㅇㅅㅇ
 
 
 
+class WodManager {
+    ArrayList<WOD> wodList = new ArrayList<WOD>();
+    ArrayList<String> err = new ArrayList<String>();
+    Data_Movement data;
+    UserInfo info;
+    public WodManager() {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-class Wod_manager{
-    private Wod_function wod;
-    private int basic_time = 0;
-
-
-    //수정 할 wod 를 받는 부분
-    public Wod_manager(Wod_function wod) {
-        this.wod = wod;
     }
 
 
-    //여기 날려도 뭐 달라질껀 없을듯.
-
-    public ArrayList<String> stimulation() {
-        Wod_Algorithm algorithm = new Wod_Algorithm();
-        return algorithm.stimulation();
+    public WodManager(Data_Movement _data,UserInfo _info) {
+        data=_data;
+        info=_info;
     }
 
-    // algorithm FORTIME 생성 , {movement의 개수 , 각 rep을 반복}
-    public void FORTIME(ArrayList<String> movements) {
-        Data_Wod wod_data = new Data_Wod();
-        Data_Movement movement_data = new Data_Movement();
-        int[] algorithm = wod_data.Data_type("FORTIME", movements.size());
-        for(int j =0 ; j < algorithm.length -1; j++) {
-            for(int i = 0; i < algorithm[0]; i++) {
-                int index = movement_data.get_index(movements.get(i));
-                Movement movement = new Movement(index);
-                movement.set_rep((int)(movement.get_rep()*algorithm[1+j]/15));
-                this.wod.set_movement_add(movement);
-            }
+
+
+
+
+
+    /* WodManager
+     * wodList를 입력 받으면 저장하거나 새로운 와드를 만들어줌
+     *
+     *
+     * 구현 필요
+     * - Arraylist 으로 체계적 관리 o
+     * - 로그기능 o
+     * - 빈 wodList를 받으면 채우는 함수 o
+     *
+     *
+     * Data_Movement
+     * 엑셀 데이터를 클래스의 내의 변수로 저장
+     *
+     * 구현 필요
+     * - 클래스 외부에서 접근하는 함수 o
+     * - 엑셀 읽는 기능 x
+     *
+     * WodAlgorithm
+     * 빈와드를 넣으면 알아서 맞는 Wod 넣도록
+     *
+     * 구현 필요
+     *
+     *  사용자 정보에 따른 Wod 생성 (1/5)
+     *  사용자 장비 o
+     *  사용자 점수 o
+     *  사용자 랭킹 x
+     *  사용자 레벨 o
+     *
+     *  사용자가 했던 wodList에 따라서 (1/2)  - 개발
+     *  stimulation o
+     *  area x 제거
+     *
+     *  +와드데이터를 통해서 학습하고 추천(0/0) // 제거
+     *	//와드 데이터 만드는 공식이 있기에 머신러닝 쓸 이유가 없음
+     *
+     *  data collection x
+     *  lerning tool x
+     *
+     *  WodLearning
+     *
+     *  11/25
+     *
+     */
+
+
+    public WOD make(WOD wod) {
+        WodAlgorithm algorithm = new WodAlgorithm(data,info);
+        algorithm._makeWod("FORTIME", 0);
+        return algorithm.getWod();
+    }
+
+    public WOD make(String type) {
+        WodAlgorithm algorithm = new WodAlgorithm(data,info);
+        algorithm._makeWod( type  ,2 );
+        return algorithm.getWod();
+    }
+
+    public WOD make(String type,int level) {
+        WodAlgorithm algorithm = new WodAlgorithm(data,info);
+        algorithm._makeWod( type , level );
+        return algorithm.getWod();
+    }
+
+
+    public WOD make() {
+        WodAlgorithm algorithm = new WodAlgorithm(data,info);
+        algorithm._makeWod("FORTIME", 0);
+        return algorithm.getWod();
+    }
+
+    public int time(WOD wod) {
+        WodAlgorithm algorithm = new WodAlgorithm(data,info);
+        return algorithm._getTime(wod);
+    }
+
+    public int AMRAPtime(WOD wod) {
+        WodAlgorithm algorithm = new WodAlgorithm(data,info);
+        return 5*algorithm._getTime(wod);
+    }
+
+
+	/*public int replace(WOD wod,String target,String want) {
+		return
+	}
+	*/
+
+    public int score(WOD wod,int time) {
+        WodAlgorithm algorithm = new WodAlgorithm(data,info);
+        return (int)algorithm._Score(wod, time);
+    }
+
+    public int level(WOD wod) {
+        WodAlgorithm algorithm = new WodAlgorithm(data,info);
+
+        return algorithm._level(wod);
+    }
+
+
+
+    public ArrayList<WOD> _getWod(){
+        return wodList;
+    }
+
+
+    public WOD _getWod(int index) {
+
+        if(rangeArray(index,wodList.size())) {
+            return wodList.get(index);}
+        else {
+            err.add("getWod/ wodList / out of index ");
+            return null;}
+    }
+
+
+    public int _getWodSize() {
+        return this.wodList.size();
+    }
+
+
+
+
+    public boolean _addWod(WOD input) {
+        if(input != null) {
+            this.wodList.add(input);
+            return true;
+        }
+        else {
+            err.add("addWod/ wodList / input is null ");
+            return false;
+        }
+
+    }
+
+
+
+
+
+
+    public void _addWod(ArrayList<WOD> inputs){
+        for(int i = 0; i < inputs.size(); i++){
+            this._addWod(inputs.get(i));}
+
+    }
+
+
+
+
+    public boolean _delWod(int index) {
+        if(rangeArray(index,wodList.size())) {
+            wodList.remove(index);
+            return true;
+        }
+        else {
+            err.add("delWod/ wodList / out of size ");
+            return false;
+        }
+    }
+
+    public void _delWod(ArrayList<Integer> indexs) {
+        Collections.sort(indexs,Collections.reverseOrder());
+        for(int i =0 ; i < indexs.size(); i++) {
+            _delWod(indexs.get(i));
+        }
+
+
+    }
+
+
+
+    public boolean _setWod(int index,WOD input) {
+        if(rangeArray(index,wodList.size())){
+            wodList.remove(index);
+            wodList.add(index,input);
+            return true;
+        }
+        else {
+            err.add("setWod / index out of range");
+            return false;
         }
     }
 
@@ -476,387 +529,301 @@ class Wod_manager{
 
 
 
-    // AMRAP 생성 {movement의 개수 , 각 rep , time}  time 값은 wod.manager.get_time()
-    public void AMRAP(ArrayList<String> movements) {
-        Data_Wod wod_data = new Data_Wod();
-        Data_Movement movement_data = new Data_Movement();
-        int[] algorithm = wod_data.Data_type("AMRAP", movements.size());
-        for(int i = 0 ; i < algorithm[0]; i++ ) {
-            int index = movement_data.get_index(movements.get(i));
-            Movement movement = new Movement(index);
-            movement.set_rep((int)(movement.get_rep()*algorithm[i+1]/15));
-            this.wod.set_movement_add(movement);
+    public ArrayList<String> MgetErr(){
+        return err;
+    }
+
+    public boolean rangeArray(int index,int max) {
+        if(index > max) {
+            return false;
         }
-        this.basic_time = algorithm[algorithm.length-1];
+        else {
+            return true;
+        }
     }
-
-
-    public int get_time() {
-        return basic_time; // AMRAP 시 시간을 알려줌
+    public boolean rangeArray(int index,int min,int max) {
+        if((index < max )&&(index >= min)) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
-
-
-
-
 
 }
 
 
+class WodAlgorithm {
+    private Data_Movement data;
+    private WOD wod = new WOD();
+    private UserInfo info;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-class Wod_function {
-
-
-    private String name;
-    private String level;  //
-    private ArrayList<Movement> movement_list = new ArrayList<Movement>();
-    private String type;
-    private Wod_manager manager = new Wod_manager(this);
-    private Wod_Algorithm algorithm= new Wod_Algorithm();
-    // 추천 와드 생성하기 AMRAP
-    public Wod_function(){
-
-    }
-
-    public Wod_function(UserInfo info) {
-        this.name = "WOD";
-        this.setWODtype("FORTIME");
-        ArrayList<String> movement_recommend = algorithm.stimulation(algorithm.equipment(info));
-        this.manager.FORTIME(movement_recommend);
-
-    }
-
-
-    public Wod_function(UserInfo info,String type) {
-        this.name = "WOD";
-        if(type.equals("FORTIME")) {
-            this.setWODtype("FORTIME");
-            ArrayList<String> movement_recommend = algorithm.stimulation(algorithm.equipment(info));
-            this.manager.FORTIME(movement_recommend);
-        }
-        else if(type.equals("AMRAP")){
-            this.setWODtype("AMRAP");
-            ArrayList<String> movement_recommend = algorithm.stimulation(algorithm.equipment(info));
-            this.manager.AMRAP(movement_recommend);
-        }
-    }
-
-
-    ////////////////// Movement / Equipment / Movementnum /Weightlist 얻는 부분 //////////////////////
-    public ArrayList<String> getMovement(){
-        ArrayList<String> output = new ArrayList<String>();
-        for(int i = 0; i < movement_list.size(); i++) {
-            output.add(this.movement_list.get(i).get_name());
-        }
-        return output;
-    }
-
-
-    public ArrayList<String> getEquipment(){
-        Data_Movement data = new Data_Movement();
-        ArrayList<String> output = new ArrayList<String>();
-        for(int i = 0; i < movement_list.size(); i++) {
-            String name = data.get_equipment(data.get_index(this.movement_list.get(i).get_name()));
-            output.add(name);
-        }
-        return output;
-    }
-
-
-    public ArrayList<String> getMovementnum(){
-        ArrayList<String> output = new ArrayList<String>();
-        for(int i = 0; i < movement_list.size(); i++) {
-            output.add(Integer.toString(this.movement_list.get(i).get_rep()));
-
-        }
-        return output;
-    }
-    public ArrayList<String> getWeightlist(){
-        ArrayList<String> output = new ArrayList<String>();
-        for(int i = 0; i < movement_list.size(); i++) {
-            output.add(Integer.toString((int)this.movement_list.get(i).get_weight()));
-
-        }
-        return output;
-    }
-
-
-
-
-
-    public Wod_manager manage_wod() {
-        return this.manager;
-    }
-
-    public ArrayList<Movement> get_movement_Arraylist(){
-        return this.movement_list;
-    }
-
-    // 정보를 저장하는 부분분
-    public void setWODname(String input) {
-        this.name = input;
-    }
-    public void setWODtype(String input) {
-        this.type = input;
-    }
-    public void setWODlevel(String input) {
-        this.level = input;
-    }
-
-    public String getWODname() {
-        return this.name;
-    }
-    public String getWODtype() {
-        return this.type;
-    }
-    public String getWODlevel() {
-        return this.level;
-    }
-
-
-
-    public void set_movement_add(Movement input) {
-        this.movement_list.add(input);
-    }
-    public void set_movement_remove(int index) {
-        this.movement_list.remove(index);
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-class Data_Movement {
     private ArrayList<String> movement = new ArrayList<String>();
-    private ArrayList<String> equipment = new ArrayList<String>();
-    private ArrayList<int[]> exercise_area = new ArrayList<int[]>();
-    private ArrayList<Integer> stimulation = new ArrayList<Integer>(); // 0 = 체조 , 1 = 메타볼릭컨디셔닝 , 2 = 역도
-    private ArrayList<Double> score = new ArrayList<Double>();
-    private ArrayList<Double> weight = new ArrayList<Double>();
-    private ArrayList<Integer> rep = new ArrayList<Integer>();
-    private ArrayList<String> equipment_list = new ArrayList<String>();
+    private ArrayList<String> equipment= new ArrayList<String>();
+    private ArrayList<String> rep = new ArrayList<String>();
+    private ArrayList<String> weight = new ArrayList<String>();
 
 
 
-    // 데이터를 바로 읽어서 넘기는 장면
-    // T는 추후에 오류가 생기면 이벤트리스너로 넘기면 된다 (오류가 있으면 F) .
+    /*
+     *   WodAlgorithm
+     *
+     *
+     *
+     */
 
-    public Data_Movement() {
-        Read_movement Data = new Read_movement();
-        input_Data_Movement(Data.movement,Data.equipment,Data.exercise_area,Data.stimulate,Data.score,Data.weight,Data.rep);
+
+
+    public WodAlgorithm() {
+
+
+    }
+
+
+    public WodAlgorithm(Data_Movement Data,UserInfo info) {
+        this.data = Data;
+        this.info = info;
     }
 
 
 
 
-    // equipment 종류를 읽는 작업
-    public void input_equipment_list(String[] input) {
-        this.equipment_list = new ArrayList<>(Arrays.asList(input));
+    public WodAlgorithm(Data_Movement Data, WOD Wod,UserInfo info) {
+        this.wod = Wod;
+        this.data = Data;
+        this.info = info;
     }
 
+    /*
+     예상 time 구하는 부분
 
-
-    // input_Data_Movement  데이터를 읽었을 때 하나 씩 넣는 부분
-    public boolean input_Data_Movement(String name,String equipment, int[] exercise_area,int stimulation ,double score,double weight,int rep) {
-        this.movement.add(name);
-        this.equipment.add(equipment);
-        this.exercise_area.add(exercise_area);
-        this.stimulation.add(stimulation);
-        this.score.add(score);
-        this.weight.add(weight);
-        this.rep.add(rep);
-        return true;
-
-    }
-
-
-
-    // input_Data_Movement 데이터 배열로 읽었을 때 넣는 부분
-    public boolean input_Data_Movement(String[] name,String[] equipment, ArrayList<int[]> exercise_area,int[] stimulation ,double[] score,double[] weight,int[] rep) {
-        for(int i = 0 ; i< name.length; i++) {
-            input_Data_Movement(name[i], equipment[i], exercise_area.get(i),stimulation[i], score[i],weight[i],rep[i]);
+    */
+    public int _getTime(WOD inputWOD) {
+        if(wod == null) {
+            return 0;
         }
-        return true;
+        double Time = 0;
 
+        for(int i = 0; i < inputWOD.getMovement().size(); i++) {
+            int index = data.getIndex(inputWOD.getMovement().get(i));
+            double movementNum = StringToDouble(inputWOD.getMovementnum().get(i));
+            double score = data.getScore(index);
+            double rep = data.getRep(index);
+            double calc = score * movementNum / rep;
+            Time += calc;
+        }
+
+
+
+
+        return (int)Time;
     }
 
+    /*score 구하는 부분
+     *
+     *
+     *
+     *
+     *
+     */
+    public double _Score(WOD inputWOD, int time) {
+        int wodtime = _getTime(inputWOD);
+        if(inputWOD.getWODtype() == "FORTIME") {
+            return 100 + 100*(wodtime-time)/(wodtime+time);
+        }
+        if(inputWOD.getWODtype() == "AMRAP") {
+            return 100 + 100*(time-4)/(time+5);
+        }
+
+        return 0;
 
 
+    }
+    // level 구하는 부분
 
+    public int _level(WOD inputWOD) {
+        if(inputWOD == null) {
+            return -1;
+        }
 
-
-
-
-    // 수정
-    public int search_movement_index(String name){
-        for (int i = 0 ; i < this.movement.size(); i++) {
-            if(this.movement.get(i).equals(name)){
-                return i;
+        for(int i = 0; i < inputWOD.getMovement().size(); i++) {
+            if(!inputWOD.getWeightlist().get(i).equals("0") ) {
+                return _levelsub(inputWOD.getMovement().get(i) ,inputWOD.getWeightlist().get(i));
             }
+
+
         }
         return -1;
+
     }
 
 
 
-    public ArrayList<String> get_equipment_list() {
-        return this.equipment_list;
+    public int _levelsub(String Movement,String Weight) {
+        int index = data.getIndex(Movement);
+        double weight = Double.parseDouble(Weight);
+        double userWeight;
+        if(info.getUserWeight() == null) {
+            userWeight = 65;
+        }
+        else {
+            userWeight = Double.parseDouble(info.getUserWeight());
+        }
+
+        double Weightmul = 1 + (userWeight - 65)/65;
+
+
+        if(index == -1) {
+            return -1;
+        }
+
+
+        // weight = data * mul * userWeight
+        double mul = weight / data.getWeight(index) /Weightmul;
+
+        if(mul < 0.74) {
+            return 0;
+        }
+
+        if(mul < 0.99) {
+            return 1;
+        }
+
+        if(mul < 1.24) {
+            return 2;
+        }
+        if(mul < 1.49) {
+            return 3;
+        }
+        if(mul < 1.99) {
+            return 4;
+        }
+        if(mul < 3.0) {
+            return 5;
+        }
+
+
+
+        return -1;
+        // level 0 = 50%  // begineer
+        // level 1 = 75%  // womans wod
+        // level 2 = 100% // normal wod
+        // level 3 = 125% // famous wod
+        // level 4 = 150% // pro wod
+        // level 5 = 200% // hero wod
+
     }
 
 
-    public int get_index(String movement) {
-        for(int i = 0 ; i < this.movement.size(); i++) {
-            if(movement.equals(this.movement.get(i))) {
-                return i;
-            }
+
+
+
+
+
+
+
+    /*
+     *   wod 만드는 부분
+     *
+     *
+     */
+
+    public void _makeWod(String type,int level) {
+        ArrayList<Integer> movement = new ArrayList<Integer>();
+
+        // movement 받는 부분
+        movement = _seleteMovement();
+        //fortime 구현해야하고
+        if(type.equals("FORTIME")) {
+            _FORTIME(movement, level);
+            wod.setMovement(this.movement);
+            wod.setEquipment(this.equipment);
+            wod.setMovementnum(this.rep);
+            wod.setWeightlist(this.weight);
+            wod.setWODtype("FORTIME");
 
         }
-        return -1;
+
+        else if(type.equals("AMRAP")) {
+            _AMRAP(movement,level);
+            wod.setMovement(this.movement);
+            wod.setEquipment(this.equipment);
+            wod.setMovementnum(this.rep);
+            wod.setWeightlist(this.weight);
+            wod.setWODtype("AMRAP");
+        }
+
+    }
+
+    public void _addMovement(int index, int Level, int part) {
+
+        // level 0 = 50%  // begineer
+        // level 1 = 75%  // womans wod
+        // level 2 = 100% // normal wod
+        // level 3 = 125% // famous wod
+        // level 4 = 150% // pro wod
+        // level 5 = 200% // hero wod
+
+        movement.add(data.getMovement(index));
+        equipment.add(data.getEquipment(index));
+        rep.add(_setMovementnum(index,part));
+        weight.add(_setWeightlist(index,Level));
+
+    }
+
+    public String _setMovementnum(int index, int part){
+        return numberToString((int)(data.getRep(index)*part));
+    }
+
+
+    public String _setWeightlist(int index,int level){
+        double mul;
+        double weight = 65;
+
+        if(info.getUserWeight() != null) {
+            weight = Double.parseDouble(info.getUserWeight());
+        }
+        double weightMul = 1+((weight-65)/65);
+
+        // Level 조정 부분
+        if(level == 0) {
+            mul = 0.5;
+        }
+
+        else if(level == 1) {
+            mul = 0.75;
+        }
+        else if(level == 2) {
+            mul = 1.0;
+        }
+        else if(level == 3) {
+            mul = 1.25;
+        }
+
+        else if(level == 4) {
+            mul = 1.5;
+
+        }
+        else if(level == 5) {
+            mul = 2.0;
+        }
+        else {
+            mul = 1.0;
+        }
+
+
+        return numberToString((int)(data.getWeight(index)*mul*weightMul));
     }
 
 
 
 
 
-    public String get_movement(int index) {
-        return this.movement.get(index);
-    }
-    public ArrayList<String> get_movement() {
-        return this.movement;
-    }
-
-
-
-    public ArrayList<String> get_equipment(){
-        return this.equipment;
-    }
-    public String get_equipment(int index) {
-        return this.equipment.get(index);
-    }
-
-
-    public ArrayList<int[]> get_exercise(){
-        return this.exercise_area;
-    }
-    public int[] get_exercise_area(int index) {
-        return this.exercise_area.get(index);
-    }
-
-
-
-
-    public ArrayList<Integer> get_stimulation(){
-        return this.stimulation;
-    }
-    public int get_stimulation(int index) {
-        return this.stimulation.get(index);
-    }
-
-
-
-    public ArrayList<Double> get_score(){
-        return this.score;
-    }
-    public double get_score(int index) {
-        return this.score.get(index);
-    }
-
-
-
-    public ArrayList<Integer> get_rep(){
-        return this.rep;
-    }
-    public int get_rep(int index) {
-        return this.rep.get(index);
-    }
-
-
-    public ArrayList<Double> get_weight(){
-        return this.weight;
-    }
-    public double get_weight(int index) {
-        return this.weight.get(index);
-    }
-
-
-    public int get_Data_length() {
-        return this.movement.size();
-    }
-
-
-    //어디에 저장할지 정하지 않음 위에 함수 다 정의해둬서 바로바로 for문으로 10초면 저장함
-    public void output_Data_Movement() {
-
-    }
-}
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-class Data_Wod {
-    private ArrayList<int[]> FORTIME = new ArrayList<int[]>();
-    private ArrayList<int[]> AMRAP = new ArrayList<int[]>();
     // FORTIME
     // 형식 맨 앞 운동의 갯수 , 반복할 횟수
     // 2 21 15 9  45
@@ -873,677 +840,853 @@ class Data_Wod {
     // 3 5 : 3 : 2
     // 3 3 : 3 : 3
 
+    public void _FORTIME(ArrayList<Integer> indexList){
+        if(indexList != null) { // 에러 생겼을 때 여기서 에러메세지 넣으면 될듯
 
-    // AMRAP
+            WodType type = new WodType();
+            int[] count = type.getType("FORTIME", indexList);
 
-    public Data_Wod() {
-        // FORTIME
-        int[] input = {1,30};
-        this.add_FORTIME(input);
-        input = new int[] {2,10,5};
-        this.add_FORTIME(input);
-        input = new int[] {2,7,5,3};
-        this.add_FORTIME(input);
-        input = new int[] {2,5,5,5};
-        this.add_FORTIME(input);
-        input = new int[] {3,5,3,2};
-        this.add_FORTIME(input);
-        input = new int[] {3,3,3,3};
-        this.add_FORTIME(input);
 
-        //amrap
-        // first = movement kind , 2 ~ n-1 = movement_count , last = time(min)
-        input = new int[] {1 , 1, 10};
-        this.add_AMRAP(input);
-        input = new int[] {2 , 1,1, 10};
-        this.add_AMRAP(input);
-        input = new int[] {3 , 1,1,1, 10};
-        this.add_AMRAP(input);
-    }
-
-    // 추후수정
-    public int[] Data_type(String input,int movement_num){
-        ArrayList<Integer> save = new ArrayList<Integer>();
-        Random rand = new Random();
-        if(input.equals("FORTIME")) {
-            for(int i = 0 ; i < FORTIME.size(); i++) {
-                if(FORTIME.get(i)[0] == movement_num ) {
-                    save.add(i);
+            for(int i = 1; i < count.length; i++) {
+                for(int mNum = 0; mNum < indexList.size(); mNum++) {
+                    _addMovement(indexList.get(mNum), 0, count[i]);
                 }
             }
-            return this.FORTIME.get(save.get(rand.nextInt(save.size())));
+        }
+
+    }
+
+    public void _FORTIME(ArrayList<Integer> indexList,int level){
+        if(indexList != null) { // 에러 생겼을 때 여기서 에러메세지 넣으면 될듯
+
+            WodType type = new WodType();
+            int[] count = type.getType("FORTIME", indexList);
+
+
+            for(int i = 1; i < count.length; i++) {
+                for(int mNum = 0; mNum < indexList.size(); mNum++) {
+                    _addMovement(indexList.get(mNum), level, count[i]);
+                }
+            }
+        }
+
+    }
+
+
+
+
+
+    public void _AMRAP(ArrayList<Integer> indexList) {
+        WodType type = new WodType();
+        if(indexList != null) {
+            int[] count = type.getType("AMRAP", indexList);
+
+
+            for(int mNum = 0; mNum < indexList.size(); mNum++) {
+                _addMovement(indexList.get(mNum), 0, 1);
+            }
+        }
+
+    }
+    // 수정필요
+
+    public void _AMRAP(ArrayList<Integer> indexList,int level) {
+        WodType type = new WodType();
+        if(indexList != null) {
+            int[] count = type.getType("AMRAP", indexList);
+
+
+            for(int mNum = 0; mNum < indexList.size(); mNum++) {
+                _addMovement(indexList.get(mNum), level, 1);
+            }
+        }
+
+    }
+
+
+
+
+
+
+
+    // _selteMovement(){}
+
+    public ArrayList<Integer> _seleteMovement(){
+
+        boolean area = false;
+        ArrayList<Integer> movement;
+        // area 로 정렬하고
+
+
+        // equipment 로 분류하고
+        movement = _getEquipementList();
+        if(movement.isEmpty()) {return null;}
+        movement = _WODstimulation(movement, area);
+        if(movement.isEmpty()) {
+            return _randomMovement(2,movement);
+        }
+
+        return movement;
+    }
+
+
+    public ArrayList<Integer> _randomMovement(int i,ArrayList<Integer> movement){
+        ArrayList<Integer> output = new ArrayList<Integer>();
+        Random rand = new Random();
+        output.add(movement.get(rand.nextInt(movement.size())));
+        output.add(movement.get(rand.nextInt(movement.size())));
+
+        while(output.get(0) == output.get(1)) {
+            output.set(1,movement.get(rand.nextInt(movement.size())));
+
+        }
+
+        return output;
+    }
+
+
+
+    // Equipement
+
+
+    public ArrayList<String> _getUserEquipementList() {
+        ArrayList<String> list =  new ArrayList<String>();
+        if(info.isBarbell()) {
+            list.add("Barbell");
+        }
+        if(info.isBody()) {
+            list.add("Body");
+        }
+        if(info.isBox()) {
+            list.add("Box");
+        }
+        if(info.isDumbbell()) {
+            list.add("Dumbbell");
+        }
+        if(info.isJumprope()) {
+            list.add("Jumprope");
+        }
+        if(info.isKettlebell()) {
+            list.add("Kettlebell");
+        }
+        if(info.isPullUpBar()) {
+            list.add("PullUpBar");
+        }
+        if(info.isWallBall()) {
+            list.add("WallBall");
+        }
+        return list;
+    }
+
+
+
+
+    public ArrayList<Integer> _getEquipementList(){
+        ArrayList<Integer> movements = new ArrayList<Integer>();
+        ArrayList<String> list = _getUserEquipementList();
+        for(int i = 0; i < data.getArraySize();i++) {
+            if(_ArrayincludeString(data.getEquipment(i), list)) {
+                movements.add(i);
+            }
+        }
+        return movements;
+    }
+
+
+    public ArrayList<Integer> _getEquipementList(ArrayList<Integer> DataList){
+        ArrayList<Integer> movements = new ArrayList<Integer>();
+        ArrayList<String> list = _getUserEquipementList();
+        for(int i = 0; i < DataList.size();i++) {
+            if(_ArrayincludeString(data.getEquipment(DataList.get(i)), list)) {
+                movements.add(DataList.get(i));
+            }
+        }
+        return movements;
+    }
+
+
+
+
+
+
+
+
+
+    // exercise area
+
+
+    public ArrayList<Integer> _sortExerciseArea(){
+        ArrayList<Integer> movements = new ArrayList<Integer>();
+        return movements;
+    }
+
+
+
+
+
+
+
+
+
+
+    // stimulation
+    /*
+     *  1. wod 를 통해서 stimulation 을 알아내는 것 (wod 넣으면 stimulation boolean type [3])
+     *  2. stimulation 을 통해서 movement 추출하는 것 (전체에서 , 주어진 list에서  int type[size])
+     *  3.
+     */
+
+    public ArrayList<Integer>_WODstimulation(WOD yesterday,ArrayList<Integer> movementList, boolean sorted) {
+        ArrayList<Boolean> stimulation = _stimulationRecommand(yesterday);
+        return _stimulationMain(stimulation,movementList,sorted);
+    }
+
+    public ArrayList<Integer>_WODstimulation(ArrayList<WOD> wodlist,ArrayList<Integer> movementList, boolean sorted) {
+        ArrayList<Boolean> stimulation = _stimulationRecommand(wodlist);
+        return _stimulationMain(stimulation,movementList,sorted);
+    }
+
+    public ArrayList<Integer>_WODstimulation(ArrayList<Integer> movementList, boolean sorted){
+        ArrayList<Boolean> stimulation = _stimulationRecommand();
+        return _stimulationMain(stimulation,movementList,sorted);
+    }
+
+
+
+
+    public ArrayList<Boolean> _getStimulaion(WOD wod){
+        // wod 의 movement를 통해서 stimulation을 알아낸다.
+        ArrayList<Boolean> stimulation = new ArrayList<Boolean>();
+        ArrayList<String> movement = wod.getMovement();
+        ArrayList<Integer> movementIndex = new ArrayList<Integer>();
+
+        for(int i = 0; i < 3; i++) {
+            stimulation.add(false);
+        }
+
+        for(int i = 0; i < movement.size(); i++) {
+            movementIndex.add(data.getArrayIndex(movement.get(i)));
+        }
+
+        for(int i = 0; i < movementIndex.size(); i++) {
+            int index = movementIndex.get(i);
+
+            if(data.getStimulation(index) == 0) {
+                stimulation.set(0, true);
+            }
+
+            else if(data.getStimulation(index) == 1) {
+                stimulation.set(1, true);
+            }
+
+            else if(data.getStimulation(index) == 2) {
+                stimulation.set(2, true);
+            }
+        }
+        return stimulation;
+    }
+
+
+    public ArrayList<Integer> _stimulationBooltoInt(ArrayList<Boolean> input){
+        ArrayList<Integer> output = new ArrayList<Integer>();
+        for(int i = 0; i < 3; i++) {
+            output.add(0);
+        }
+        for(int i = 0; i < 3; i++) {
+            if(input.get(i)) {
+                output.set(i, 1);
+            }
+        }
+        return output;
+
+    }
+
+    // WOD.. 전날 했던 wod 아니면 user 추천
+    public ArrayList<Boolean> _stimulationRecommand(){
+        Random rand = new Random();
+        ArrayList<Boolean> output = new ArrayList<Boolean>();
+        int SettingValue = rand.nextInt(100);
+        if(SettingValue < 60) {
+            for(int i = 0; i < 3; i++) {
+                output.add(true);}
+
+        }
+        else if(SettingValue <80) {
+            for(int i = 0; i < 3; i++) {
+                output.add(true);}
+            output.set(rand.nextInt(3), false);
+
+        }
+        else {
+            for(int i = 0; i < 3; i++) {
+                output.add(false);}
+            output.set(rand.nextInt(3), true);
 
 
         }
 
+        return output;
 
 
-        if(input.equals("AMRAP")) {
-            for(int i = 0; i < AMRAP.size(); i++) {
-                if(AMRAP.get(i)[0] == movement_num) {
-                    save.add(i);
+    }
+
+
+
+
+
+
+
+    public ArrayList<Boolean> _stimulationRecommand(WOD yesterday){
+        if(yesterday == null) {
+            return null;
+        }
+
+        Random rand = new Random();
+
+        ArrayList<Boolean> output = _getStimulaion(yesterday);
+        if(output.get(0))
+            if(output.get(1))
+                if(output.get(2)) {
+                    output.set(rand.nextInt(output.size()), false);
+                    return output;
                 }
+        for(int i = 0; i < output.size(); i++) {
+            if(!output.get(i)) {
+                output.set(i, true);
+                return output;
+            }
+
+        }
+
+        return output;
+
+    }
+
+
+
+
+
+
+    public ArrayList<Boolean> _stimulationRecommand(ArrayList<WOD> wodlist){
+        ArrayList<Boolean> output = new ArrayList<Boolean>();
+        ArrayList<Integer> SumStimulation = new ArrayList<Integer>();
+        for(int i = 0; i < 3; i++) {
+            SumStimulation.add(0);
+        }
+
+
+
+
+        for(int i = 0; i < wodlist.size(); i++) {
+            ArrayList<Boolean> stimulation_bool = _getStimulaion(wodlist.get(i));
+            ArrayList<Integer> stimulation_int = _stimulationBooltoInt(stimulation_bool);
+
+            for(int j = 0; j < 3; j++) {
+                stimulation_bool.add(false);
+                int temp = SumStimulation.get(j) + stimulation_int.get(j);
+                SumStimulation.set(j, temp);
+            }
+        }
+
+
+
+        // 비교 sum
+        if(SumStimulation.get(0) > SumStimulation.get(1)) {
+            if(SumStimulation.get(1) > SumStimulation.get(2)){
+                output.set(2, true);
+                return output;
+            }
+            else if(SumStimulation.get(1) == SumStimulation.get(2)) {
+                output.set(1, true);
+                output.set(2, true);
+                return output;
+            }
+            else {
+                output.set(1, true);
+                return output;
 
             }
-            return this.AMRAP.get(save.get(rand.nextInt(save.size())));
+
+        }
+        else if(SumStimulation.get(0) == SumStimulation.get(1)) {
+            if(SumStimulation.get(1) > SumStimulation.get(2)){
+                output.set(2, true);
+                return output;
+            }
+            else if(SumStimulation.get(1) == SumStimulation.get(2)) {
+
+                output.set(0, true);
+                output.set(1, true);
+                output.set(2, true);
+
+                return output;
+            }
+            else {
+                output.set(0, true);
+                output.set(1, true);
+                return output;
+
+            }
+        }
+        else{
+            if(SumStimulation.get(0) > SumStimulation.get(2)){
+                output.set(2, true);
+                return output;
+            }
+            else if(SumStimulation.get(0) == SumStimulation.get(2)) {
+
+                output.set(0, true);
+                output.set(2, true);
+
+                return output;
+            }
+            else {
+                output.set(0, true);
+                return output;
+
+            }
+        }
+    }
+
+
+
+    public ArrayList<Integer> _stimulation(ArrayList<Boolean> stimulation){
+        ArrayList<Integer> output = new ArrayList<Integer>();
+        for(int i = 0; i < data.getArraySize(); i++) {
+            if(stimulation.get(data.getStimulation(i))) {
+                output.add(i);
+            }
+        }
+        return output;
+
+    }
+
+
+
+
+    public ArrayList<Integer> _stimulation(ArrayList<Boolean> stimulation,ArrayList<Integer> movementList){
+        ArrayList<Integer> output = new ArrayList<Integer>();
+        for(int i = 0; i < movementList.size(); i++) {
+            if(stimulation.get(data.getStimulation(movementList.get(i)))) {
+                output.add(movementList.get(i));
+            }
+        }
+        return output;
+    }
+
+    public ArrayList<Integer> _stimulationMain(ArrayList<Boolean> stimultaion, ArrayList<Integer> movementList,boolean sorted){
+        if(sorted) { // exercise area  적용된 movement list
+
+            ArrayList<Integer> output = new ArrayList<Integer>();
+            ArrayList<Integer> SubList_0 =_stimulationSub(0,movementList);
+            ArrayList<Integer> SubList_1 =_stimulationSub(1,movementList);
+            ArrayList<Integer> SubList_2 =_stimulationSub(2,movementList);
+            output.add(_MovementSelectUpper(SubList_0));
+            output.add(_MovementSelectUpper(SubList_1));
+            output.add(_MovementSelectUpper(SubList_2));
+            for(int i = output.size()-1; i >= 0 ; i--) {
+                if(output.get(i) == -1) {
+                    output.remove(i);
+                }
+            }
+            return output;
+
+        }
+
+        else { //  exercise area 적용 안되었을 때
+
+            ArrayList<Integer> output = new ArrayList<Integer>();
+            ArrayList<Integer> SubList_0 =_stimulationSub(0,movementList);
+            ArrayList<Integer> SubList_1 =_stimulationSub(1,movementList);
+            ArrayList<Integer> SubList_2 =_stimulationSub(2,movementList);
+            output.add(_MovementSelectRandom(SubList_0));
+            output.add(_MovementSelectRandom(SubList_1));
+            output.add(_MovementSelectRandom(SubList_2));
+
+            for(int i = output.size()-1; i >= 0 ; i--) {
+                if(output.get(i) == -1) {
+                    output.remove(i);
+                }
+            }
+            return output;
+        }
+    }
+
+
+    public ArrayList<Integer> _stimulationMain(ArrayList<Boolean> stimultaion){
+        ArrayList<Integer> output = new ArrayList<Integer>();
+        ArrayList<Integer> SubList_0 =_stimulationSub(0);
+        ArrayList<Integer> SubList_1 =_stimulationSub(1);
+        ArrayList<Integer> SubList_2 =_stimulationSub(2);
+        output.add(_MovementSelectRandom(SubList_0));
+        output.add(_MovementSelectRandom(SubList_1));
+        output.add(_MovementSelectRandom(SubList_2));
+
+        for(int i = output.size()-1; i >= 0 ; i--) {
+            if(output.get(i) == -1) {
+                output.remove(i);
+            }
+        }
+        return output;
+    }
+
+
+    public ArrayList<Integer> _stimulationSub(int stimulation){
+        ArrayList<Integer> output = new ArrayList<Integer>();
+        for(int i = 0; i < data.getArraySize(); i++) {
+            if(data.getStimulation(i)==stimulation) {
+                output.add(i);
+            }
+        }
+        return output;
+    }
+
+
+
+
+
+
+    public ArrayList<Integer> _stimulationSub(int stimulation, ArrayList<Integer> movementList){
+        ArrayList<Integer> output = new ArrayList<Integer>();
+        for(int i = 0; i < movementList.size(); i++) {
+            if(data.getStimulation(movementList.get(i))==stimulation) {
+                output.add(movementList.get(i));
+            }
+        }
+        return output;
+    }
+
+// stimulation end
+
+
+
+
+
+
+
+
+
+
+// 내부 function
+
+
+    public int _MovementSelectRandom(ArrayList<Integer> movementList) {
+        if(movementList.isEmpty()) {
+            return -1;
+
+        }
+        Random rand = new Random();
+        int output = rand.nextInt(movementList.size());
+        return movementList.get(output);
+    }
+
+
+
+
+    public int _MovementSelectUpper(ArrayList<Integer> movementList) {
+        if(movementList.isEmpty()) {
+            return -1;
+        }
+        return movementList.get(0);
+    }
+
+
+
+    public WOD getWod() {
+        return this.wod;
+    }
+
+
+
+
+
+    public boolean _ArrayincludeString(String string,ArrayList<String> list) {
+        if(list.size() == 0) {
+            return false;
+        }
+        for(int i = 0; i < list.size(); i++) {
+            if(list.get(i).equals(string)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String numberToString(int number) {
+        return Integer.toString(number);
+    }
+    public String numberToString(double number) {
+        return Double.toString(number);
+    }
+    public double StringToDouble(String string) {
+        return Double.parseDouble(string);
+    }
+    public int StringToInt(String string) {
+        return Integer.parseInt(string);
+    }
+
+
+
+
+}
+
+
+
+
+class WodType {
+    ArrayList<int[]> FORTIME = new ArrayList<int[]>();
+    ArrayList<int[]> AMRAP = new ArrayList<int[]>();
+
+    // FORTIME
+    // 형식 맨 앞 운동의 갯수 , 반복할 횟수
+    // 2 21 15 9  45
+    // -> 21 21 15 15 9 9 의 비율
+    // 1 -> 30
+    // 2 -> 15  * 2
+    // 3 -> 10  * 3
+
+
+    // 1 30    30
+    // 2 10 : 5
+    // 2 21 : 15 : 9
+    // 2 5 : 5 : 5
+    // 3 5 : 3 : 2
+    // 3 3 : 3 : 3
+
+    public WodType() {
+        // FORTIME
+        int[] input = {1,30};
+        this._addFORTIME(input);
+        input = new int[] {2,30,15};
+        this._addFORTIME(input);
+        input = new int[] {2,21,15,9};
+        this._addFORTIME(input);
+        input = new int[] {2,15,15,15};
+        this._addFORTIME(input);
+        input = new int[] {3,15,9,6};
+        this._addFORTIME(input);
+        input = new int[] {3,10,10,10};
+        this._addFORTIME(input);
+
+        //amrap
+        // first = movement kind , 2 ~ n-1 = movement_count , last = time(min)
+        input = new int[] {1 , 6, 10};
+        this._addAMRAP(input);
+        input = new int[] {2 , 3,3, 10};
+        this._addAMRAP(input);
+        input = new int[] {3 , 2,2,2, 10};
+        this._addAMRAP(input);
+
+
+
+
+
+    }
+
+
+    public int[] getType(String type, ArrayList<Integer> movement) {
+
+        if(type.equals("FORTIME")) {
+            return getFortime(movement.size());
+        }
+
+        if(type.equals("AMRAP")) {
+            return getAMRAP(movement.size());
         }
 
         return null;
 
     }
-    public void add_FORTIME(int[] input) {
+
+
+
+
+    public int[] getFortime(int sizeOfmovement) {
+        ArrayList<Integer> indexList = new ArrayList<Integer>();
+        Random rand = new Random();
+        for(int i = 0; i < this.FORTIME.size(); i++) {
+            if(FORTIME.get(i)[0] == sizeOfmovement) {
+                indexList.add(i);
+            }
+        }
+
+        return FORTIME.get(indexList.get(rand.nextInt(indexList.size())));
+    }
+
+    public int[] getAMRAP(int sizeOfmovement) {
+        ArrayList<Integer> indexList = new ArrayList<Integer>();
+        Random rand = new Random();
+        for(int i = 0; i < this.AMRAP.size(); i++) {
+            if(AMRAP.get(i)[0] == sizeOfmovement) {
+                indexList.add(i);
+            }
+        }
+
+        return AMRAP.get(indexList.get(rand.nextInt(indexList.size())));
+    }
+
+
+
+
+
+    public void _addFORTIME(int[] input) {
         this.FORTIME.add(input);
     }
 
-    public void add_AMRAP(int[] input) {
+    public void _addAMRAP(int[] input) {
         this.AMRAP.add(input);
     }
 
 
 
 
+
+
 }
 
 
 
+class Data_Movement {
+    private ArrayList<String> movement = new ArrayList<String>();
+    private ArrayList<String> equipment = new ArrayList<String>();
+    private ArrayList<int[]> exercise = new ArrayList<int[]>();
+    private ArrayList<Integer> stimulation = new ArrayList<Integer>(); // 0 = 체조 , 1 = 메타볼릭컨디셔닝 , 2 = 역도
+    private ArrayList<Double> score = new ArrayList<Double>();
+    private ArrayList<Double> weight = new ArrayList<Double>();
+    private ArrayList<Double> rep = new ArrayList<Double>();
+    private int ArraySize = movement.size();
 
 
+    public Data_Movement(){
 
+    }
 
+    public int getArraySize(){
+        setArraySize();
+        return this.ArraySize;
+    }
 
+    public int getArrayIndex(String movementName) {
+        setArraySize();
+        for(int i = 0; i < ArraySize; i++) {
+            if(movement.get(i).equals(movementName)) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-class Movement {
-    private String name; // Movement 이름
-    private String equipment; // equipment 이름
-    private int rep; // 반복 횟수
-    private double weight; // 무게
-    private double score; // rep*weight
-
-
-    public Movement() {} // 기본 생성자
-    public Movement(int index) {
-        Data_Movement data = new Data_Movement();
-        if(range(0,index,data.get_Data_length())){
-            this.name = data.get_movement(index);
-            this.equipment = data.get_equipment(index);
-            this.rep = data.get_rep(index);
-            this.weight = data.get_weight(index);
-            this.score = get_score();
+    public ArrayList<String> getMovement() {
+        return movement;
+    }
+    public ArrayList<String> getEquipment() {
+        return equipment;
+    }
+    public ArrayList<int[]> getExercise() {
+        return exercise;
+    }
+    public ArrayList<Integer> getStimulation() {
+        return stimulation;
+    }
+    public ArrayList<Double> getScore() {
+        return score;
+    }
+    public ArrayList<Double> getWeight() {
+        return weight;
+    }
+    public ArrayList<Double> getRep() {
+        return rep;
+    }
+    public String getMovement(int index) {
+        if(rangeArray(index, ArraySize)) {
+            return movement.get(index);
         }
         else {
-            this.name = "error / Read_movement  /out of range";
+            return null;
         }
-
     }
-
-
-
-    public Movement(String Name,String Equipment,int Rep,double Weight) {
-        this.name = Name;
-        this.equipment = Equipment;
-        this.rep = Rep;
-        this.weight = Weight;
-        set_score();
-    }
-
-
-    public void set_name(int index) {
-        Data_Movement data = new Data_Movement();
-        if(range(0,index,data.get_Data_length())) {
-            this.name = data.get_movement(index);
+    public String getEquipment(int index) {
+        if(rangeArray(index, ArraySize)) {
+            return equipment.get(index);
         }
-
-        // index가 movement의 내용을 넘었을 경우
-        else {}
-    }
-
-    public void set_equipment(int index) {
-        Data_Movement data = new Data_Movement();
-        if(range(0,index,data.get_Data_length())) {
-            this.equipment = data.get_equipment(index);
+        else {
+            return null;
         }
-
+    }
+    public int[] getExercise(int index) {
+        if(rangeArray(index, ArraySize)) {
+            return exercise.get(index);
+        }
+        else {
+            return null;
+        }
+    }
+    public int getStimulation(int index) {
+        if(rangeArray(index, ArraySize)) {
+            return stimulation.get(index);
+        }
+        else {
+            return -1;
+        }
+    }
+    public double getScore(int index) {
+        if(rangeArray(index, ArraySize)) {
+            return score.get(index);
+        }
+        else {
+            return -1;
+        }
+    }
+    public double getWeight(int index) {
+        if(rangeArray(index, ArraySize)) {
+            return weight.get(index);
+        }
+        else {
+            return -1;
+        }
+    }
+    public Double getRep(int index) {
+        if(rangeArray(index, ArraySize)) {
+            return rep.get(index);
+        }
+        else {
+            return -1.0;
+        }
     }
 
 
-    public void set_rep(int input) {
-        this.rep = input;
-        set_score();
-    }
-
-    public void set_weight(int input) {
-        this.weight = input;
-        set_score();
-
-    }
-
-    public void set_score() {
-
-        if(this.weight == 0)
-            this.score = rep;
-        else
-            this.score = this.rep*this.weight;
-    }
-
-
-    public String get_name() {
-        return this.name;
-
-    }
-    public String get_equipement() {
-        return this.equipment;
-    }
-
-    public int get_rep() {
-        return this.rep;
-
-    }
-    public double get_weight() {
-        return this.weight;
-
-    }
-    public double get_score() {
-        return this.score;
-
-    }
-
-
-
-    public boolean range(int Min, int input,int Max) {
-        if(input <= Max) {
-            if(input >= Min) {
-                return true;
+    public int getIndex(String input) {
+        for(int i = 0; i < this.getArraySize(); i++) {
+            if(input.equals(movement.get(i))) {
+                return i;
             }
-            else {
-                return false;
-            }
+
+        }
+        return -1;
+    }
+
+
+
+
+    public boolean rangeArray(int index,int max) {
+        if(index > max) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+    public boolean rangeArray(int index,int min,int max) {
+        if((index < max )&&(index >= min)) {
+            return true;
         }
         else {
             return false;
         }
     }
-}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-class Read_movement {
-    ArrayList<int[]> exercise_area = new ArrayList<int[]>();
-
-
-
-    String[] movement = {"air squat",
-            "pull up",
-            "push up",
-            "dips",
-            "handstand push up",
-            "rope climb",
-            "muscle up",
-            "handstand press",
-            "back extension",
-            "sit up",
-            "jump",
-            "runge",
-            "run",
-            "bicycle",
-            "rowing",
-            "jump rope",
-            "dead lift",
-            "clean",
-            "bench press",
-            "snatch",
-            "clean and jerk",
-            "medicine ball",
-            "kettlebell swing",
-            "Bench dips",
-            "thruster"};
-
-    String[] equipment = {
-            "Body",
-            "PullUpBar",
-            "Body",
-            "PullUpBar",
-            "Body",
-            "Body",
-            "PullUpBar",
-            "Dumbbell",
-            "Body",
-            "Body",
-            "Body",
-            "Body",
-            "Body",
-            "Body",
-            "Body",
-            "Jumprope",
-            "Barbell",
-            "Barbell",
-            "Barbell",
-            "Barbell",
-            "Barbell",
-            "WallBall",
-            "kettlebell",
-            "Body",
-            "Barbell"};
-
-    int[][] exercise_area_double = {
-            {0,0,0,0,0,0,3,10},
-            {5,3,0,10,0,5,0,0},
-            {5,7,5,10,0,0,0,0},
-            {5,7,5,10,0,0,0,0},
-            {10,10,10,0,0,0,0,0},
-            {10,0,0,10,0,5,5,0},
-            {10,10,7,10,0,5,0,0},
-            {10,10,10,0,0,0,0,0},
-            {0,0,0,0,0,3,10,0},
-            {0,0,0,0,0,0,3,10},
-            {0,0,0,0,0,0,10,10},
-            {0,0,0,0,0,0,10,10},
-            {0,0,0,0,0,0,10,10},
-            {0,0,0,0,0,0,10,10},
-            {10,10,0,10,0,10,10,10},
-            {0,0,0,0,0,0,10,10},
-            {10,0,0,10,0,10,10,10},
-            {10,10,10,5,5,10,10,5},
-            {10,10,10,0,10,0,7,0},
-            {10,3,10,5,0,10,10,10},
-            {10,10,10,10,0,10,10,10},
-            {10,10,10,10,10,10,10,10},
-            {5,7,10,3,3,7,10,3},
-            {5,7,5,10,0,0,0,0},
-            {10,10,10,10,5,10,10,10},
-
-    };
-
-    int[] stimulate = {0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            1,
-            1,
-            1,
-            1,
-            2,
-            2,
-            2,
-            2,
-            2,
-            2,
-            2,
-            1,
-            2
-
-
-    };
-
-    double[] score = {
-            0,
-            2,
-            1,
-            2,
-            2,
-            2,
-            3,
-            2,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            2,
-            0,
-            2,
-            3,
-            3,
-            3,
-            3,
-            1,
-            2,
-            0,
-            3
-
-    };
-
-    double[] weight = {
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            100,
-            60,
-            60,
-            60,
-            55,
-            10,
-            30,
-            0,
-            40,
-            0,
-
-
-    };
-
-    int[] rep = {
-            100,
-            20,
-            100,
-            20,
-            20,
-            3,
-            10,
-            50,
-            25,
-            100,
-            100,
-            100,
-            800,
-            1500,
-            650,
-            300,
-            10,
-            20,
-            10,
-            20,
-            10,
-            50,
-            20,
-            20,
-            20,
-            180
-
-    };
-
-    Read_movement(){
-        for(int i = 0; i < movement.length; i++){
-            this.exercise_area.add(this.exercise_area_double[i]);
-        }
-
+    public void setArraySize() {
+        ArraySize = movement.size();
     }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-class Wod_Algorithm {
-
-    // 두개로 분류 해보자 -> equipment 부분
-    // equipment 를 분류해서 movement 추출하기?
-
-    //userinfo에서 데이터 받아서 분류
-    public ArrayList<Movement> equipment(UserInfo info) {
-        ArrayList<Movement> output = new ArrayList<Movement>();
-        if(info.isBarbell()) {
-            output.addAll(equipment("Barbell"));
-        }
-        if(info.isBody()) {
-            output.addAll(equipment("Body"));
-        }
-        if(info.isBox()) {
-            output.addAll(equipment("Box"));
-
-        }
-        if(info.isDumbbell()) {
-            output.addAll(equipment("Dumbell"));
-
-        }
-        if(info.isJumprope()) {
-            output.addAll(equipment("Jumprope"));
-
-        }
-        if(info.isKettlebell()) {
-            output.addAll(equipment("Kettlebell"));
-
-        }
-        if(info.isPullUpBar()) {
-            output.addAll(equipment("isPullUpBar"));
-
-        }
-        if(info.isWallBall()) {
-            output.addAll(equipment("isWallBall"));
-        }
-
-
-
-
-        return output;
-
-    }
-
-
-    //혹시 나중에 2차 검열 필요할 때 사용할 것.
-    public ArrayList<Movement> equipment(UserInfo info,ArrayList<Movement> movement){
-        ArrayList<Movement> output = new ArrayList<Movement>();
-        if(info.isBarbell()) {
-            output.addAll(equipment("Barbell",movement));
-        }
-        if(info.isBody()) {
-            output.addAll(equipment("Body",movement));
-        }
-        if(info.isBox()) {
-            output.addAll(equipment("Box",movement));
-
-        }
-        if(info.isDumbbell()) {
-            output.addAll(equipment("Dumbell",movement));
-
-        }
-        if(info.isJumprope()) {
-            output.addAll(equipment("Jumprope",movement));
-
-        }
-        if(info.isKettlebell()) {
-            output.addAll(equipment("Kettlebell",movement));
-
-        }
-        if(info.isPullUpBar()) {
-            output.addAll(equipment("isPullUpBar",movement));
-
-        }
-        if(info.isWallBall()) {
-            output.addAll(equipment("isWallBall",movement));
-        }
-        return output;
-    }
-
-
-
-
-
-    // equipement 이름으로 분류
-    public ArrayList<Movement> equipment(String equipment){
-        Data_Movement data = new Data_Movement();
-        ArrayList<Movement> output = new ArrayList<Movement>();
-        for(int i = 0; i <data.get_Data_length(); i++ ) {  // 읽은 데이터 전부를 인덱싱
-            if(equipment.equals(data.get_equipment(i))) {  // 읽은 movement의 equipement와 같다면
-                Movement movement = new Movement(i);   //movement를 생성해서
-                output.add(movement);  // output 에 추가한다.
-            }
-        }
-        return output;
-    }
-
-
-
-    public ArrayList<Movement> equipment(String equipment,ArrayList<Movement> movements ){
-        ArrayList<Movement> output = new ArrayList<Movement>();
-        for(int i = 0; i <movements.size(); i++ ) {  // 이번엔 읽은 데이터를 인덱싱
-            if(equipment.equals(movements.get(i).get_equipement())) {  // 읽은 movement의 equipement와 같다면
-                Movement movement = new Movement();
-                movement = movements.get(i); //movement를 생성해서
-                output.add(movement);  // output 에 추가한다.
-            }
-        }
-        return output;
-    }
-
-
-
-
-
-    // 근육 부위 exercise_area ***
-    public void exercise_area() {
-
-    }
-
-
-
-
-
-
-    // 운동 달력에 대한 부분  stimulation 0 역도 / 1 메타볼릭 / 2 체조
-    public ArrayList<String> stimulation() {
-        ArrayList<String> output = new ArrayList<String>();
-        for(int i = 0; i < 3; i++) {
-
-            if(stimulation(i) != null) {
-                output.add(stimulation(i));
-            }
-
-        }
-
-        return output;
-    }
-
-
-    public ArrayList<String> stimulation(ArrayList<Movement> movement) {
-        ArrayList<String> output = new ArrayList<String>();
-        for(int i = 0; i < 3; i++) {
-            if(stimulation(i,movement) != null) {
-                output.add(stimulation(i,movement));
-            }
-        }
-
-        return output;
-    }
-
-
-    public String stimulation(int stimulation,ArrayList<Movement> movement) {
-        Data_Movement data = new Data_Movement();
-        ArrayList<String> output_list = new ArrayList<String>();
-        for(int i = 0; i < data.get_Data_length(); i++) {
-            if(stimulation == data.get_stimulation(i)) {
-                output_list.add(data.get_movement(i));
-            }
-        }
-
-        Random random = new Random();
-        String output =output_list.get(random.nextInt(output_list.size()));
-        return output;
-
-
-
-    }
-
-
-
-    public String stimulation(int stimulation) {    //해당하는 movement 중에 하나 추천
-        Data_Movement data = new Data_Movement();
-        ArrayList<String> output_list = new ArrayList<String>();
-        for(int i = 0; i < data.get_Data_length(); i++) {
-            if(stimulation == data.get_stimulation(i)) {
-                output_list.add(data.get_movement(i));
-            }
-        }
-
-        Random random = new Random();
-        String output =output_list.get(random.nextInt(output_list.size()));
-        return output;
-    }
-
-    public void stimulation(boolean[] input) {
-
-
-    }
-
-
-
-
-
-
-
 
 }
-
-
-
-
-

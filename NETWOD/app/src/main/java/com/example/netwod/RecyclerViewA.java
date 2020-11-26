@@ -67,8 +67,7 @@ public class RecyclerViewA extends RecyclerView.Adapter<RecyclerViewA.ViewHolder
     public void onBindViewHolder(RecyclerViewA.ViewHolder holder, final int position) {
         //holder.textView.setText(title[position]);
 
-        System.out.println("recyclerView에서 position:" + position);
-        //holder.textView2.setText(type[position]);
+
         
         holder.listdeletebutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,7 +142,7 @@ public class RecyclerViewA extends RecyclerView.Adapter<RecyclerViewA.ViewHolder
 
                    clickedlist.set(position, 0);
                }
-System.out.println(position+"번째클릭됨");
+
 
 
 
@@ -157,7 +156,7 @@ System.out.println(position+"번째클릭됨");
 
     @Override
     public int getItemCount() {
-        System.out.println("유저와드리스트사이즈:"+activity.excelscrapper.userinfo.getUserwodlist().size());
+
         return activity.excelscrapper.userinfo.getUserwodlist().size();
 
         //return 3;

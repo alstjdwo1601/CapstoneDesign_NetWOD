@@ -75,7 +75,7 @@ public class RecyclerViewRecord extends RecyclerView.Adapter<RecyclerViewRecord.
     public void onBindViewHolder(RecyclerViewRecord.ViewHolder holder, final int position) {
         //holder.textView.setText(title[position]);
 
-        System.out.println("recyclerView에서 position:" + position);
+
         //holder.textView2.setText(type[position]);
         for(int i=0;i<activity.excelscrapper.userinfo.getWodrecord().wodlist.size();i++){
             clickedlist.add(0);
@@ -132,8 +132,7 @@ public class RecyclerViewRecord extends RecyclerView.Adapter<RecyclerViewRecord.
         int recordsize =activity.excelscrapper.userinfo.getWodrecord().recordlist.get(position).length();
         int namesize = activity.excelscrapper.userinfo.getWodrecord().wodlist.get(position).getWODname().length();
         int scoresize = activity.excelscrapper.userinfo.getWodrecord().scorelist.get(position).length();
-        //System.out.println("리코드와드이름:"+activity.excelscrapper.userinfo.getWodrecord().wodlist.get(position).getWODname());
-        String scorestring="";
+       String scorestring="";
         String namestring="";
         String recordstring="";
         for(int i=0; i<namesize;i++){
@@ -185,7 +184,7 @@ public class RecyclerViewRecord extends RecyclerView.Adapter<RecyclerViewRecord.
 
                     clickedlist.set(position, 0);
                 }
-                System.out.println(position+"번째클릭됨");
+
 
 
 
@@ -199,7 +198,7 @@ public class RecyclerViewRecord extends RecyclerView.Adapter<RecyclerViewRecord.
 
     @Override
     public int getItemCount() {
-        System.out.println("유저와드리스트사이즈:"+activity.excelscrapper.userinfo.getUserwodlist().size());
+
         return activity.excelscrapper.userinfo.getWodrecord().wodlist.size();
 
         //return 3;

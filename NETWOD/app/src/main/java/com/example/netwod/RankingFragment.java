@@ -97,7 +97,7 @@ public class RankingFragment extends Fragment {
         activity.rankusernamelist.clear();
         activity.rankwoddatelist.clear();
         activity.ranklist.clear();
-        System.out.println("destroyview");
+
         super.onDestroyView();
     }
 
@@ -134,7 +134,6 @@ public class RankingFragment extends Fragment {
 
                                 //WOD wod=(WOD)document.getData().get("WOD");
                                 activity.rankwodrecord.wodlist.add(wod);
-                                System.out.println("  activity.rankwodrecord.wodlist.add(wod);:"+activity.rankwodrecord.wodlist.size());
 
                                 activity.rankwodrecord.scorelist.add(document.getString("SCORE"));
                                 activity.rankwodrecord.recordlist.add(document.getString("RECORD"));

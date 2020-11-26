@@ -98,20 +98,15 @@ public class WodlistFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                System.out.println("현재인덱스:"+activity.excelscrapper.userinfo.getCurrentwodindex());
-
-                System.out.println("현재인덱스 와드타입:"+activity.excelscrapper.userinfo.getUserwodlist().get(activity.excelscrapper.userinfo.getCurrentwodindex()).getWODtype());
-                System.out.println("현재인덱스 와드사이즈:"+activity.excelscrapper.userinfo.getUserwodlist().get(activity.excelscrapper.userinfo.getCurrentwodindex()).getWODtype().length());
-
 
                 if(activity.excelscrapper.userinfo.getUserwodlist().get(activity.excelscrapper.userinfo.getCurrentwodindex()).getWODtype().equals("FORTIME")) {
-                    System.out.println("==FORTIME");
+
 
                     activity.onFragmentChange(10);
                 }
                 else {
                     activity.onFragmentChange(11);
-                    System.out.println("=!FORTIME");
+                 
                 }
             }
         });
@@ -140,9 +135,7 @@ public class WodlistFragment extends Fragment {
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
                         Map<String, Object> user = new HashMap<>();
                         user.put("WOD", activity.excelscrapper.userinfo.userwodlist.get(activity.excelscrapper.userinfo.getCurrentwodindex()));
-                        System.out.println("디비추가시인덱스:"+activity.excelscrapper.userinfo.getCurrentwodindex());
-                        System.out.println("디비추가시와드이름:"+activity.excelscrapper.userinfo.userwodlist.get(activity.excelscrapper.userinfo.getCurrentwodindex()).getWODname());
-                        user.put("Username",activity.excelscrapper.userinfo.getUserName());
+                       user.put("Username",activity.excelscrapper.userinfo.getUserName());
                         user.put("Description",value);
                         db.collection("WODdashboard").document()
                                 .set(user)

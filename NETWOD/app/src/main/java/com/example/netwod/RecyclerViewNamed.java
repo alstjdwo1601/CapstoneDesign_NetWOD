@@ -152,7 +152,7 @@ public class RecyclerViewNamed extends RecyclerView.Adapter<RecyclerViewNamed.Vi
 
                     clickedlist.set(position, 0);
                 }
-                System.out.println(position+"번째클릭됨");
+
 
 
 
@@ -166,7 +166,7 @@ public class RecyclerViewNamed extends RecyclerView.Adapter<RecyclerViewNamed.Vi
 
     @Override
     public int getItemCount() {
-        System.out.println("유저와드리스트사이즈:"+activity.namedwodlist.size());
+
         return activity.namedwodlist.size();
 
         //return 3;

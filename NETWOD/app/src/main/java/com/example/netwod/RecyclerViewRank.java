@@ -88,7 +88,7 @@ public class RecyclerViewRank extends RecyclerView.Adapter<RecyclerViewRank.View
     public void onBindViewHolder(RecyclerViewRank.ViewHolder holder, final int position) {
         //holder.textView.setText(title[position]);
 
-        System.out.println("recyclerView에서 position:" + position);
+
 
 
         //int recordsize =activity.rankwodrecordarraylist.get(position).recordlist.length();
@@ -104,7 +104,7 @@ public class RecyclerViewRank extends RecyclerView.Adapter<RecyclerViewRank.View
 
 
 
-        //System.out.println("리코드와드이름:"+activity.excelscrapper.userinfo.getWodrecord().wodlist.get(position).getWODname());
+
         String usernamestring="";
         String rankdatestring="";
         String wodtypestring="";
@@ -169,7 +169,6 @@ public class RecyclerViewRank extends RecyclerView.Adapter<RecyclerViewRank.View
         holder.rankwodrecordtextview.setText(recordstring);
         holder.rankwodscoretextview.setText(scorestring);
         holder.rankwodranktextview.setText(rankstring);
-        System.out.println("와드이름스트링:"+namestring);
 
 
 
@@ -182,7 +181,7 @@ public class RecyclerViewRank extends RecyclerView.Adapter<RecyclerViewRank.View
 
     @Override
     public int getItemCount() {
-        System.out.println("랭크:"+activity.rankwodrecord.wodlist.size());
+
         return activity.rankwodrecord.wodlist.size();
 
         //return 3;

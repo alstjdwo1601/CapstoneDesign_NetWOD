@@ -127,7 +127,10 @@ public class CreateWODFragment extends Fragment {
                 if (wodtype.equals("FORTIME")) {
 
 
-                    activity.tmpwod=new WOD(activity.excelscrapper.userinfo,"FORTIME");
+                    //activity.tmpwod=new WOD(activity.excelscrapper.userinfo,"FORTIME");
+                    WodManager wodManager= new WodManager(activity.datamovement,activity.excelscrapper.userinfo);
+                   //  wodManager.make("FORTIME");
+                    activity.tmpwod= wodManager.make("FORTIME");
                     String createdwodname=createwodname.getText().toString();
                     activity.tmpwod.setWODname(createdwodname);
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, activity.createwodselectionFragment).commit();
@@ -135,7 +138,9 @@ public class CreateWODFragment extends Fragment {
 
                 } else {
 
-                    activity.tmpwod=new WOD(activity.excelscrapper.userinfo,"AMRAP");
+                    WodManager wodManager= new WodManager(activity.datamovement,activity.excelscrapper.userinfo);
+                    //  wodManager.make("FORTIME");
+                    activity.tmpwod= wodManager.make("AMRAP");
                     String createdwodname=createwodname.getText().toString();
                     activity.tmpwod.setWODname(createdwodname);
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, activity.createwodselectionFragment).commit();

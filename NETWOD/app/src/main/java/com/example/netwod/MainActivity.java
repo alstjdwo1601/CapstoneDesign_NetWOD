@@ -49,6 +49,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import jxl.Cell;
 import jxl.CellType;
 import jxl.Sheet;
 import jxl.Workbook;
@@ -102,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
     public ArrayList<String> rankusernamelist=new ArrayList<String>();
     public ArrayList<String> ranklist=new ArrayList<String>();
     LinearLayout selectwodlayout;
+    Data_Movement datamovement=new Data_Movement();
 
     /*
     1~4 하단 네비게이션 메뉴 화면
@@ -167,11 +169,11 @@ public class MainActivity extends AppCompatActivity {
             case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STROAGE: {
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     Toast.makeText(this, "권한이 허가되어 있습니다.", Toast.LENGTH_LONG).show();
-                    System.out.println("권한허가.");
+
                 }
                 else{
                     Toast.makeText(this, "아직 승인받지 않았습니다.", Toast.LENGTH_LONG).show();
-                    System.out.println("아직승인x");
+
                 }
                 return;
             }
@@ -190,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "외부 저장소 접근을 위해 저장소 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STROAGE);
 
-                System.out.println("거부한경우외부 저장소 접근을 위해 저장소 접근 권한이 필요합니다.");
+
             }
             //최초 요청
             else {
@@ -198,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
 
                 Toast.makeText(this, "외부 저장소 접근을 위해 저장소 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
-                System.out.println("최초요청외부 저장소 접근을 위해 저장소 접근 권한이 필요합니다.");
+
             }
         }
         int permissionwritecheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -210,14 +212,14 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "외부 저장소 쓰기을 위해 저장소 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
 
-                System.out.println("거부한경우외부 저장소 쓰기을 위해 저장소 접근 권한이 필요합니다.");
+
             }
             //최초 요청
             else {
                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
 
                 Toast.makeText(this, "외부 저장소 접근을 위해 저장소 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
-                System.out.println("최초요청외부 저장소 읽기을 위해 저장소 접근 권한이 필요합니다.");
+
             }
         }
 
@@ -248,6 +250,12 @@ public class MainActivity extends AppCompatActivity {
         //userwodlist.xls 읽기(나만의 와드 리스트들)
 
         excelscrapper.readExcel2();
+
+        excelscrapper.readExcel4(datamovement);
+
+
+
+
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
 
@@ -499,7 +507,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if(this.userinfo.isDumbbell()) { dumbbelllabel.setString("Y"); }
                 else {dumbbelllabel.setString("N");}
-                System.out.println("수정된 덤벨:" + this.userinfo.isDumbbell());
+
             }
 
 
@@ -528,9 +536,9 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 is = new FileInputStream(file);
-                System.out.println("editUserRecord에서 인풋스트림 생성 성공");
+
             } catch (FileNotFoundException e) {
-                System.out.println("editUserRecord에서 인풋스트림 생성 불가");
+
                 e.printStackTrace();
             }
 
@@ -558,7 +566,7 @@ public class MainActivity extends AppCompatActivity {
             if (scorecell.getType() == CellType.LABEL) {
                 Label scorelabel = (Label) scorecell;
                 scorelabel.setString(this.userinfo.getAvg_score());
-                System.out.println("수정된 스코어:" + this.userinfo.getAvg_score());
+
 
             }
 
@@ -568,7 +576,7 @@ public class MainActivity extends AppCompatActivity {
             if (timecell.getType() == CellType.LABEL) {
                 Label timelabel = (Label) timecell;
                 timelabel.setString(this.userinfo.getAvg_time());
-                System.out.println("수정된 시간:" + this.userinfo.getAvg_time());
+
 
             }
 
@@ -578,7 +586,7 @@ public class MainActivity extends AppCompatActivity {
             if (wodlevelcell.getType() == CellType.LABEL) {
                 Label wodlevellabel = (Label) wodlevelcell;
                 wodlevellabel.setString(this.userinfo.getAvg_WODlevel());
-                System.out.println("수정된 와드레벨:" + this.userinfo.getAvg_WODlevel());
+
 
             }
 
@@ -609,9 +617,9 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 is = new FileInputStream(file);
-                System.out.println("editUserWodList에서 인풋스트림 생성 성공");
+
             } catch (FileNotFoundException e) {
-                System.out.println("editUserWodList에서 인풋스트림 생성 불가");
+
                 e.printStackTrace();
             }
 
@@ -651,7 +659,7 @@ public class MainActivity extends AppCompatActivity {
                     if (wodnamecell.getType() == CellType.LABEL) {
                         Label wodnamelabel = (Label) wodnamecell;
                         wodnamelabel.setString(wod.getWODname());
-                        System.out.println("수정된 와드네임:" + wod.getWODname());
+
 
                     }
 
@@ -690,7 +698,7 @@ public class MainActivity extends AppCompatActivity {
                         if (equipmentcell.getType() == CellType.LABEL) {
                             Label equipmentlabel = (Label) equipmentcell;
                             equipmentlabel.setString(wod.getEquipment().get(wodrow));
-                            System.out.println("수정된 장비:" + wod.getEquipment().get(wodrow));
+
 
                         }
 
@@ -700,7 +708,7 @@ public class MainActivity extends AppCompatActivity {
                         if (movementnumcell.getType() == CellType.LABEL) {
                             Label movementnumlabel = (Label) movementnumcell;
                             movementnumlabel.setString(wod.getMovementnum().get(wodrow));
-                            System.out.println("수정된 수행횟수:" + wod.getMovementnum().get(wodrow));
+
 
                         }
 
@@ -710,7 +718,7 @@ public class MainActivity extends AppCompatActivity {
                         if (weightlistcell.getType() == CellType.LABEL) {
                             Label weightlistlabel = (Label) weightlistcell;
                             weightlistlabel.setString(wod.getWeightlist().get(wodrow));
-                            System.out.println("수정된 장비 무게:" + wod.getWeightlist().get(wodrow));
+
 
                         }
 
@@ -763,9 +771,9 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 is = new FileInputStream(file);
-                System.out.println("netwodtemplate에서 인풋스트림 생성 성공");
+
             } catch (FileNotFoundException e) {
-                System.out.println("netwodtemplate에서 인풋스트림 생성 불가");
+
                 e.printStackTrace();
             }
 
@@ -777,7 +785,7 @@ public class MainActivity extends AppCompatActivity {
                 workbook = Workbook.getWorkbook(is);
 
                 if(workbook==null){
-                    System.out.println("워크북이 NULL");
+
                 }
 
                 // TODO : use is(InputStream).
@@ -785,7 +793,6 @@ public class MainActivity extends AppCompatActivity {
 
                 //netwodtemplate.xls 읽기
                 if(workbook != null){
-                    System.out.println("워크북이 있다");
                     sheet = workbook.getSheet(1);
 
                     if(sheet != null) {
@@ -817,7 +824,7 @@ public class MainActivity extends AppCompatActivity {
                         if(barbell.equals("Y")){ this.userinfo.setBarbell(true); }
                         else{ this.userinfo.setBarbell(false); }
 
-                        System.out.println(userinfo.isBarbell());
+
 
                         if(body.equals("Y")){ this.userinfo.setBody(true); }
                         else{ this.userinfo.setBody(false); }
@@ -897,7 +904,7 @@ public class MainActivity extends AppCompatActivity {
                             temp_score += Float.parseFloat(sheet.getCell(10,nRowStartIndex).getContents());
 
                             while(sheet.getCell(4, wodrow).getContents()!=""){
-                                //System.out.println("NULL인가"+sheet.getCell(2, nRowStartIndex).getContents() );
+
                                 wod.getMovement().add(sheet.getCell(4, wodrow).getContents());
                                 wod.getEquipment().add(sheet.getCell(5, wodrow).getContents());
                                 wod.getMovementnum().add(sheet.getCell(6, wodrow).getContents());
@@ -1030,6 +1037,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
             catch (Exception e) {
+
                 e.printStackTrace();
             }
         }
@@ -1111,6 +1119,77 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+        public void readExcel4(Data_Movement data) {
+            //sdCardPath+"/Download/wodlist.xls"
+            file = new File(sdCardPath+"/Download/movement_data.xls" );
+            try {
+                is = new FileInputStream(file);
+
+            } catch (FileNotFoundException e) {
+
+                e.printStackTrace();
+            }
+
+            //file=new File(sdCardPath+"/Download/netwodtemplate.xls" );
+            try{
+                Workbook workbook = null;
+                Sheet sheet;
+                workbook = Workbook.getWorkbook(is);
+
+
+
+                //Workbook wb = Workbook.getWorkbook(new File(sdCardPath+"/Download/netwodtemplate.xls"));  //test 용
+                Sheet s = workbook.getSheet(0);
+                int i = 5;
+                while(true){
+                    try{
+                        Cell cmovement= s.getCell(0,i);
+                        Cell cequipment = s.getCell(1, i);
+                        //Cell cexercise_area_double = s.getCell(2, i);
+                        Cell cstimulate = s.getCell(3, i);
+                        Cell cscore = s.getCell(4, i);
+                        Cell crep = s.getCell(5, i);
+                        Cell cweight = s.getCell(6, i);
+				/*	Cell cexercise[] = {s.getCell(7,i),
+							s.getCell(8,i),
+							s.getCell(9,i),
+							s.getCell(10,i),
+							s.getCell(11,i),
+							s.getCell(12,i),
+							s.getCell(13,i),
+							s.getCell(14,i),};*/
+                        int[] exercise = new int[8];
+                        for(int count = 0; count < 8; count++ ) {
+                            Cell cexercise = s.getCell(7+count,i);
+                            String S = cexercise.getContents();
+                            exercise[count] = Integer.parseInt(S);
+
+
+                        }
+
+                        data.getMovement().add(cmovement.getContents());
+                        data.getEquipment().add(cequipment.getContents());
+                        data.getExercise().add(exercise);
+                        data.getStimulation().add(Integer.parseInt(cstimulate.getContents()));
+                        data.getScore().add(Double.parseDouble(cscore.getContents()));
+                        data.getRep().add(Double.parseDouble(crep.getContents()));
+                        data.getWeight().add(Double.parseDouble(cweight.getContents()));
+
+                        i++;
+
+                    } catch(Exception e){
+                        break;
+                    }
+                }
+
+
+                workbook.close();
+            }catch(Exception e){
+
+                System.out.println("Err : " + e.getMessage());
+            }
+        }
+
     }
 }
 

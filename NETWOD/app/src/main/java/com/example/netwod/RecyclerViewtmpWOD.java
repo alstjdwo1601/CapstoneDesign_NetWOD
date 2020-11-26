@@ -74,8 +74,11 @@ public class RecyclerViewtmpWOD extends RecyclerView.Adapter<RecyclerViewtmpWOD.
             public void onClick(View v) {
                 String wodtype=activity.tmpwod.getWODtype();
                 String wodname=activity.tmpwod.getWODname();
-                //System.out.println("새로고침 눌렀을때 와드타입:"+wodtype);
-              activity.tmpwod=new WOD(activity.excelscrapper.userinfo,wodtype);
+
+                WodManager wodManager= new WodManager(activity.datamovement,activity.excelscrapper.userinfo);
+                //  wodManager.make("FORTIME");
+                activity.tmpwod= wodManager.make(wodtype);
+
               activity.tmpwod.setWODname(wodname);
 
                 notifyDataSetChanged();

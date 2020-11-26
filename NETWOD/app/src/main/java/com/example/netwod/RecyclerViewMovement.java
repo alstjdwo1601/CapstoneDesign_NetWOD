@@ -92,10 +92,10 @@ public class RecyclerViewMovement extends RecyclerView.Adapter<RecyclerViewMovem
                 String weightstring=weight.getText().toString();
                 weightarraylist.add(weightstring);
 
-                //System.out.println("데이터 세트 바뀜");
+
                 notifyDataSetChanged();
 
-                //System.out.println("데이터 세트 바뀜");
+
             }
         });
         holder.generatewodaddbutton.setOnClickListener(new View.OnClickListener() {
@@ -141,7 +141,7 @@ public class RecyclerViewMovement extends RecyclerView.Adapter<RecyclerViewMovem
 
     @Override
     public int getItemCount() {
-System.out.println("여기는?");
+
        return movementarraylist.size();
 
     }

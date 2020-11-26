@@ -156,26 +156,6 @@ public class FortimewodgenerateFragment extends Fragment {
 
 
 
-        //리사이클뷰여기까지
-
-/*
-        addmovementbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                System.out.println("movement추가 버튼 눌림");
-                String movementstring=spinner2.getSelectedItem().toString();
-                String weightstring=fortimerepetition.getText().toString();
-                String repetitionstring=fortimerepetition.getText().toString();
-                //recyclerView.getAdapter().
-                //recyclerView.getAdapter().notifyDataSetChanged();
-               //recyclerView.getAdapter().notifyDataSetChanged();
-
-            }
-        });
-
-*/
 
 
 

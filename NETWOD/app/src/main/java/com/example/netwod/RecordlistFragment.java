@@ -87,13 +87,13 @@ public class RecordlistFragment extends Fragment {
                 //여기에 버튼 선택시
 
                 if(activity.excelscrapper.userinfo.getUserwodlist().get(activity.excelscrapper.userinfo.getCurrentwodindex()).getWODtype().equals("FORTIME")) {
-                    System.out.println("==FORTIME");
+
 
                     activity.onFragmentChange(10);
                 }
                 else {
                     activity.onFragmentChange(11);
-                    System.out.println("=!FORTIME");
+
                 }
             }
         });

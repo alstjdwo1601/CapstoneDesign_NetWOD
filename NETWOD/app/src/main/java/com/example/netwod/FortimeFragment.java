@@ -145,7 +145,7 @@ public class FortimeFragment extends Fragment {
                 activity.excelscrapper.userinfo.getWodrecord().wodlist.add(activity.tmpwod);
                 activity.excelscrapper.userinfo.getWodrecord().recordlist.add(result);
                 activity.excelscrapper.userinfo.getWodrecord().scorelist.add("TE");
-                System.out.println(result);
+
             }
         });
 
@@ -157,7 +157,7 @@ public class FortimeFragment extends Fragment {
                 switch (cur_Status) {
                     case Init:
                         myBaseTime = SystemClock.elapsedRealtime();
-                        System.out.println(myBaseTime);
+
                         //myTimer이라는 핸들러를 빈 메세지를 보내서 호출
                         myTimer.sendEmptyMessage(0);
                         fortimestartbutton.setText("멈춤"); //버튼의 문자"시작"을 "멈춤"으로 변경
