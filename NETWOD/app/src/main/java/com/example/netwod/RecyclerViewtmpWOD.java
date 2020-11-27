@@ -35,11 +35,12 @@ public class RecyclerViewtmpWOD extends RecyclerView.Adapter<RecyclerViewtmpWOD.
         public TextView textView2;
         public ImageView imageView;
         public TextView textView3;
+        public TextView leveltextview;
         public Button refreshbutton;
         public Button addbutton;
         public ViewHolder(View view) {
             super(view);
-
+            this.leveltextview=view.findViewById(R.id.wodleveltextview);
             this.textView = view.findViewById(R.id.textView);
             this.textView2 = view.findViewById(R.id.textView2);
             this.textView3 = view.findViewById(R.id.textview3);
@@ -104,6 +105,7 @@ public class RecyclerViewtmpWOD extends RecyclerView.Adapter<RecyclerViewtmpWOD.
         String movementstring="";
         String titlestring="";
         String typestring="";
+        String levelstring="";
         for(int i=0; i<titlesize;i++){
             titlestring=titlestring+"\n"+activity.tmpwod.getWODname().charAt(i);
         }
@@ -120,6 +122,8 @@ public class RecyclerViewtmpWOD extends RecyclerView.Adapter<RecyclerViewtmpWOD.
 
             movementstring=movementstring+" "+activity.tmpwod.getMovementnum().get(i)+"times/meters";
         }
+        levelstring=activity.tmpwod.getWODlevel();
+        holder.leveltextview.setText(levelstring);
         holder.textView.setText(titlestring);
         holder.textView2.setText(typestring);
         holder.textView3.setText(movementstring);

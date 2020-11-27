@@ -329,12 +329,14 @@ class WodManager {
     ArrayList<String> err = new ArrayList<String>();
     Data_Movement data;
     UserInfo info;
+    WodAlgorithm algorithm;
     public WodManager() {
 
     }
 
 
     public WodManager(Data_Movement _data,UserInfo _info) {
+        algorithm=new WodAlgorithm(_data,_info);
         data=_data;
         info=_info;
     }
@@ -390,37 +392,37 @@ class WodManager {
 
 
     public WOD make(WOD wod) {
-        WodAlgorithm algorithm = new WodAlgorithm(data,info);
+
         algorithm._makeWod("FORTIME", 0);
         return algorithm.getWod();
     }
 
     public WOD make(String type) {
-        WodAlgorithm algorithm = new WodAlgorithm(data,info);
+
         algorithm._makeWod( type  ,2 );
         return algorithm.getWod();
     }
 
     public WOD make(String type,int level) {
-        WodAlgorithm algorithm = new WodAlgorithm(data,info);
+
         algorithm._makeWod( type , level );
         return algorithm.getWod();
     }
 
 
     public WOD make() {
-        WodAlgorithm algorithm = new WodAlgorithm(data,info);
+
         algorithm._makeWod("FORTIME", 0);
         return algorithm.getWod();
     }
 
     public int time(WOD wod) {
-        WodAlgorithm algorithm = new WodAlgorithm(data,info);
+
         return algorithm._getTime(wod);
     }
 
     public int AMRAPtime(WOD wod) {
-        WodAlgorithm algorithm = new WodAlgorithm(data,info);
+
         return 5*algorithm._getTime(wod);
     }
 
@@ -431,12 +433,12 @@ class WodManager {
 	*/
 
     public int score(WOD wod,int time) {
-        WodAlgorithm algorithm = new WodAlgorithm(data,info);
+
         return (int)algorithm._Score(wod, time);
     }
 
     public int level(WOD wod) {
-        WodAlgorithm algorithm = new WodAlgorithm(data,info);
+
 
         return algorithm._level(wod);
     }
@@ -628,10 +630,13 @@ class WodAlgorithm {
      */
     public double _Score(WOD inputWOD, int time) {
         int wodtime = _getTime(inputWOD);
-        if(inputWOD.getWODtype() == "FORTIME") {
+        if(inputWOD.getWODtype().equals( "FORTIME")) {
+            System.out.println("알고리즘 적정시간:"+wodtime);
+            System.out.println("실제로 수행한 시간:"+time);
+            System.out.println("나온 점수:"+100 + 100*(wodtime-time)/(wodtime+time));
             return 100 + 100*(wodtime-time)/(wodtime+time);
         }
-        if(inputWOD.getWODtype() == "AMRAP") {
+        if(inputWOD.getWODtype().equals( "AMRAP")) {
             return 100 + 100*(time-4)/(time+5);
         }
 
@@ -741,6 +746,7 @@ class WodAlgorithm {
             wod.setMovementnum(this.rep);
             wod.setWeightlist(this.weight);
             wod.setWODtype("FORTIME");
+            wod.setWODlevel(Integer.toString(level));
 
         }
 
@@ -751,6 +757,7 @@ class WodAlgorithm {
             wod.setMovementnum(this.rep);
             wod.setWeightlist(this.weight);
             wod.setWODtype("AMRAP");
+            wod.setWODlevel(Integer.toString(level));
         }
 
     }
@@ -1657,6 +1664,7 @@ class Data_Movement {
 
     public int getIndex(String input) {
         for(int i = 0; i < this.getArraySize(); i++) {
+
             if(input.equals(movement.get(i))) {
                 return i;
             }

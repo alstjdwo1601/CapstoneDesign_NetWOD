@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
     public ArrayList<String> dashboardboardcommentlist=new ArrayList<String>();
     LinearLayout selectwodlayout;
     Data_Movement datamovement=new Data_Movement();
-
+    WodManager wodmanger;
     /*
     1~4 하단 네비게이션 메뉴 화면
     1:홈화면
@@ -256,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
 
         excelscrapper.readExcel4(datamovement);
 
-
+        wodmanger= new WodManager(datamovement,excelscrapper.userinfo);
 
 
         setTheme(R.style.AppTheme);
@@ -269,36 +269,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.frame_layout, menu1Fragment).commitAllowingStateLoss();
 //여기서부터
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        Map<String, Object> user = new HashMap<>();
-        WOD w= new WOD();
-        ArrayList<String> e= new ArrayList<String>();
-        e.add("3");
-        e.add("Oh");
-        user.put("WODRECORD", excelscrapper.userinfo.wodrecord);
-        user.put("RANKING", 0);
-        user.put("Username",excelscrapper.userinfo.getUserName());
-        user.put("Date","등록시점날짜찾는법모름");
 
-
-        // Add a new document with a generated ID
-        String excelname;
-
-        db.collection("UserInfo").document("test")
-                .set(user)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                    }
-                });
-//여기까지
 
 
         // bottomNavigationView의 아이템이 선택될 때 호출될 리스너 등록
@@ -1013,7 +984,7 @@ public class MainActivity extends AppCompatActivity {
 
                             wod2.setWODname(sheet.getCell(0, nRowStartIndex).getContents()    );
                             wod2.setWODtype(sheet.getCell(1, nRowStartIndex).getContents()    );
-
+                            wod2.setWODlevel(sheet.getCell(6, nRowStartIndex).getContents() );
 
                             while(sheet.getCell(wodcol, wodrow).getContents()!=""){
 

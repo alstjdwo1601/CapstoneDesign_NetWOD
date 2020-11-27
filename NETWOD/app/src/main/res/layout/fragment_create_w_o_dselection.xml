@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:weightSum="10"
+    android:weightSum="20"
     tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="0dp"
         android:layout_weight="2"
         android:orientation="horizontal"
         android:weightSum="10">
@@ -41,13 +41,22 @@
             android:gravity="center"
             android:text="Movements"
             android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/levelcreate"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="WOD level"
+            android:textSize="16sp" />
     </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/rel"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="7">
+        android:layout_height="0dp"
+        android:layout_weight="16">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
@@ -62,21 +71,21 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:layout_weight="2"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/createnewwodbutton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="REFRESH" />
 
         <Button
             android:id="@+id/createdwodaddbutton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="ADD" />
     </LinearLayout>

@@ -36,6 +36,7 @@ public class RecyclerViewA extends RecyclerView.Adapter<RecyclerViewA.ViewHolder
         public ImageView imageView;
         public TextView textView3;
         public Button listdeletebutton;
+        public TextView wodleveltextview;
 
         public ViewHolder(View view) {
             super(view);
@@ -43,7 +44,7 @@ public class RecyclerViewA extends RecyclerView.Adapter<RecyclerViewA.ViewHolder
             this.textView = view.findViewById(R.id.textView);
             this.textView2 = view.findViewById(R.id.textView2);
             this.textView3 = view.findViewById(R.id.textview3);
-
+            this.wodleveltextview=view.findViewById(R.id.wodleveltextview);
             this.listdeletebutton=activity.findViewById(R.id.listdeletebutton);
 
         }
@@ -90,6 +91,7 @@ public class RecyclerViewA extends RecyclerView.Adapter<RecyclerViewA.ViewHolder
         String movementstring="";
         String titlestring="";
         String typestring="";
+        String wodlevelstring="";
         for(int i=0; i<titlesize;i++){
             titlestring=titlestring+"\n"+activity.excelscrapper.userinfo.getUserwodlist().get(position).getWODname().charAt(i);
         }
@@ -103,9 +105,11 @@ public class RecyclerViewA extends RecyclerView.Adapter<RecyclerViewA.ViewHolder
             }
             movementstring=movementstring+" "+activity.excelscrapper.userinfo.getUserwodlist().get(position).getMovementnum().get(i)+"times/meters";
     }
+        wodlevelstring=activity.excelscrapper.userinfo.getUserwodlist().get(position).getWODlevel();
         holder.textView.setText(titlestring);
         holder.textView2.setText(typestring);
         holder.textView3.setText(movementstring);
+        holder.wodleveltextview.setText(wodlevelstring);
         if(clickedlist.get(position)==1) {
             holder.textView.setBackgroundColor(Color.YELLOW);
         }

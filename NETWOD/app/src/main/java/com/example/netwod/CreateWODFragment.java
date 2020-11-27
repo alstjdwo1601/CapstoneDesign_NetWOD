@@ -44,6 +44,9 @@ public class CreateWODFragment extends Fragment {
     Button userwodgeneratebutton;
 
     Spinner spinner2;
+    Spinner wodlevelspinner;
+    ArrayList<String> levelarrayList;
+    ArrayAdapter<String> levelarrayAdapter;
     ArrayList<String> arrayList;
     ArrayAdapter<String> arrayAdapter;
     EditText createwodname;
@@ -93,7 +96,7 @@ public class CreateWODFragment extends Fragment {
         // Inflate the layout for this fragment
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment_create_w_o_d , container, false);
 
-
+        wodlevelspinner=rootView.findViewById(R.id.createwodlevelspinner);
         userwodgeneratebutton=rootView.findViewById(R.id.createwodbutton);
         createwodname=rootView.findViewById(R.id.createwodname);
         spinner2=rootView.findViewById(R.id.createwodspinner);
@@ -104,7 +107,19 @@ public class CreateWODFragment extends Fragment {
                 arrayList);
 
 
+        levelarrayList = new ArrayList<>();
+        levelarrayList.add("0");
+        levelarrayList.add("1");
+        levelarrayList.add("2");
+        levelarrayList.add("3");
+        levelarrayList.add("4");
+        levelarrayList.add("5");
+
+        levelarrayAdapter = new ArrayAdapter<>(activity.getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,
+                levelarrayList);
+
         spinner2.setAdapter(arrayAdapter);
+        wodlevelspinner.setAdapter(levelarrayAdapter);
 
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -123,14 +138,14 @@ public class CreateWODFragment extends Fragment {
 
 
                 String wodtype = spinner2.getSelectedItem().toString();
-
+                String wodlevel= wodlevelspinner.getSelectedItem().toString();
                 if (wodtype.equals("FORTIME")) {
 
 
                     //activity.tmpwod=new WOD(activity.excelscrapper.userinfo,"FORTIME");
-                    WodManager wodManager= new WodManager(activity.datamovement,activity.excelscrapper.userinfo);
+
                    //  wodManager.make("FORTIME");
-                    activity.tmpwod= wodManager.make("FORTIME");
+                    activity.tmpwod= activity.wodmanger.make("FORTIME",Integer.parseInt(wodlevel));
                     String createdwodname=createwodname.getText().toString();
                     activity.tmpwod.setWODname(createdwodname);
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, activity.createwodselectionFragment).commit();
@@ -138,9 +153,9 @@ public class CreateWODFragment extends Fragment {
 
                 } else {
 
-                    WodManager wodManager= new WodManager(activity.datamovement,activity.excelscrapper.userinfo);
+
                     //  wodManager.make("FORTIME");
-                    activity.tmpwod= wodManager.make("AMRAP");
+                    activity.tmpwod= activity.wodmanger.make("AMRAP",Integer.parseInt(wodlevel));
                     String createdwodname=createwodname.getText().toString();
                     activity.tmpwod.setWODname(createdwodname);
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, activity.createwodselectionFragment).commit();

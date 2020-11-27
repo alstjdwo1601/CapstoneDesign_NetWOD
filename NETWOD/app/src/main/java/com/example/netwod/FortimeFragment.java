@@ -144,7 +144,18 @@ public class FortimeFragment extends Fragment {
                 activity.tmpwod=activity.excelscrapper.userinfo.getUserwodlist().get(currentindex);
                 activity.excelscrapper.userinfo.getWodrecord().wodlist.add(activity.tmpwod);
                 activity.excelscrapper.userinfo.getWodrecord().recordlist.add(result);
-                activity.excelscrapper.userinfo.getWodrecord().scorelist.add("TE");
+                String min=result.substring(0,2);
+
+                String sec=result.substring(3,5);
+                int min2=Integer.parseInt(min);
+                int sec2=Integer.parseInt(sec);
+                int finaltime=sec2+min2*60;
+                String wodscore;
+                //finaltime이 타이머에 찍힌건데 이 파이널타임보다 초단위로 더해서 결과 넣으면 됨. 6000이면 타이머 시간보다 6000초(10분) 더걸린걸로
+                wodscore= Integer.toString(activity.wodmanger.score(activity.tmpwod,finaltime+6000));
+
+
+                activity.excelscrapper.userinfo.getWodrecord().scorelist.add(wodscore);
 
             }
         });
