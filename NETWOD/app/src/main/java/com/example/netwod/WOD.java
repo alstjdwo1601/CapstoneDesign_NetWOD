@@ -633,7 +633,7 @@ class WodAlgorithm {
         if(inputWOD.getWODtype().equals( "FORTIME")) {
             System.out.println("알고리즘 적정시간:"+wodtime);
             System.out.println("실제로 수행한 시간:"+time);
-            System.out.println("나온 점수:"+100 + 100*(wodtime-time)/(wodtime+time));
+            System.out.println("나온 점수100 + :"+ 100*(wodtime-time)/(wodtime+time));
             return 100 + 100*(wodtime-time)/(wodtime+time);
         }
         if(inputWOD.getWODtype().equals( "AMRAP")) {

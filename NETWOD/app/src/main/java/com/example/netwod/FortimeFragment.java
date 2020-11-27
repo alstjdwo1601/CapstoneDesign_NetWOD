@@ -152,7 +152,7 @@ public class FortimeFragment extends Fragment {
                 int finaltime=sec2+min2*60;
                 String wodscore;
                 //finaltime이 타이머에 찍힌건데 이 파이널타임보다 초단위로 더해서 결과 넣으면 됨. 6000이면 타이머 시간보다 6000초(10분) 더걸린걸로
-                wodscore= Integer.toString(activity.wodmanger.score(activity.tmpwod,finaltime+6000));
+                wodscore= Integer.toString(activity.wodmanger.score(activity.tmpwod,finaltime));
 
 
                 activity.excelscrapper.userinfo.getWodrecord().scorelist.add(wodscore);
@@ -213,7 +213,7 @@ public class FortimeFragment extends Fragment {
 
                         fortimestartbutton.setText("시작");
                         fortimerecordbutton.setText("기록");
-                        fortimetextview.setText("00:00:00");
+                        fortimetextview.setText("10:00:00");
 
                         cur_Status = Init;
                         myCount = 1;
@@ -245,7 +245,10 @@ public class FortimeFragment extends Fragment {
 
 
     String getTimeOut(){
-        long now = SystemClock.elapsedRealtime(); //애플리케이션이 실행되고나서 실제로 경과된 시간(??)^^;
+        long now = SystemClock.elapsedRealtime()+60000*10; //애플리케이션이 실행되고나서 실제로 경과된 시간(??)^^;
+        // 1000 단위가 1초
+        // 60000 단위가 1분
+        // 60000 * 3600 = 1시간
         long outTime = now - myBaseTime;
         String easy_outTime = String.format("%02d:%02d:%02d", outTime/1000 / 60, (outTime/1000)%60,(outTime%1000)/10);
         return easy_outTime;
