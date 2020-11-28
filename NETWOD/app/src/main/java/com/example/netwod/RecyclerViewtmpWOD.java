@@ -78,7 +78,7 @@ public class RecyclerViewtmpWOD extends RecyclerView.Adapter<RecyclerViewtmpWOD.
 
                 WodManager wodManager= new WodManager(activity.datamovement,activity.excelscrapper.userinfo);
                 //  wodManager.make("FORTIME");
-                activity.tmpwod= wodManager.make(wodtype);
+                activity.tmpwod= wodManager.make(wodtype,Integer.parseInt(activity.tmpwod.getWODlevel()));
 
               activity.tmpwod.setWODname(wodname);
 

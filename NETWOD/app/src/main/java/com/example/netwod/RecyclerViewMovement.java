@@ -113,6 +113,7 @@ public class RecyclerViewMovement extends RecyclerView.Adapter<RecyclerViewMovem
 
                     }
                 }
+                activity.tmpwod.setWODlevel(Integer.toString(activity.wodmanger.level( activity.tmpwod)));
                 activity.excelscrapper.userinfo.getUserwodlist().add(activity.tmpwod);
                 activity.tmpwod=new WOD();
             }

@@ -1124,6 +1124,7 @@ public class MainActivity extends AppCompatActivity {
                         Cell cscore = s.getCell(4, i);
                         Cell crep = s.getCell(5, i);
                         Cell cweight = s.getCell(6, i);
+                        Cell cscoreMax = s.getCell(5, i);  // 추가
 				/*	Cell cexercise[] = {s.getCell(7,i),
 							s.getCell(8,i),
 							s.getCell(9,i),
@@ -1148,7 +1149,7 @@ public class MainActivity extends AppCompatActivity {
                         data.getScore().add(Double.parseDouble(cscore.getContents()));
                         data.getRep().add(Double.parseDouble(crep.getContents()));
                         data.getWeight().add(Double.parseDouble(cweight.getContents()));
-
+                        data.getScoreMax().add(Double.parseDouble(cscoreMax.getContents()));  //추가
                         i++;
 
                     } catch(Exception e){

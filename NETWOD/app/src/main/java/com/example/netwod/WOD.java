@@ -425,6 +425,10 @@ class WodManager {
 
         return 5*algorithm._getTime(wod);
     }
+    public int percent(WOD wod,int time) {
+        WodAlgorithm algorithm = new WodAlgorithm(data,info);
+        return (int)algorithm._percent(wod, time);
+    }
 
 
 	/*public int replace(WOD wod,String target,String want) {
@@ -620,7 +624,75 @@ class WodAlgorithm {
 
         return (int)Time;
     }
+    public double _percent(WOD inputWOD, int time) {
+        int mean = _getTime(inputWOD);
+        int Max = _getTimeMax(inputWOD);
+        int abs = Math.abs(Max-mean)/2;
+        System.out.println(_getArea(time,mean, abs));
+        return _getArea(time,mean, abs)*100;
 
+    }
+
+
+
+
+
+
+    public double _getArea(double x, double m, double d) {
+        double term = Math.abs(m-x);
+        double sum = 0.5;
+        double sum2 = 0;
+        // 10000 => 10d(시그마)
+        int value = (int)(term/d*1000);
+        for(int i = 0 ; i < value; i++) {
+            double dev = 10*d/10000;
+            sum2 += norm(m+i*dev,m,d);
+        }
+        sum2 -= norm(m,m,d)*1/2D;
+        sum2 *= 10*d/10000;
+        System.out.println("time:"+x);
+        System.out.println("mean:"+m);
+        System.out.println("abs:"+d);
+        System.out.println("sum2:"+sum2);
+        if(x < m) {
+            return 0.5 + sum2;
+        }
+        else {
+            return 0.5 - sum2;
+        }
+
+
+
+    }
+    public int _getTimeMax(WOD inputWOD) {
+        if(wod == null) {
+            return 0;
+        }
+        double Time = 0;
+
+        for(int i = 0; i < inputWOD.getMovement().size(); i++) {
+            int index = data.getIndex(inputWOD.getMovement().get(i));
+            double movementNum = StringToDouble(inputWOD.getMovementnum().get(i));
+            double score = data.getScoreMax(index);
+            double rep = data.getRep(index);
+            double calc = score * movementNum / rep;
+            Time += calc;
+        }
+
+
+        return (int)Time;
+    }
+
+    // 추가
+    // x = input 값 , m 평균 , d 표준편차
+    public double norm(double x, double m, double d) {
+        return (1/Math.sqrt(2*Math.PI*d*d)*Math.exp(-((x-m)*(x-m)/(2D*d*d))));
+    }
+
+    public double norm(int x, int m, int d) {
+        // TODO Auto-generated method stub
+        return (1/Math.sqrt(2*Math.PI*d*d))*Math.exp(-((x-m)*(x-m))/(2D*d*d));
+    }
     /*score 구하는 부분
      *
      *
@@ -674,6 +746,9 @@ class WodAlgorithm {
         else {
             userWeight = Double.parseDouble(info.getUserWeight());
         }
+        if(userWeight == 0) {
+            userWeight = 65;
+        }
 
         double Weightmul = 1 + (userWeight - 65)/65;
 
@@ -686,6 +761,10 @@ class WodAlgorithm {
         // weight = data * mul * userWeight
         double mul = weight / data.getWeight(index) /Weightmul;
 
+ System.out.println("mul:"+mul);
+        System.out.println("weight:"+weight);
+        System.out.println("data.getWeight(index):"+data.getWeight(index));
+        System.out.println("Weightmul:"+Weightmul);
         if(mul < 0.74) {
             return 0;
         }
@@ -1561,6 +1640,7 @@ class Data_Movement {
     private ArrayList<Double> score = new ArrayList<Double>();
     private ArrayList<Double> weight = new ArrayList<Double>();
     private ArrayList<Double> rep = new ArrayList<Double>();
+    private ArrayList<Double> scoreMax = new ArrayList<Double>();  //추가
     private int ArraySize = movement.size();
 
 
@@ -1603,6 +1683,17 @@ class Data_Movement {
     }
     public ArrayList<Double> getRep() {
         return rep;
+    }
+    public ArrayList<Double> getScoreMax() { // 추가
+        return scoreMax;
+    }
+    public double getScoreMax(int index) {
+        if(rangeArray(index, ArraySize)) {
+            return scoreMax.get(index);
+        }
+        else {
+            return -1;
+        }
     }
     public String getMovement(int index) {
         if(rangeArray(index, ArraySize)) {

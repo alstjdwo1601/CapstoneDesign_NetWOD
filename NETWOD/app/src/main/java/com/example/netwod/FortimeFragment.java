@@ -136,6 +136,8 @@ public class FortimeFragment extends Fragment {
 
         fortimewodmovementtextview.setText(movementstring);
 
+
+
         fortimeaddbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,7 +154,7 @@ public class FortimeFragment extends Fragment {
                 int finaltime=sec2+min2*60;
                 String wodscore;
                 //finaltime이 타이머에 찍힌건데 이 파이널타임보다 초단위로 더해서 결과 넣으면 됨. 6000이면 타이머 시간보다 6000초(10분) 더걸린걸로
-                wodscore= Integer.toString(activity.wodmanger.score(activity.tmpwod,finaltime));
+                wodscore= Integer.toString(activity.wodmanger.percent(activity.tmpwod,finaltime));
 
 
                 activity.excelscrapper.userinfo.getWodrecord().scorelist.add(wodscore);
@@ -213,7 +215,7 @@ public class FortimeFragment extends Fragment {
 
                         fortimestartbutton.setText("시작");
                         fortimerecordbutton.setText("기록");
-                        fortimetextview.setText("10:00:00");
+                        fortimetextview.setText("05:00:00");
 
                         cur_Status = Init;
                         myCount = 1;
@@ -233,6 +235,16 @@ public class FortimeFragment extends Fragment {
 
         return rootView;
     }
+    String getTimeOut(){
+        long now = SystemClock.elapsedRealtime()+60000*5; //애플리케이션이 실행되고나서 실제로 경과된 시간(??)^^;
+        // 1000 단위가 1초
+        // 60000 단위가 1분
+        // 60000 * 3600 = 1시간
+        long outTime = now - myBaseTime;
+        String easy_outTime = String.format("%02d:%02d:%02d", outTime/1000 / 60, (outTime/1000)%60,(outTime%1000)/10);
+        return easy_outTime;
+
+    }
     Handler myTimer = new Handler(){
         public void handleMessage(Message msg){
             fortimetextview=rootView.findViewById(R.id.fortimetext);
@@ -243,17 +255,6 @@ public class FortimeFragment extends Fragment {
         }
     };
 
-
-    String getTimeOut(){
-        long now = SystemClock.elapsedRealtime()+60000*10; //애플리케이션이 실행되고나서 실제로 경과된 시간(??)^^;
-        // 1000 단위가 1초
-        // 60000 단위가 1분
-        // 60000 * 3600 = 1시간
-        long outTime = now - myBaseTime;
-        String easy_outTime = String.format("%02d:%02d:%02d", outTime/1000 / 60, (outTime/1000)%60,(outTime%1000)/10);
-        return easy_outTime;
-
-    }
     public void onAttach(Context context) {
         super.onAttach(context);
         //이 메소드가 호출될떄는 프래그먼트가 엑티비티위에 올라와있는거니깐 getActivity메소드로 엑티비티참조가능
