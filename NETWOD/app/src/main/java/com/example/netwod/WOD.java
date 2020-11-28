@@ -664,8 +664,6 @@ class WodAlgorithm {
 
 
     }
-
-
     public int _getTimeMax(WOD inputWOD) {
         if(wod == null) {
             return 0;
@@ -720,42 +718,77 @@ class WodAlgorithm {
     }
     // level 구하는 부분
 
-
-    public int _level(WOD wod){
-
-        ArrayList<Integer> movements =  new ArrayList<Integer>();
-        ArrayList<Double> weightDIV = new ArrayList<Double>();
-        ArrayList<Double> repDIV = new ArrayList<Double>();
-        double sum = 0;
-        for(int i = 0; i < wod.getMovement().size(); i++) {
-            String name = (wod.getMovement().get(i));
-            movements.add(data.getIndex(name));
+    public int _level(WOD inputWOD) {
+        if(inputWOD == null) {
+            return -1;
         }
 
-        for(int i = 0; i < wod.getMovement().size(); i++) {
-            int index = movements.get(i);
-            if(data.getWeight(index) != 0) {
-                weightDIV.add(Double.parseDouble(wod.getWeightlist().get(i))/data.getWeight(index));
+        for(int i = 0; i < inputWOD.getMovement().size(); i++) {
+            if(!inputWOD.getWeightlist().get(i).equals("0") ) {
+                return _levelsub(inputWOD.getMovement().get(i) ,inputWOD.getWeightlist().get(i));
             }
-            else {
-                weightDIV.add(1.0);
-            }
-            repDIV.add(Double.parseDouble(wod.getMovementnum().get(i))/data.getRep(movements.get(i)));
 
 
         }
-        for(int i = 0; i< weightDIV.size();i++) {
-            sum += weightDIV.get(i)*repDIV.get(i);
-            System.out.println(wod.getMovement().get(i)+ "\n / " + weightDIV.get(i)+" / "+repDIV.get(i));
-        }
-
-
-        return _levelsub(sum);
+        return -1;
 
     }
 
-    public int _levelsub(double a){
-        double mid = 90;
+
+
+    public int _levelsub(String Movement,String Weight) {
+        int index = data.getIndex(Movement);
+        double weight = Double.parseDouble(Weight);
+        double userWeight;
+        if(info.getUserWeight() == null) {
+            userWeight = 65;
+        }
+        else {
+            userWeight = Double.parseDouble(info.getUserWeight());
+        }
+        if(userWeight == 0) {
+            userWeight = 65;
+        }
+
+        double Weightmul = 1 + (userWeight - 65)/65;
+
+
+        if(index == -1) {
+            return -1;
+        }
+
+
+        // weight = data * mul * userWeight
+        double mul = weight / data.getWeight(index) /Weightmul;
+
+ System.out.println("mul:"+mul);
+        System.out.println("weight:"+weight);
+        System.out.println("data.getWeight(index):"+data.getWeight(index));
+        System.out.println("Weightmul:"+Weightmul);
+        if(mul < 0.74) {
+            return 0;
+        }
+
+        if(mul < 0.99) {
+            return 1;
+        }
+
+        if(mul < 1.24) {
+            return 2;
+        }
+        if(mul < 1.49) {
+            return 3;
+        }
+        if(mul < 1.99) {
+            return 4;
+        }
+        if(mul < 3.0) {
+            return 5;
+        }
+
+
+
+        return -1;
         // level 0 = 50%  // begineer
         // level 1 = 75%  // womans wod
         // level 2 = 100% // normal wod
@@ -763,25 +796,6 @@ class WodAlgorithm {
         // level 4 = 150% // pro wod
         // level 5 = 200% // hero wod
 
-        if (a < 0.75*mid) {
-            return 0;
-        }
-        if (a < 1.0*mid) {
-            return 1;
-        }
-        if (a < 1.25*mid) {
-            return 2;
-        }
-        if (a < 1.5*mid) {
-            return 3;
-        }
-        if (a < 2.0*mid) {
-            return 4;
-        }
-        if (a < 3.0*mid) {
-            return 5;
-        }
-        return 6;
     }
 
 
@@ -827,56 +841,20 @@ class WodAlgorithm {
 
     }
 
-    public void _addMovement(int index, int level, int part) {
-        double val;
+    public void _addMovement(int index, int Level, int part) {
+
         // level 0 = 50%  // begineer
         // level 1 = 75%  // womans wod
         // level 2 = 100% // normal wod
         // level 3 = 125% // famous wod
         // level 4 = 150% // pro wod
         // level 5 = 200% // hero wod
-        if(level == 0 ) {val = 0.5;}
-        else if(level == 1 ) {val = 0.75;}
-        else if(level == 2 ) {val = 1.0;}
-        else if(level == 3 ) {val = 1.25;}
-        else if(level == 4 ) {val = 1.5;}
-        else if(level == 5 ) {val = 2.0;}
-        else {val = 1;}
-        Random rand = new Random();
-        double Level1;
-        double Level2;
-        if(data.getWeight(index) == 0) {
-            Level1 = val;
-            Level2 = 1;
-        }
-        else {
-            if(rand.nextInt(2) == 0) {
-                Level1 = val;
-                Level2 = 1;
-            }
-            else {
-                Level1 = 1;
-                Level2 = val;
-
-            }
-        }
-
-
 
         movement.add(data.getMovement(index));
         equipment.add(data.getEquipment(index));
-        rep.add(_setMovementnum(index,part,Level1));
-        weight.add(_setWeightlist(index,Level2));
+        rep.add(_setMovementnum(index,part));
+        weight.add(_setWeightlist(index,Level));
 
-    }
-
-    public String _setMovementnum(int index, int part,double mul){
-        return numberToString(Math.ceil((data.getRep(index)*part)*mul));
-    }
-
-
-    public String _setWeightlist(int index,double mul){
-        return numberToString(Math.ceil(data.getWeight(index)*mul));
     }
 
     public String _setMovementnum(int index, int part){
