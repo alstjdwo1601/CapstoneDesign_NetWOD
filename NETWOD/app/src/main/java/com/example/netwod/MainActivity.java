@@ -1122,10 +1122,10 @@ public class MainActivity extends AppCompatActivity {
                         //Cell cexercise_area_double = s.getCell(2, i);
                         Cell cstimulate = s.getCell(3, i);
                         Cell cscore = s.getCell(4, i);
-                        Cell crep = s.getCell(5, i);
-                        Cell cweight = s.getCell(6, i);
                         Cell cscoreMax = s.getCell(5, i);  // 추가
-				/*	Cell cexercise[] = {s.getCell(7,i),
+                        Cell crep = s.getCell(6, i);
+                        Cell cweight = s.getCell(7, i);
+               /*	Cell cexercise[] = {s.getCell(7,i),
 							s.getCell(8,i),
 							s.getCell(9,i),
 							s.getCell(10,i),
@@ -1135,7 +1135,7 @@ public class MainActivity extends AppCompatActivity {
 							s.getCell(14,i),};*/
                         int[] exercise = new int[8];
                         for(int count = 0; count < 8; count++ ) {
-                            Cell cexercise = s.getCell(7+count,i);
+                            Cell cexercise = s.getCell(8+count,i);
                             String S = cexercise.getContents();
                             exercise[count] = Integer.parseInt(S);
 
