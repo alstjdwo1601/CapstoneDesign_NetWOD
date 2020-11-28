@@ -868,12 +868,12 @@ class WodAlgorithm {
     }
 
     public String _setMovementnum(int index, int part,double mul){
-        return numberToString(Math.ceil((data.getRep(index)*part)*mul));
+        return numberToString((int)Math.ceil((data.getRep(index)*part)*mul));
     }
 
 
     public String _setWeightlist(int index,double mul){
-        return numberToString(Math.ceil(data.getWeight(index)*mul));
+        return numberToString((int)Math.ceil(data.getWeight(index)*mul));
     }
 
 
