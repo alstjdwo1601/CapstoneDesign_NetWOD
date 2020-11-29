@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     public DashboardFragment dashboardFragment=new DashboardFragment();
     public ArrayList<WOD> namedwodlist=new ArrayList<WOD>();
     int namedwodindex;
-    String loginname="sex";
+    String loginname="netwoduser";
     public FirebaseAuth mAuth;
     WOD tmpwod=new WOD();
     public WODrecord rankwodrecord=new WODrecord();
